@@ -14,11 +14,11 @@ export const COLORS: ThemeColors = {
 
   // base colors
   /** UI color for #primary */
-  primary: '#19295C',
+  primary: '#5A8DEE',
   /** UI color for #secondary */
-  secondary: '#7B61FF', // '#8392AB',
+  secondary: '#36CFC9', // '#8392AB',
   /** UI color for #tertiary */
-  tertiary: '#FFC75F',
+  tertiary: '#FFC48B',
 
   // non-colors
   black: '#252F40',
@@ -37,20 +37,20 @@ export const COLORS: ThemeColors = {
   /** UI color for #warning */
   warning: '#FFC107',
   /** UI color for #success */
-  success: '#30D5C8',
+  success: '#58D3B4',
   /** UI color for #info */
   info: '#17C1E8',
 
   /** UI colors for navigation & card */
   card: '#FFFFFF',
-  background: '#E9ECEF',
+  background: '#F5F7FA',
 
   /** UI color for shadowColor */
   shadow: '#000000',
   overlay: 'rgba(0,0,0,0.3)',
 
   /** UI color for input borderColor on focus */
-  focus: '#7B61FF',
+  focus: '#58D3B4',
   input: '#252F40',
 
   /** UI color for switch checked/active color */
@@ -73,7 +73,7 @@ export const COLORS: ThemeColors = {
   blurTint: 'light',
 
   /** product link color */
-  link: '#19295C',
+  link: '#5A8DEE',
 
 }
 

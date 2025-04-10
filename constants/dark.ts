@@ -1,5 +1,4 @@
 import {
-  ITheme,
   ThemeColors,
   ThemeGradients,
   ThemeSizes,
@@ -7,6 +6,7 @@ import {
 } from "./theme";
 
 import { THEME as commonTheme } from './theme';
+import { ITheme } from "./types";
 
 export const COLORS: ThemeColors = {
   // default text color
@@ -14,11 +14,11 @@ export const COLORS: ThemeColors = {
 
   // base colors
   /** UI color for #primary */
-  primary: '#19295C',
+  primary: '#5A8DEE',
   /** UI color for #secondary */
-  secondary: '#627594', // '#8392AB',
+  secondary: '#36CFC9', // '#8392AB',
   /** UI color for #tertiary */
-  tertiary: '#E8AE4C',
+  tertiary: '#FFC48B',
 
   // non-colors
   black: '#252F40',
@@ -33,32 +33,32 @@ export const COLORS: ThemeColors = {
 
   // colors variations
   /** UI color for #danger */
-  danger: '#EA0606',
+  danger: '#FF6B6B',
   /** UI color for #warning */
   warning: '#FFC107',
   /** UI color for #success */
-  success: '#82D616',
+  success: '#58D3B4',
   /** UI color for #info */
   info: '#17C1E8',
 
   /** UI colors for navigation & card */
-  card: '#292C3A',
-  background: '#1B1D22',
+  card: '#2A2A3B',
+  background: '#1F1F2E',
 
   /** UI color for shadowColor */
   shadow: '#627594',
   overlay: 'rgba(0,0,0,0.3)',
 
   /** UI color for input borderColor on focus */
-  focus: '#7B61FF',
+  focus: '#627594',
   input: '#FFFFFF',
 
   /** UI color for switch checked/active color */
-  switchOn: '#7B61FF',
+  switchOn: '#5A8DEE',
   switchOff: '#181A1F',
 
   /** UI color for checkbox icon checked/active color */
-  checkbox: ['#3A416F', '#141727'],
+  checkbox: ['#5A8DEE', '#141727'],
   checkboxIcon: '#FFFFFF',
 
   /** social colors */
@@ -77,8 +77,8 @@ export const COLORS: ThemeColors = {
 };
 
 export const GRADIENTS: ThemeGradients = {
-  primary: ['#FF0080', '#7928CA'],
-  secondary: ['#A8B8D8', '#627594'],
+  primary: ['#5A8DEE', '#36CFC9'],
+  secondary: ['#89E0CF', '#36CFC9'],
   info: ['#21D4FD', '#2152FF'],
   success: ['#98EC2D', '#17AD37'],
   warning: ['#FBCF33', '#F53939'],
