@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1041459528553",
+    "project_id": "wave-dev-6c3e6",
+    "storage_bucket": "wave-dev-6c3e6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041459528553:android:15e7a3b081f3273920f3f8",
+        "android_client_info": {
+          "package_name": "com.pravatustech.waveapp.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041459528553-pdt4hu9afklnkqsvb8fm2ihsqebv4to0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsl-YQEDQ0-K9fYYAqPfElD969jv1XvuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041459528553-pdt4hu9afklnkqsvb8fm2ihsqebv4to0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1041459528553-9aqjebv561plkojr7630ndfiojfpk815.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pravatustech.waveapp.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

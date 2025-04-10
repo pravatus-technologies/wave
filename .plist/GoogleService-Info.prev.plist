@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>287494129615-l5b52uuahoitbu63c9itnt113aj44koe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.287494129615-l5b52uuahoitbu63c9itnt113aj44koe</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAfKL7Bzq0CVBKp9PXobUQW46_70RU67FI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>287494129615</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pravatustech.waveapp.preview</string>
+	<key>PROJECT_ID</key>
+	<string>wave-preview</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wave-preview.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:287494129615:ios:8db35dec8cea274afaf4ba</string>
+</dict>
+</plist>
