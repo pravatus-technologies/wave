@@ -12,14 +12,22 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { AuthProvider } from "@/hooks/useAuth";
+import { logInfo } from "@/utils/Logger";
+import { DebugProvider } from "@/utils/debug/DebugContext";
+import { DebugOverlay } from "@/utils/debug/DebugOverlay";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  logInfo("RootLayout", "-- Was here");
+
   return (
-    <AuthProvider>
-      <Slot />
-    </AuthProvider>
+    <DebugProvider>
+      <AuthProvider>
+        <Slot />
+      </AuthProvider>
+      <DebugOverlay />
+    </DebugProvider>
   );
 }

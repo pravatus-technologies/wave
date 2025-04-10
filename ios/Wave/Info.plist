@@ -27,6 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>waveapp</string>
           <string>com.pravatustech.waveapp.dev</string>
         </array>
       </dict>

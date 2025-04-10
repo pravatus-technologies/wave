@@ -1,7 +1,9 @@
-import { Redirect, Slot, Stack } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
+import { Stack } from "expo-router";
 
 export default function AuthLayout() {
-  const { user } = useAuth();
-  return !user ? <Redirect href="/signin/" /> : <Slot />;
+  return (
+    <Stack>
+      <Stack.Screen options={{ headerShown: false }} name="signin" />
+    </Stack>
+  );
 }

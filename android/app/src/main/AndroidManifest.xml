@@ -26,6 +26,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.pravatustech.waveapp.dev"/>
         <data android:scheme="exp+wave"/>
+        <data android:scheme="waveapp"/>
       </intent-filter>
     </activity>
   </application>

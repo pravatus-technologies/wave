@@ -4,3 +4,8 @@ export * from './ITheme';
 export * from './IThemeProvider';
 export * from './IconName';
 export * from './AuthContext';
+
+export * from './IFriend';
+export * from './IFriendRequest';
+
+export * from './errors';

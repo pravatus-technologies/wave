@@ -17,6 +17,7 @@ export default ({ config }) => {
     ...config,
     name: "Wave",
     slug: "Wave",
+    scheme: "waveapp",
     owner: "egeneral",
     version: "0.0.1",
     orientation: "portrait",
