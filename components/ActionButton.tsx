@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks";
+import { useData, useTheme } from "@/hooks";
 import React from "react";
 import {
   Pressable,
@@ -8,6 +8,7 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  ColorValue,
 } from "react-native";
 
 type Props = {
@@ -16,8 +17,9 @@ type Props = {
   loading?: boolean;
   disabled?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
+  textColor?: ColorValue;
   textStyle?: StyleProp<TextStyle>;
-  spinnerColor?: string;
+  spinnerColor?: ColorValue;
 };
 
 export const ActionButton = ({
@@ -27,10 +29,13 @@ export const ActionButton = ({
   disabled = false,
   buttonStyle,
   textStyle,
+  textColor,
   spinnerColor = "#ffffff",
 }: Props) => {
-  const isDisabled = disabled || loading;
+  const { isDark } = useData();
   const { colors, sizes } = useTheme();
+  const isDisabled = disabled || loading;
+
   return (
     <Pressable
       onPress={onPress}
@@ -38,7 +43,7 @@ export const ActionButton = ({
       style={[
         {
           backgroundColor: isDisabled ? colors.gray : colors.primary,
-          paddingVertical: 12,
+          paddingVertical: 8,
           paddingHorizontal: 24,
 
           borderWidth: 1,
@@ -59,7 +64,12 @@ export const ActionButton = ({
           style={{ marginRight: 8 }}
         />
       )}
-      <Text style={[{ color: "#fff", fontWeight: "bold" }, textStyle]}>
+      <Text
+        style={[
+          { color: textColor ?? colors.white, fontWeight: "bold" },
+          textStyle,
+        ]}
+      >
         {title}
       </Text>
     </Pressable>
