@@ -1,23 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Platform,
-  Alert,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAvoidingView } from "react-native";
+import { Platform, Alert, TextInput, StyleSheet, Image } from "react-native";
 import { Redirect } from "expo-router";
-
-import { ScrollView } from "@/components/ScrollView"; // your debug wrapper
-import { ActionButton } from "@/components/ActionButton";
 import { useAuth } from "@/hooks/useAuth";
 import { useData, useTheme } from "@/hooks";
 import * as regex from "@/constants/regex";
 import { AuthErrorCodes } from "@/constants/types";
-import { View } from "@/components/View";
+import {
+  ActionButton,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from "@/components";
 
 interface ILogin {
   email: string;
