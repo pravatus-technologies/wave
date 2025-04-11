@@ -1,3 +1,5 @@
+import "@/utils/Sentry"; // Initialize sentry
+
 import {
   DarkTheme,
   DefaultTheme,
@@ -15,19 +17,11 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { logInfo } from "@/utils/Logger";
 import { DebugProvider } from "@/utils/debug/DebugContext";
 import { DebugOverlay } from "@/utils/debug/DebugOverlay";
+import { RootProviders } from "@/providers/RootProviders";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  logInfo("RootLayout", "-- Was here");
-
-  return (
-    <DebugProvider>
-      <AuthProvider>
-        <Slot />
-      </AuthProvider>
-      <DebugOverlay />
-    </DebugProvider>
-  );
+  return <RootProviders />;
 }

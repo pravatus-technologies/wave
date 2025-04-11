@@ -1,7 +1,6 @@
 import { AuthErrorCodes } from "@/constants/types";
-import { useData } from "@/hooks";
+import { useData, useTheme } from "@/hooks";
 import { useAuth } from "@/hooks/useAuth";
-import { logInfo } from "@/utils/Logger";
 import { Redirect, Slot } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -12,6 +11,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  Pressable,
 } from "react-native";
 
 import * as regex from "@/constants/regex";
@@ -33,7 +33,8 @@ const isAndroid = Platform.OS === "android";
 const screenHeight = Dimensions.get("window").height;
 
 export default function Signin() {
-  const { isDark } = useData();
+  const { isDark, theme } = useData();
+  const { colors, sizes, assets } = useTheme();
   const { user, loginWithEmail } = useAuth();
 
   const [isValid, setIsValid] = useState<ILoginValidation>({
@@ -144,7 +145,21 @@ export default function Signin() {
               borderRadius: 25,
             }}
           >
-            <Button title="Signin" onPress={handleSignin}></Button>
+            <Pressable
+              onPress={handleSignin}
+              style={{
+                backgroundColor: colors.primary,
+                borderWidth: 1,
+                borderColor: colors.primary,
+                padding: 12,
+                borderRadius: 25,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: colors.white, fontWeight: "bold" }}>
+                Signin
+              </Text>
+            </Pressable>
           </View>
         </View>
       </KeyboardAvoidingView>
