@@ -18,6 +18,7 @@ import * as regex from "@/constants/regex";
 import { SafeAreaView } from "@/components/SafeAreaView";
 import { KeyboardAvoidingView } from "@/components/KeyboardAvoidingView";
 import { View } from "@/components/View";
+import { ActionButton } from "@/components/ActionButton";
 
 interface ILogin {
   email: string;
@@ -36,6 +37,8 @@ export default function Signin() {
   const { isDark, theme } = useData();
   const { colors, sizes, assets } = useTheme();
   const { user, loginWithEmail } = useAuth();
+
+  const [busy, setBusy] = useState(false);
 
   const [isValid, setIsValid] = useState<ILoginValidation>({
     email: false,
@@ -56,7 +59,9 @@ export default function Signin() {
 
   const handleSignin = useCallback(async () => {
     try {
+      setBusy(true);
       await loginWithEmail(login.email, login.password);
+      setBusy(false);
     } catch (error: any) {
       let errorMessage = "Something went wrong. Please try again";
 
@@ -76,6 +81,7 @@ export default function Signin() {
           break;
       }
 
+      setBusy(false);
       Alert.alert("Login Error", errorMessage);
     }
   }, [login]);
@@ -145,21 +151,11 @@ export default function Signin() {
               borderRadius: 25,
             }}
           >
-            <Pressable
+            <ActionButton
+              loading={busy}
+              title="Signin"
               onPress={handleSignin}
-              style={{
-                backgroundColor: colors.primary,
-                borderWidth: 1,
-                borderColor: colors.primary,
-                padding: 12,
-                borderRadius: 25,
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: colors.white, fontWeight: "bold" }}>
-                Signin
-              </Text>
-            </Pressable>
+            />
           </View>
         </View>
       </KeyboardAvoidingView>
