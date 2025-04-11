@@ -1,24 +1,23 @@
-import { AuthErrorCodes } from "@/constants/types";
-import { useData, useTheme } from "@/hooks";
-import { useAuth } from "@/hooks/useAuth";
-import { Redirect, Slot } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
-  Alert,
-  Button,
-  Dimensions,
   Platform,
+  Alert,
   Text,
   TextInput,
   StyleSheet,
-  Pressable,
+  Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardAvoidingView } from "react-native";
+import { Redirect } from "expo-router";
 
-import * as regex from "@/constants/regex";
-import { SafeAreaView } from "@/components/SafeAreaView";
-import { KeyboardAvoidingView } from "@/components/KeyboardAvoidingView";
-import { View } from "@/components/View";
+import { ScrollView } from "@/components/ScrollView"; // your debug wrapper
 import { ActionButton } from "@/components/ActionButton";
+import { useAuth } from "@/hooks/useAuth";
+import { useData, useTheme } from "@/hooks";
+import * as regex from "@/constants/regex";
+import { AuthErrorCodes } from "@/constants/types";
+import { View } from "@/components/View";
 
 interface ILogin {
   email: string;
@@ -30,135 +29,142 @@ interface ILoginValidation {
   password: boolean;
 }
 
-const isAndroid = Platform.OS === "android";
-const screenHeight = Dimensions.get("window").height;
-
 export default function Signin() {
   const { isDark, theme } = useData();
-  const { colors, sizes, assets } = useTheme();
+  const { colors, assets, sizes } = useTheme();
   const { user, loginWithEmail } = useAuth();
 
   const [busy, setBusy] = useState(false);
-
-  const [isValid, setIsValid] = useState<ILoginValidation>({
-    email: false,
-    password: false,
-  });
 
   const [login, setLoginData] = useState<ILogin>({
     email: "",
     password: "",
   });
 
-  const handleChange = useCallback(
-    (value: any) => {
-      setLoginData((state) => ({ ...state, ...value }));
-    },
-    [setLoginData]
-  );
+  const [isValid, setIsValid] = useState<ILoginValidation>({
+    email: false,
+    password: false,
+  });
+
+  const handleChange = useCallback((value: Partial<ILogin>) => {
+    setLoginData((prev) => ({ ...prev, ...value }));
+  }, []);
 
   const handleSignin = useCallback(async () => {
     try {
       setBusy(true);
       await loginWithEmail(login.email, login.password);
-      setBusy(false);
     } catch (error: any) {
       let errorMessage = "Something went wrong. Please try again";
 
       switch (error.code) {
         case AuthErrorCodes.INVALID_CREDENTIAL:
-          errorMessage =
-            "Your login has expired or is invalid. Please try again.";
+          errorMessage = "Your login has expired or is invalid.";
           break;
         case AuthErrorCodes.USER_NOT_FOUND:
           errorMessage = "No user found with that email.";
           break;
         case AuthErrorCodes.WRONG_PASSWORD:
-          errorMessage = "Incorrect password. Please try again.";
+          errorMessage = "Incorrect password.";
           break;
         case AuthErrorCodes.NETWORK_FAILED:
-          errorMessage = "Network error. Check your connection and try again.";
+          errorMessage = "Network error. Check your connection.";
           break;
       }
 
-      setBusy(false);
       Alert.alert("Login Error", errorMessage);
+    } finally {
+      setBusy(false);
     }
   }, [login]);
 
   useEffect(() => {
-    setIsValid((state) => ({
-      ...state,
+    setIsValid({
       email: regex.email.test(login.email),
-      password: true,
-    }));
-  }, [login, setIsValid]);
+      password: true, // you can update this if needed
+    });
+  }, [login]);
 
-  if (user) {
-    return <Redirect href="/" />; // ✅ works on refresh and post-login
-  }
+  if (user) return <Redirect href="/" />;
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignContent: "center",
-        paddingHorizontal: 15,
-      }}
-    >
-      <KeyboardAvoidingView
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+      <View
         style={{
-          flex: 1,
-          justifyContent: "center",
+          margin: "auto",
           alignContent: "center",
+          alignItems: "center",
+          marginTop: sizes.height * 0.15,
         }}
       >
-        <View>
+        <Image source={assets.logo} style={{ width: 64, height: 64 }} />
+      </View>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={60}
+      >
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
           <TextInput
-            style={{
-              borderWidth: 1,
-              borderColor: "gray",
-              backgroundColor: "#eaeaea",
-              padding: 10,
-              marginVertical: 2,
-              borderRadius: 25,
-            }}
-            autoCapitalize={"none"}
+            style={styles.input}
+            autoCapitalize="none"
             placeholder="Email"
-            onChangeText={(value) => handleChange({ email: value })}
+            value={login.email}
+            onChangeText={(text) => handleChange({ email: text })}
           />
-        </View>
-        <View>
           <TextInput
-            style={{
-              borderWidth: 1,
-              borderColor: "gray",
-              backgroundColor: "#eaeaea",
-              padding: 10,
-              marginVertical: 2,
-              borderRadius: 25,
-            }}
+            style={styles.input}
             placeholder="Password"
             secureTextEntry
-            onChangeText={(value) => handleChange({ password: value })}
+            value={login.password}
+            onChangeText={(text) => handleChange({ password: text })}
           />
-          <View
-            style={{
+          <ActionButton
+            title="Sign In"
+            onPress={handleSignin}
+            loading={busy}
+            disabled={!isValid.email || !isValid.password}
+            buttonStyle={{ backgroundColor: colors.primary, marginTop: 16 }}
+            spinnerColor={colors.white}
+          />
+        </ScrollView>
+        <View style={styles.footer}>
+          <ActionButton
+            title="Create an account"
+            onPress={() => Alert.alert("Create account")}
+            textColor={colors.primary}
+            buttonStyle={{
+              backgroundColor: "transparent",
               borderWidth: 1,
-              borderColor: "gray",
-              marginTop: 10,
-              borderRadius: 25,
+              borderColor: isDark ? colors.gray : colors.primary,
             }}
-          >
-            <ActionButton
-              loading={busy}
-              title="Signin"
-              onPress={handleSignin}
-            />
-          </View>
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingVertical: 24,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "gray",
+    backgroundColor: "transparent",
+    padding: 12,
+    marginVertical: 8,
+    borderRadius: 10,
+  },
+  footer: {
+    marginTop: "auto",
+    marginBottom: 20,
+  },
+});
