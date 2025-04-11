@@ -70,5 +70,5 @@ export const log = async (
 // Updated helper function signatures
 export const logDebug = (ctx: string | undefined, msg: string) => log('debug', msg, ctx);
 export const logInfo = (ctx: string | undefined, msg: string) => log('info', msg, ctx);
-export const logWarn = (err: unknown, ctx: string | undefined, msg: string) => log('warn', msg, `[${ctx ?? "NOCTX"}]`, err);
-export const logError = (err: unknown, ctx: string | undefined, msg: string) => log('error', msg, `[${ctx ?? "NOCTX"}]`, err);
+export const logWarn = (err: unknown, ctx: string | undefined, msg: string) => log('warn', msg, `${ctx ?? "NOCTX"}`, err);
+export const logError = (err: unknown, ctx: string | undefined, msg: string) => log('error', msg, `${ctx ?? "NOCTX"}`, err);
