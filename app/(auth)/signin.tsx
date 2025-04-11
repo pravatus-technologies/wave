@@ -7,11 +7,13 @@ import * as regex from "@/constants/regex";
 import { AuthErrorCodes } from "@/constants/types";
 import {
   ActionButton,
+  FormInput,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   View,
 } from "@/components";
+import { useRouter } from "expo-router";
 
 interface ILogin {
   email: string;
@@ -27,6 +29,7 @@ export default function Signin() {
   const { isDark, theme } = useData();
   const { colors, assets, sizes } = useTheme();
   const { user, loginWithEmail } = useAuth();
+  const router = useRouter();
 
   const [busy, setBusy] = useState(false);
 
@@ -82,7 +85,7 @@ export default function Signin() {
   if (user) return <Redirect href="/" />;
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 20 }}>
       <View
         style={{
           margin: "auto",
@@ -103,17 +106,18 @@ export default function Signin() {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <TextInput
-            style={styles.input}
+          <FormInput
             autoCapitalize="none"
             placeholder="Email"
+            icon="MailIcon"
             value={login.email}
             onChangeText={(text) => handleChange({ email: text })}
           />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
+          <FormInput
             secureTextEntry
+            autoCapitalize="none"
+            placeholder="Password"
+            icon="Lock"
             value={login.password}
             onChangeText={(text) => handleChange({ password: text })}
           />
@@ -129,7 +133,7 @@ export default function Signin() {
         <View style={styles.footer}>
           <ActionButton
             title="Create an account"
-            onPress={() => Alert.alert("Create account")}
+            onPress={() => router.push("/signup")}
             textColor={colors.primary}
             buttonStyle={{
               backgroundColor: "transparent",

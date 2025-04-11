@@ -6,6 +6,7 @@ import { API } from "../constants";
 import { AuthContextType } from "../constants/types";
 import { logError } from "@/utils/Logger";
 import { SafeAreaView, Text } from "react-native";
+import { BYPASS_API_ENDPOINT } from "@env";
 
 const AuthContext = React.createContext<AuthContextType>({
   user: null,
@@ -56,7 +57,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await userCred.user.updateProfile({ displayName, photoURL: avatarUrl });
 
       setUser(auth().currentUser);
-      await axios.post(`${API.endpoints.newRegistration}`);
+
+      if (!BYPASS_API_ENDPOINT && !__DEV__)
+        await axios.post(`${API.endpoints.newRegistration}`);
 
       return userCred;
     } catch (error) {
