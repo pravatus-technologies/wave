@@ -4,9 +4,8 @@ import axios from "axios";
 
 import { API } from "../constants";
 import { AuthContextType } from "../constants/types";
-import { logError } from "@/utils/Logger";
 import { SafeAreaView, Text } from "react-native";
-import { BYPASS_API_ENDPOINT } from "@env";
+import { useAppEnv } from "@/providers";
 
 const AuthContext = React.createContext<AuthContextType>({
   user: null,
@@ -29,6 +28,7 @@ const AuthContext = React.createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const { logger } = useAppEnv();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
@@ -58,12 +58,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       setUser(auth().currentUser);
 
-      if (!BYPASS_API_ENDPOINT && !__DEV__)
-        await axios.post(`${API.endpoints.newRegistration}`);
+      await axios.post(`${API.endpoints.newRegistration}`);
 
       return userCred;
     } catch (error) {
-      await logError(error, "registerUserWithEmail", "Unable to register user");
+      await logger.error(
+        error,
+        "registerUserWithEmail",
+        "Unable to register user"
+      );
       throw error;
     }
   };
@@ -79,7 +82,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return userCredential;
     } catch (error) {
-      await logError(error, "loginWithEmail", "Unable to login");
+      await logger.error(error, "loginWithEmail", "Unable to login");
       throw error;
     }
   };
@@ -89,7 +92,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await auth().signOut();
       setUser(null);
     } catch (error) {
-      await logError(error, "logout", "Unable to logout");
+      await logger.error(error, "logout", "Unable to logout");
       throw error;
     }
   };
@@ -99,7 +102,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await auth().sendPasswordResetEmail(email);
     } catch (error) {
-      await logError(error, "resetPassword", "Unable to reset password");
+      await logger.error(error, "resetPassword", "Unable to reset password");
       throw error;
     }
   };
@@ -114,7 +117,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await auth().currentUser?.updateProfile(updates);
         setUser(auth().currentUser);
       } catch (error) {
-        await logError(error, "updateProfile", "Unable to update profile");
+        await logger.error(error, "updateProfile", "Unable to update profile");
         throw error;
       }
     }
