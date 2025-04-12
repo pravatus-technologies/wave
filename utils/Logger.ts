@@ -5,6 +5,7 @@ import {
   SENTRY_DSN,
   DISCORD_WEBHOOK_URL
 } from '@env';
+import { ILogger } from '@/constants/types';
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -72,3 +73,12 @@ export const logDebug = (ctx: string | undefined, msg: string) => log('debug', m
 export const logInfo = (ctx: string | undefined, msg: string) => log('info', msg, ctx);
 export const logWarn = (err: unknown, ctx: string | undefined, msg: string) => log('warn', msg, `${ctx ?? "NOCTX"}`, err);
 export const logError = (err: unknown, ctx: string | undefined, msg: string) => log('error', msg, `${ctx ?? "NOCTX"}`, err);
+
+export const Logger: ILogger = {
+  debug: logDebug,
+  info: logInfo,
+  warn: logWarn,
+  error: logError
+};
+
+export default Logger;

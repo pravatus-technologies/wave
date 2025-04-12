@@ -7,5 +7,5 @@ export * from './AuthContext';
 
 export * from './IFriend';
 export * from './IFriendRequest';
-
+export * from './ILogger';
 export * from './errors';

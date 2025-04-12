@@ -4,6 +4,7 @@ import { AuthProvider } from "@/hooks";
 import { TranslationProvider } from "@/hooks";
 import { AppLoader } from "./AppLoader";
 import { Text } from "react-native";
+import { EnvironmentProvider } from "./EnvironmentProvider";
 
 const SentryFallback = () => (
   <Text style={{ margin: 20 }}>
@@ -13,14 +14,16 @@ const SentryFallback = () => (
 
 export function RootProviders() {
   return (
-    <Sentry.ErrorBoundary fallback={SentryFallback} showDialog>
-      <DataProvider>
-        <TranslationProvider>
-          <AuthProvider>
-            <AppLoader />
-          </AuthProvider>
-        </TranslationProvider>
-      </DataProvider>
-    </Sentry.ErrorBoundary>
+    <EnvironmentProvider>
+      <Sentry.ErrorBoundary fallback={SentryFallback} showDialog>
+        <DataProvider>
+          <TranslationProvider>
+            <AuthProvider>
+              <AppLoader />
+            </AuthProvider>
+          </TranslationProvider>
+        </DataProvider>
+      </Sentry.ErrorBoundary>
+    </EnvironmentProvider>
   );
 }
