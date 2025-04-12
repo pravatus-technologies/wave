@@ -18,10 +18,15 @@ import { logInfo } from "@/utils/Logger";
 import { DebugProvider } from "@/utils/debug/DebugContext";
 import { DebugOverlay } from "@/utils/debug/DebugOverlay";
 import { RootProviders } from "@/providers/RootProviders";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  return <RootProviders />;
+  return (
+    <GestureHandlerRootView>
+      <RootProviders />
+    </GestureHandlerRootView>
+  );
 }
