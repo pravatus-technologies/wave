@@ -1,6 +1,6 @@
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
-import { Platform, Text } from "react-native";
+import { Alert, Platform, Pressable, Text } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -10,14 +10,20 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { useAuth } from "@/hooks/useAuth";
 import { logInfo } from "@/utils/Logger";
 import { SafeAreaView } from "@/components/SafeAreaView";
+import { useTheme } from "@/hooks";
+import { Icon } from "@/components";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { colors } = useTheme();
   const { user, initializing } = useAuth();
 
   if (initializing) return null;
 
   if (!user) return <Redirect href="/(auth)/signin/" />;
+
+  const handleActionPress = () => {
+    Alert.alert(`Wave action pressed!`);
+  };
 
   return !user ? (
     <SafeAreaView>
@@ -26,17 +32,30 @@ export default function TabLayout() {
   ) : (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
+        tabBarIconStyle: {
+          marginTop: 10,
+        },
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 20, // 👈 moves it up
+          left: 16,
+          right: 16,
+          borderRadius: 25, // 👈 round corners
+          backgroundColor: "white",
+          height: 70,
+          elevation: 5, // Android shadow
+          shadowColor: "#000", // iOS shadow
+          shadowOffset: { width: 0, height: 5 },
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+        },
+        tabBarActiveTintColor: colors.primary as string,
+        tabBarInactiveTintColor: colors.text as string,
       }}
     >
       <Tabs.Screen
@@ -44,16 +63,58 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <Icon name="House" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="friends"
         options={{
-          title: "Explore",
+          title: "Friends",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <Icon name="Users" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="action"
+        options={{
+          title: "Wave",
+          tabBarIcon: ({ color }) => (
+            <Icon name="Hand" size={24} color={color} />
+          ),
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              onPress={(e) => {
+                e.preventDefault();
+                handleActionPress();
+              }}
+              style={({ pressed }) => ({
+                marginTop: Platform.OS === "ios" ? 12 : 5,
+                opacity: pressed ? 0.7 : 1,
+                alignItems: "center",
+                justifyContent: "center",
+              })}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="messages"
+        options={{
+          title: "Messages",
+          tabBarIcon: ({ color }) => (
+            <Icon name="MessageCircleMore" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notifications"
+        options={{
+          title: "Alerts",
+          tabBarIcon: ({ color }) => (
+            <Icon name="Bell" size={24} color={color} />
           ),
         }}
       />
