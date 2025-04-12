@@ -168,6 +168,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
+          headerShown: false,
           title: "Alerts",
           tabBarIcon: ({ color }) => (
             <Icon name="Bell" size={24} color={color} />

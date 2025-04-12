@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  View,
   Text,
   Image,
   StyleSheet,
@@ -11,6 +10,7 @@ import {
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
+import { View } from "@/components";
 
 export const PostCard = ({ post }) => {
   const [visibleComments, setVisibleComments] = useState(1);
@@ -128,6 +128,18 @@ export const PostCard = ({ post }) => {
                       style: styles.link,
                       onPress: handleUrlPress,
                     },
+                    {
+                      type: "phone",
+                      style: styles.link,
+                      onPress: handleUrlPress,
+                    },
+                    {
+                      type: "email",
+                      style: styles.link,
+                      onPress: handleUrlPress,
+                    },
+                    { pattern: /@\w+/, style: styles.mention },
+                    { pattern: /#\w+/, style: styles.hashtag },
                   ]}
                 >
                   {comment.text}
@@ -160,7 +172,7 @@ export const PostCard = ({ post }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 16 },
+  container: { padding: 16, paddingBottom: 100 },
   card: {
     backgroundColor: "#fff",
     borderRadius: 20,
@@ -247,5 +259,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 14,
     fontWeight: "500",
+  },
+  mention: {
+    color: "#3b82f6",
+    fontWeight: "600",
+  },
+  hashtag: {
+    color: "#8b5cf6",
+    fontWeight: "600",
   },
 });
