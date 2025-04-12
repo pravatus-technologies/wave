@@ -11,4 +11,5 @@ export interface ThemeAssets {
   OpenSansBold?: any;
 
   logo: ImageSourcePropType;
+  logoText: ImageSourcePropType;
 }

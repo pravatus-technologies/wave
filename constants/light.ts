@@ -10,7 +10,7 @@ import { ITheme } from "./types";
 
 export const COLORS: ThemeColors = {
   // default text color
-  text: '#1E1E1E',
+  text: '#545454',
 
   // base colors
   /** UI color for #primary */

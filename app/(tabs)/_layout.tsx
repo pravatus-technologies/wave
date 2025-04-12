@@ -1,6 +1,13 @@
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
-import { Alert, Platform, Pressable, Text } from "react-native";
+import {
+  Alert,
+  Image,
+  Platform,
+  Pressable,
+  Text,
+  StyleSheet,
+} from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -11,10 +18,58 @@ import { useAuth } from "@/hooks/useAuth";
 import { logInfo } from "@/utils/Logger";
 import { SafeAreaView } from "@/components/SafeAreaView";
 import { useTheme } from "@/hooks";
-import { Icon } from "@/components";
+import { Icon, View } from "@/components";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+export const CustomHeader = ({ title, logo }: { title: string; logo: any }) => {
+  const insets = useSafeAreaInsets();
+  const { colors, assets } = useTheme();
+
+  return (
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <View style={styles.inner}>
+        <Image
+          source={assets.logoText}
+          style={{
+            width: 128,
+            height: 24,
+            resizeMode: "contain",
+            marginLeft: -18,
+          }}
+        />
+        <View style={{ flex: 1 }} />
+        <Icon name="User2Icon" size={24} color={colors.text} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#e5e5e5",
+  },
+  inner: {
+    height: 60,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+  },
+  logo: {
+    width: 32,
+    height: 32,
+    resizeMode: "contain",
+  },
+  rightIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: "contain",
+  },
+});
 
 export default function TabLayout() {
-  const { colors } = useTheme();
+  const { colors, assets } = useTheme();
   const { user, initializing } = useAuth();
 
   if (initializing) return null;
@@ -32,7 +87,6 @@ export default function TabLayout() {
   ) : (
     <Tabs
       screenOptions={{
-        headerShown: false,
         tabBarIconStyle: {
           marginTop: 10,
         },
@@ -49,6 +103,7 @@ export default function TabLayout() {
           shadowOffset: { width: 0, height: 5 },
           shadowOpacity: 0.1,
           shadowRadius: 10,
+          marginHorizontal: 15,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -62,6 +117,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          header: () => <CustomHeader title="" logo={assets.logo} />,
           tabBarIcon: ({ color }) => (
             <Icon name="House" size={24} color={color} />
           ),

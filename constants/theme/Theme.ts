@@ -44,7 +44,8 @@ export const ASSETS: ThemeAssets = {
   OpenSansExtraBold: require('../../assets/fonts/OpenSans-ExtraBold.ttf'),
   OpenSansBold: require('../../assets/fonts/OpenSans-Bold.ttf'),
 
-  logo: require('../../assets/images/logo.png')
+  logo: require('../../assets/images/logo.png'),
+  logoText: require('../../assets/images/logo-text.png'),
 }
 
 export const FONTS: ThemeFonts = {
