@@ -133,13 +133,14 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           >
             <YoutubePlayer
               height={screenWidth * 0.5625}
-              width={screenWidth}
+              width={screenWidth - 32}
               play={isPlaying}
               videoId={youtubeIdMatch[1]}
               webViewProps={{
                 nestedScrollEnabled: true,
                 scrollEnabled: false,
                 showsVerticalScrollIndicator: false,
+                allowsFullscreenVideo: true,
               }}
             />
           </Pressable>
