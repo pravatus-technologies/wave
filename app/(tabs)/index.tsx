@@ -217,45 +217,22 @@ export default function HomeScreen() {
         <PostCard
           scrollY={scrollY}
           post={{
-            id: "1",
-            author: "Jack Black",
-            text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
-            media: ["https://youtu.be/eQc_B8ffJsA?feature=shared"],
-            time: "2 Hours ago",
-            comments: "3.4k Comments",
-            shares: "46 Shares",
-            reactedBy: "Q&A with Mark & 361k others",
-            reactions: "❤️💙🤣",
+            id: "yt3",
+            author: "Olivia Park",
+            avatar: "https://i.pravatar.cc/100?img=18",
+            text: "My vlog from Japan 🇯🇵✨ Hope you enjoy!",
+            media: ["https://youtu.be/nKhMA5d0adA"],
+            time: "1h ago",
+            comments: "1.1k Comments",
+            shares: "210 Shares",
+            reactedBy: "Travel Junkies & 5k others",
+            reactions: "🌸🍣✈️",
             commentsList: [
               {
-                name: "Maya Johnson",
-                avatar: "https://i.pravatar.cc/301",
-                text: "This is incredible work @AnnaMary! I’m obsessed with the vibe. 😍 #DesignGoals",
-                time: "1m",
-              },
-              {
-                name: "Kevin Tran",
-                avatar: "https://i.pravatar.cc/302",
-                text: "Hit me up at kevin.tran@example.com if you’re looking for a collaborator. #CreativeMinds",
-                time: "3m",
-              },
-              {
-                name: "Isla Summers",
-                avatar: "https://i.pravatar.cc/303",
-                text: "Love the colors! Check out my portfolio too 👉 https://islasart.io",
-                time: "5m",
-              },
-              {
-                name: "Carlos Vega",
-                avatar: "https://i.pravatar.cc/304",
-                text: "@LunaPark this reminds me of that dreamy concept you shared last week! 😄 #Inspiration",
-                time: "7m",
-              },
-              {
-                name: "Naomi Singh",
-                avatar: "https://i.pravatar.cc/305",
-                text: "Feel free to text me at 555-0199 for future projects. 💼 #LetsConnect",
-                time: "9m",
+                name: "Mina Tanaka",
+                avatar: "https://i.pravatar.cc/100?img=17",
+                text: "Love your Kyoto shots 😍",
+                time: "8m",
               },
             ],
           }}
@@ -263,45 +240,22 @@ export default function HomeScreen() {
         <PostCard
           scrollY={scrollY}
           post={{
-            id: "2",
-            author: "Jack Black",
-            text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
-            media: ["https://youtu.be/gbPDNsbwotc?feature=shared"],
-            time: "2 Hours ago",
-            comments: "3.4k Comments",
-            shares: "46 Shares",
-            reactedBy: "Q&A with Mark & 361k others",
-            reactions: "❤️💙🤣",
+            id: "yt1",
+            author: "Tom Morello",
+            avatar: "https://i.pravatar.cc/100?img=10",
+            text: "This riff changed my life 🤘 #GuitarGod",
+            media: ["https://youtu.be/LXEKuttVRIo"],
+            time: "5m ago",
+            comments: "512 Comments",
+            shares: "87 Shares",
+            reactedBy: "Tommy & 1.2k others",
+            reactions: "🔥🎸💯",
             commentsList: [
               {
-                name: "Maya Johnson",
-                avatar: "https://i.pravatar.cc/301",
-                text: "This is incredible work @AnnaMary! I’m obsessed with the vibe. 😍 #DesignGoals",
-                time: "1m",
-              },
-              {
-                name: "Kevin Tran",
-                avatar: "https://i.pravatar.cc/302",
-                text: "Hit me up at kevin.tran@example.com if you’re looking for a collaborator. #CreativeMinds",
-                time: "3m",
-              },
-              {
-                name: "Isla Summers",
-                avatar: "https://i.pravatar.cc/303",
-                text: "Love the colors! Check out my portfolio too 👉 https://islasart.io",
-                time: "5m",
-              },
-              {
-                name: "Carlos Vega",
-                avatar: "https://i.pravatar.cc/304",
-                text: "@LunaPark this reminds me of that dreamy concept you shared last week! 😄 #Inspiration",
-                time: "7m",
-              },
-              {
-                name: "Naomi Singh",
-                avatar: "https://i.pravatar.cc/305",
-                text: "Feel free to text me at 555-0199 for future projects. 💼 #LetsConnect",
-                time: "9m",
+                name: "Zoe Nguyen",
+                avatar: "https://i.pravatar.cc/100?img=20",
+                text: "@Tom that solo hits so hard 🔥",
+                time: "2m",
               },
             ],
           }}
@@ -309,45 +263,72 @@ export default function HomeScreen() {
         <PostCard
           scrollY={scrollY}
           post={{
-            id: "3",
-            author: "Jack Black",
-            text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
-            media: ["https://youtu.be/nKhMA5d0adA?feature=shared"],
-            time: "2 Hours ago",
-            comments: "3.4k Comments",
-            shares: "46 Shares",
-            reactedBy: "Q&A with Mark & 361k others",
-            reactions: "❤️💙🤣",
+            id: "img1",
+            author: "ArtByLevi",
+            avatar: "https://i.pravatar.cc/100?img=6",
+            text: "A surreal cityscape I painted over the weekend 🌆✨",
+            media: [
+              "https://images.unsplash.com/photo-1501594907352-04cda38ebc29",
+            ],
+            time: "30m ago",
+            comments: "300 Comments",
+            shares: "51 Shares",
+            reactedBy: "Gallery Viewers & 3k others",
+            reactions: "🎨🖌️🧠",
             commentsList: [
               {
-                name: "Maya Johnson",
-                avatar: "https://i.pravatar.cc/301",
-                text: "This is incredible work @AnnaMary! I’m obsessed with the vibe. 😍 #DesignGoals",
-                time: "1m",
+                name: "Jin Soo",
+                avatar: "https://i.pravatar.cc/100?img=13",
+                text: "This deserves a spot in MoMA. So good.",
+                time: "10m",
               },
+            ],
+          }}
+        />
+        <PostCard
+          scrollY={scrollY}
+          post={{
+            id: "yt2",
+            author: "FilmBros",
+            avatar: "https://i.pravatar.cc/100?img=12",
+            text: "Trailer breakdown for the upcoming sci-fi epic!",
+            media: ["https://youtu.be/EXeTwQWrcwY"],
+            time: "25m ago",
+            comments: "189 Comments",
+            shares: "46 Shares",
+            reactedBy: "Sarah & 820 others",
+            reactions: "🎬🛸🍿",
+            commentsList: [
               {
-                name: "Kevin Tran",
-                avatar: "https://i.pravatar.cc/302",
-                text: "Hit me up at kevin.tran@example.com if you’re looking for a collaborator. #CreativeMinds",
-                time: "3m",
+                name: "Rick Dalton",
+                avatar: "https://i.pravatar.cc/100?img=25",
+                text: "This scene gave me goosebumps 😱 #Cinema",
+                time: "4m",
               },
+            ],
+          }}
+        />
+        <PostCard
+          scrollY={scrollY}
+          post={{
+            id: "img3",
+            author: "NeoCanvas",
+            avatar: "https://i.pravatar.cc/100?img=30",
+            text: "AI meets traditional. Prompt + Paint 🧠🎨",
+            media: [
+              "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+            ],
+            time: "1h ago",
+            comments: "430 Comments",
+            shares: "99 Shares",
+            reactedBy: "Artists & 2.4k others",
+            reactions: "🤖🎨🔥",
+            commentsList: [
               {
-                name: "Isla Summers",
-                avatar: "https://i.pravatar.cc/303",
-                text: "Love the colors! Check out my portfolio too 👉 https://islasart.io",
-                time: "5m",
-              },
-              {
-                name: "Carlos Vega",
-                avatar: "https://i.pravatar.cc/304",
-                text: "@LunaPark this reminds me of that dreamy concept you shared last week! 😄 #Inspiration",
-                time: "7m",
-              },
-              {
-                name: "Naomi Singh",
-                avatar: "https://i.pravatar.cc/305",
-                text: "Feel free to text me at 555-0199 for future projects. 💼 #LetsConnect",
-                time: "9m",
+                name: "Drew Fields",
+                avatar: "https://i.pravatar.cc/100?img=31",
+                text: "This is hauntingly beautiful 💀💡",
+                time: "12m",
               },
             ],
           }}
