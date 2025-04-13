@@ -9,7 +9,6 @@ import {
   useWindowDimensions,
   View as RNView,
   findNodeHandle,
-  Pressable,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
@@ -60,14 +59,18 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const lastShouldPlay = useRef<boolean>(false);
   const userPaused = useRef(false);
 
+  const updateFade = (visible: boolean) => {
+    fadeAnim.value = withTiming(visible ? 1 : 0.3);
+  };
+
   const pauseVideo = () => {
     setIsPlaying(false);
-    fadeAnim.value = withTiming(0.3);
+    updateFade(false);
   };
 
   const playVideo = () => {
     setIsPlaying(true);
-    fadeAnim.value = withTiming(1);
+    updateFade(true);
   };
 
   const checkVisibility = () => {
@@ -83,11 +86,12 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
       debounceTimer.current = setTimeout(() => {
-        if (shouldPlay !== lastShouldPlay.current) {
+        updateFade(shouldPlay);
+        if (!userPaused.current && shouldPlay !== lastShouldPlay.current) {
           lastShouldPlay.current = shouldPlay;
-          if (shouldPlay && !userPaused.current) {
+          if (shouldPlay) {
             playVideo();
-          } else if (!shouldPlay) {
+          } else {
             pauseVideo();
           }
         }
@@ -124,26 +128,22 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           ref={videoRef}
           style={[styles.videoWrapper, fadeStyle]}
         >
-          <Pressable
-            onPress={() => {
-              const nextPlaying = !isPlaying;
-              setIsPlaying(nextPlaying);
-              userPaused.current = !nextPlaying;
+          <YoutubePlayer
+            height={screenWidth * 0.5625}
+            width={screenWidth - 32}
+            play={isPlaying}
+            videoId={youtubeIdMatch[1]}
+            onChangeState={(event) => {
+              if (event === "paused") userPaused.current = true;
+              if (event === "playing") userPaused.current = false;
             }}
-          >
-            <YoutubePlayer
-              height={screenWidth * 0.5625}
-              width={screenWidth - 32}
-              play={isPlaying}
-              videoId={youtubeIdMatch[1]}
-              webViewProps={{
-                nestedScrollEnabled: true,
-                scrollEnabled: false,
-                showsVerticalScrollIndicator: false,
-                allowsFullscreenVideo: true,
-              }}
-            />
-          </Pressable>
+            webViewProps={{
+              allowsFullscreenVideo: true,
+              nestedScrollEnabled: true,
+              scrollEnabled: false,
+              showsVerticalScrollIndicator: false,
+            }}
+          />
         </Animated.View>
       );
     }
