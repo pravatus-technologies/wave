@@ -209,7 +209,6 @@ export default function HomeScreen() {
         contentContainerStyle={{
           paddingTop: 240,
           paddingBottom: 100,
-          paddingHorizontal: 16,
         }}
         scrollEventThrottle={16}
         onScroll={scrollHandler}
@@ -342,7 +341,6 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9fafb" },
   topRowContainer: {
     paddingTop: 60,
-    paddingHorizontal: 16,
     backgroundColor: "#fff",
     zIndex: 11,
   },
