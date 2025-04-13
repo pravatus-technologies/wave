@@ -7,11 +7,7 @@ import {
   Linking,
   ScrollView,
   useWindowDimensions,
-  Modal,
-  Pressable,
-  TextInput,
   View as RNView,
-  LayoutChangeEvent,
   findNodeHandle,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -25,19 +21,11 @@ import { View } from "@/components";
 
 export const PostCard = ({ post, scrollY }) => {
   const { height: screenHeight, width: screenWidth } = useWindowDimensions();
-  const [visibleComments, setVisibleComments] = useState(1);
-  const [expandedComments, setExpandedComments] = useState<
-    Record<number, boolean>
-  >({});
   const [isPlaying, setIsPlaying] = useState(false);
+  const [visibleComments, setVisibleComments] = useState(1);
+  const [expandedComments, setExpandedComments] = useState({});
   const fadeAnim = useSharedValue(1);
   const videoRef = useRef(null);
-
-  const handleUrlPress = (url: string) => Linking.openURL(url);
-
-  const toggleExpand = (index: number) => {
-    setExpandedComments((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
 
   const pauseVideo = () => {
     setIsPlaying(false);
@@ -58,12 +46,8 @@ export const PostCard = ({ post, scrollY }) => {
       const midY = y + h / 2;
       const screenCenter = screenHeight / 2;
       const distance = Math.abs(midY - screenCenter);
-
-      if (distance < screenHeight * 0.25) {
-        playVideo();
-      } else {
-        pauseVideo();
-      }
+      const shouldPlay = distance < screenHeight * 0.25;
+      shouldPlay ? playVideo() : pauseVideo();
     });
   };
 
@@ -78,7 +62,13 @@ export const PostCard = ({ post, scrollY }) => {
     };
   });
 
-  const renderMediaItem = (src: string, index: number) => {
+  const toggleExpand = (index) => {
+    setExpandedComments((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  const handleUrlPress = (url) => Linking.openURL(url);
+
+  const renderMediaItem = (src, index) => {
     const youtubeIdMatch = src.match(
       /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/
     );
@@ -106,6 +96,10 @@ export const PostCard = ({ post, scrollY }) => {
     }
 
     return <Image key={index} source={{ uri: src }} style={styles.mediaItem} />;
+  };
+
+  const openLink = () => {
+    if (post?.link) Linking.openURL(post.link);
   };
 
   return (
@@ -330,5 +324,18 @@ const styles = StyleSheet.create({
   hashtag: {
     color: "#8b5cf6",
     fontWeight: "600",
+  },
+  debugOverlay: {
+    position: "absolute",
+    top: 4,
+    left: 4,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  debugText: {
+    color: "#fff",
+    fontSize: 12,
   },
 });
