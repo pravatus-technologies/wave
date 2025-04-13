@@ -217,6 +217,7 @@ export default function HomeScreen() {
         <PostCard
           scrollY={scrollY}
           post={{
+            id: "1",
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
             media: ["https://youtu.be/eQc_B8ffJsA?feature=shared"],
@@ -262,6 +263,7 @@ export default function HomeScreen() {
         <PostCard
           scrollY={scrollY}
           post={{
+            id: "2",
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
             media: ["https://youtu.be/gbPDNsbwotc?feature=shared"],
@@ -307,6 +309,7 @@ export default function HomeScreen() {
         <PostCard
           scrollY={scrollY}
           post={{
+            id: "3",
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
             media: ["https://youtu.be/nKhMA5d0adA?feature=shared"],
