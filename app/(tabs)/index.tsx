@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
-  withSpring,
-  useAnimatedReaction,
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
+  useAnimatedReaction,
   useAnimatedScrollHandler,
+  withSpring,
 } from "react-native-reanimated";
 import {
   Dimensions,
@@ -41,7 +41,12 @@ export default function HomeScreen() {
   const scrollY = useSharedValue(0);
   const headerTranslateY = useSharedValue(0);
   const tabBarTranslateY = useSharedValue(0);
-  const lastScrollY = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   useAnimatedReaction(
     () => scrollY.value,
@@ -50,7 +55,7 @@ export default function HomeScreen() {
       if (Math.abs(diff) < 10) return;
 
       if (diff > 0) {
-        headerTranslateY.value = withSpring(-200);
+        headerTranslateY.value = withSpring(-300);
         tabBarTranslateY.value = withSpring(100);
       } else if (diff < 0) {
         headerTranslateY.value = withSpring(0);
@@ -67,24 +72,6 @@ export default function HomeScreen() {
   const tabBarStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: tabBarTranslateY.value }],
   }));
-
-  const handleScroll = ({ nativeEvent }) => {
-    const currentY = nativeEvent.contentOffset.y;
-    const diff = currentY - lastScrollY.value;
-    const velocity = nativeEvent.velocity?.y ?? 0;
-
-    if (Math.abs(diff) < 10) return;
-
-    if (diff > 0 && velocity > 0.5) {
-      headerTranslateY.value = withSpring(-200);
-      tabBarTranslateY.value = withSpring(100);
-    } else if (diff < 0 && velocity < -0.5) {
-      headerTranslateY.value = withSpring(0);
-      tabBarTranslateY.value = withSpring(0);
-    }
-
-    lastScrollY.value = currentY;
-  };
 
   return (
     <View style={styles.container}>
@@ -112,17 +99,21 @@ export default function HomeScreen() {
         </View>
       </Modal>
 
+      {/* Static header (logo + icons) */}
+      <View style={styles.topRowContainer}>
+        <View style={styles.topRow}>
+          <View style={styles.fbLogo} />
+          <View style={styles.headerIcons}>
+            <View style={styles.headerIcon} />
+            <View style={styles.headerIcon} />
+            <View style={styles.headerIcon} />
+          </View>
+        </View>
+      </View>
+
+      {/* Collapsing content */}
       <Animated.View style={[styles.collapsingHeader, headerStyle]}>
         <View style={styles.headerWrapper}>
-          <View style={styles.topRow}>
-            <View style={styles.fbLogo} />
-            <View style={styles.headerIcons}>
-              <View style={styles.headerIcon} />
-              <View style={styles.headerIcon} />
-              <View style={styles.headerIcon} />
-            </View>
-          </View>
-
           <Pressable onPress={() => setModalVisible(true)}>
             <TextInput
               placeholder="What's on your mind, Hashem?"
@@ -145,42 +136,44 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.storyRow}>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={stories}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.storyBubble}>
-                <View style={{ position: "relative" }}>
-                  {item.image ? (
-                    item.hasNew ? (
-                      <LinearGradient
-                        colors={["#4f46e5", "#3b82f6"]}
-                        style={styles.ringWrapperGradient}
-                      >
-                        <Image
-                          source={{ uri: item.image }}
-                          style={styles.storyImage}
-                        />
-                        <View style={styles.unreadBadge} />
-                      </LinearGradient>
+          <View>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={stories}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.storyBubble}>
+                  <View style={{ position: "relative" }}>
+                    {item.image ? (
+                      item.hasNew ? (
+                        <LinearGradient
+                          colors={["#4f46e5", "#3b82f6"]}
+                          style={styles.ringWrapperGradient}
+                        >
+                          <Image
+                            source={{ uri: item.image }}
+                            style={styles.storyImage}
+                          />
+                          <View style={styles.unreadBadge} />
+                        </LinearGradient>
+                      ) : (
+                        <View style={styles.ringWrapper}>
+                          <Image
+                            source={{ uri: item.image }}
+                            style={styles.storyImage}
+                          />
+                        </View>
+                      )
                     ) : (
-                      <View style={styles.ringWrapper}>
-                        <Image
-                          source={{ uri: item.image }}
-                          style={styles.storyImage}
-                        />
-                      </View>
-                    )
-                  ) : (
-                    <View style={styles.storyPlaceholder} />
-                  )}
+                      <View style={styles.storyPlaceholder} />
+                    )}
+                  </View>
+                  <Text style={styles.storyLabel}>{item.label}</Text>
                 </View>
-                <Text style={styles.storyLabel}>{item.label}</Text>
-              </View>
-            )}
-          />
+              )}
+            />
+          </View>
         </View>
       </Animated.View>
 
@@ -191,11 +184,7 @@ export default function HomeScreen() {
           paddingHorizontal: 16,
         }}
         scrollEventThrottle={16}
-        onScroll={useAnimatedScrollHandler({
-          onScroll: (event) => {
-            scrollY.value = event.contentOffset.y;
-          },
-        })}
+        onScroll={scrollHandler}
       >
         <PostCard
           post={{
@@ -354,16 +343,28 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9fafb" },
+  topRowContainer: {
+    paddingTop: 60,
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+    zIndex: 11,
+  },
+  topRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+  },
   collapsingHeader: {
+    paddingTop: 20,
     position: "absolute",
-    top: 0,
+    top: 96,
     left: 0,
     right: 0,
     zIndex: 10,
     backgroundColor: "#fff",
   },
   headerWrapper: {
-    paddingTop: 60,
     paddingHorizontal: 16,
     paddingBottom: 20,
     borderBottomLeftRadius: 24,
@@ -371,12 +372,6 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 10,
-  },
-  topRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 12,
   },
   fbLogo: {
     width: 36,

@@ -174,7 +174,7 @@ export const PostCard = ({ post }) => {
 export default PostCard;
 
 const styles = StyleSheet.create({
-  container: { padding: 16, paddingBottom: 100 },
+  container: { paddingBottom: 100 },
   card: {
     backgroundColor: "#fff",
     borderRadius: 20,
