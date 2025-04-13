@@ -6,3 +6,4 @@ export * from './View';
 export * from './Icon';
 export * from './FormInput';
 export * from './FormToggle';
+export * from './PostCard';
