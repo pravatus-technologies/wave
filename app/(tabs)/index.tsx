@@ -24,6 +24,7 @@ import {
 import { PostCard } from "@/components";
 import { Home, Video, ShoppingCart, Users, Menu } from "lucide-react-native";
 import { BlurView } from "expo-blur";
+import { useTheme } from "@/hooks";
 
 const stories = [
   { id: "your", label: "Your Story", image: null, hasNew: true },
@@ -43,6 +44,8 @@ export default function HomeScreen() {
   const scrollY = useSharedValue(0);
   const headerTranslateY = useSharedValue(0);
   const tabBarTranslateY = useSharedValue(0);
+
+  const { assets } = useTheme();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -114,11 +117,12 @@ export default function HomeScreen() {
       </Modal>
       <View style={styles.topRowContainer}>
         <View style={styles.topRow}>
-          <View style={styles.fbLogo} />
+          <Image source={assets.logo} style={styles.waveLogo} />
           <View style={styles.headerIcons}>
-            <View style={styles.headerIcon} />
-            <View style={styles.headerIcon} />
-            <View style={styles.headerIcon} />
+            <Image
+              src="https://i.pravatar.cc/100?img=10"
+              style={styles.headerIcon}
+            />
           </View>
         </View>
       </View>
@@ -341,6 +345,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9fafb" },
   topRowContainer: {
     paddingTop: 60,
+    paddingHorizontal: 16,
     backgroundColor: "#fff",
     zIndex: 11,
   },
@@ -368,18 +373,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 10,
   },
-  fbLogo: {
+  waveLogo: {
     width: 36,
     height: 36,
-    backgroundColor: "#e5e7eb",
     borderRadius: 18,
   },
   headerIcons: { flexDirection: "row", gap: 8 },
   headerIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "#e5e7eb",
+    width: 36,
+    height: 36,
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: "green",
   },
   inputBox: {
     backgroundColor: "#f3f4f6",

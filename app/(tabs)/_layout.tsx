@@ -92,10 +92,9 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           position: "absolute",
-          bottom: 20, // 👈 moves it up
-          left: 16,
-          right: 16,
-          borderRadius: 25, // 👈 round corners
+
+          borderTopRightRadius: 25, // 👈 round corners
+          borderTopLeftRadius: 25,
           backgroundColor: "white",
           height: 70,
           elevation: 5, // Android shadow
@@ -103,7 +102,6 @@ export default function TabLayout() {
           shadowOffset: { width: 0, height: 5 },
           shadowOpacity: 0.1,
           shadowRadius: 10,
-          marginHorizontal: 15,
         },
         tabBarLabelStyle: {
           fontSize: 12,
