@@ -34,12 +34,12 @@ interface Post {
   text?: string;
   media?: string[];
   link?: string;
-  reactions?: string;
   commentsList?: Comment[];
   time?: string;
   comments?: string;
   shares?: string;
   reactedBy?: string;
+  reactions?: string;
 }
 
 interface PostCardProps {
@@ -57,20 +57,17 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const fadeAnim = useSharedValue(1);
   const videoRef = useRef<RNView>(null);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const lastShouldPlay = useRef<boolean>(false);
   const userPaused = useRef(false);
 
   const pauseVideo = () => {
-    if (!userPaused.current) {
-      setIsPlaying(false);
-      fadeAnim.value = withTiming(0.3);
-    }
+    setIsPlaying(false);
+    fadeAnim.value = withTiming(0.3);
   };
 
   const playVideo = () => {
-    if (!userPaused.current) {
-      setIsPlaying(true);
-      fadeAnim.value = withTiming(1);
-    }
+    setIsPlaying(true);
+    fadeAnim.value = withTiming(1);
   };
 
   const checkVisibility = () => {
@@ -86,8 +83,13 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
       debounceTimer.current = setTimeout(() => {
-        if (!userPaused.current) {
-          shouldPlay ? playVideo() : pauseVideo();
+        if (shouldPlay !== lastShouldPlay.current) {
+          lastShouldPlay.current = shouldPlay;
+          if (shouldPlay && !userPaused.current) {
+            playVideo();
+          } else if (!shouldPlay) {
+            pauseVideo();
+          }
         }
       }, 150);
     });
@@ -120,17 +122,18 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <Animated.View
           key={index}
           ref={videoRef}
-          style={[styles.videoContainer, fadeStyle]}
+          style={[styles.videoWrapper, fadeStyle]}
         >
           <Pressable
             onPress={() => {
-              userPaused.current = !isPlaying;
-              setIsPlaying((prev) => !prev);
+              const nextPlaying = !isPlaying;
+              setIsPlaying(nextPlaying);
+              userPaused.current = !nextPlaying;
             }}
           >
             <YoutubePlayer
               height={screenWidth * 0.5625}
-              width={screenWidth - 64}
+              width={screenWidth}
               play={isPlaying}
               videoId={youtubeIdMatch[1]}
               webViewProps={{
@@ -144,7 +147,13 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
       );
     }
 
-    return <Image key={index} source={{ uri: src }} style={styles.mediaItem} />;
+    return (
+      <Image
+        key={index}
+        source={{ uri: src }}
+        style={styles.imageMediaFullWidth}
+      />
+    );
   };
 
   const openLink = () => {
@@ -307,13 +316,6 @@ const styles = StyleSheet.create({
   postText: { fontSize: 15, lineHeight: 22, marginBottom: 8 },
   link: { color: "#2e6fff", marginTop: 4 },
   mediaRow: { flexDirection: "column", gap: 8, marginTop: 8 },
-  mediaItem: {
-    width: "100%",
-    height: 240,
-    borderRadius: 12,
-    resizeMode: "cover",
-  },
-  videoContainer: { marginTop: 8, borderRadius: 12, overflow: "hidden" },
   commentCount: { color: "#666", fontSize: 13, marginBottom: 12 },
   actions: { flexDirection: "row", alignItems: "center" },
   actionBtn: {
@@ -374,17 +376,17 @@ const styles = StyleSheet.create({
     color: "#8b5cf6",
     fontWeight: "600",
   },
-  debugOverlay: {
-    position: "absolute",
-    top: 4,
-    left: 4,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+  videoWrapper: {
+    marginTop: 8,
+    borderRadius: 0,
+    overflow: "hidden",
+    marginHorizontal: -16,
   },
-  debugText: {
-    color: "#fff",
-    fontSize: 12,
+  imageMediaFullWidth: {
+    width: "100%",
+    height: 240,
+    resizeMode: "cover",
+    borderRadius: 0,
+    marginHorizontal: -16,
   },
 });
