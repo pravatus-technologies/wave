@@ -130,7 +130,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         >
           <YoutubePlayer
             height={screenWidth * 0.5625}
-            width={screenWidth - 32}
+            width={screenWidth}
             play={isPlaying}
             videoId={youtubeIdMatch[1]}
             onChangeState={(event) => {
@@ -177,12 +177,13 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             <Text style={styles.more}>•••</Text>
           </TouchableOpacity>
         </View>
-
+        <Text
+          style={[styles.postText, { paddingHorizontal: 16 }]}
+          numberOfLines={3}
+        >
+          {post?.text}
+        </Text>
         <View style={styles.content}>
-          <Text style={styles.postText} numberOfLines={3}>
-            {post?.text}
-          </Text>
-
           {post?.media && (
             <View style={styles.mediaRow}>
               {post.media.map((src, index) => renderMediaItem(src, index))}
@@ -291,18 +292,14 @@ const styles = StyleSheet.create({
   container: { paddingBottom: 25 },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 3,
+    paddingTop: 16,
+    paddingBottom: 16,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
+    paddingHorizontal: 16,
   },
   avatar: {
     width: 44,
@@ -317,8 +314,17 @@ const styles = StyleSheet.create({
   postText: { fontSize: 15, lineHeight: 22, marginBottom: 8 },
   link: { color: "#2e6fff", marginTop: 4 },
   mediaRow: { flexDirection: "column", gap: 8, marginTop: 8 },
-  commentCount: { color: "#666", fontSize: 13, marginBottom: 12 },
-  actions: { flexDirection: "row", alignItems: "center" },
+  commentCount: {
+    color: "#666",
+    fontSize: 13,
+    marginBottom: 12,
+    paddingHorizontal: 16,
+  },
+  actions: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+  },
   actionBtn: {
     width: 36,
     height: 36,
@@ -339,6 +345,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: "#eee",
+    paddingHorizontal: 16,
   },
   replyAvatar: {
     width: 36,
@@ -368,6 +375,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 14,
     fontWeight: "500",
+    paddingHorizontal: 16,
   },
   mention: {
     color: "#3b82f6",
@@ -381,13 +389,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 0,
     overflow: "hidden",
-    marginHorizontal: -16,
+    marginHorizontal: 0,
   },
   imageMediaFullWidth: {
     width: "100%",
     height: 240,
     resizeMode: "cover",
     borderRadius: 0,
-    marginHorizontal: -16,
+    marginHorizontal: 0,
   },
 });
