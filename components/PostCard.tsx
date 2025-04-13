@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Text,
   Image,
@@ -6,22 +6,48 @@ import {
   TouchableOpacity,
   Linking,
   ScrollView,
-  Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  useAnimatedReaction,
+  useDerivedValue,
+  runOnJS,
+} from "react-native-reanimated";
 import { View } from "@/components";
 
-export const PostCard = ({ post }) => {
+const playbackCache = new Map();
+
+type ExpandedCommentsState = Record<number, boolean>;
+
+export const PostCard = ({ post, scrollY }) => {
+  const { height: screenHeight, width: screenWidth } = useWindowDimensions();
   const [visibleComments, setVisibleComments] = useState(1);
-  const [expandedComments, setExpandedComments] = useState({});
+  const [expandedComments, setExpandedComments] =
+    useState<ExpandedCommentsState>({});
+  const [isPlaying, setIsPlaying] = useState(
+    playbackCache.get(post?.id) || false
+  );
+  const playerRef = useRef(null);
+  const videoLayoutY = useRef(0);
+  const fadeAnim = useSharedValue(1);
+  const sharedIsOffscreen = useSharedValue(false);
+
+  const fadeStyle = useAnimatedStyle(() => ({ opacity: fadeAnim.value }));
 
   const openLink = () => {
     if (post?.link) Linking.openURL(post.link);
   };
 
-  const toggleExpand = (index) => {
-    setExpandedComments((prev) => ({ ...prev, [index]: !prev[index] }));
+  const toggleExpand = (index: number) => {
+    setExpandedComments((prev) => ({
+      ...prev,
+      [index]: !(prev[index] ?? false),
+    }));
   };
 
   const renderMediaItem = (src, index) => {
@@ -31,14 +57,26 @@ export const PostCard = ({ post }) => {
 
     if (youtubeIdMatch) {
       return (
-        <View key={index} style={styles.videoContainer}>
+        <Animated.View
+          key={index}
+          style={[styles.videoContainer, fadeStyle]}
+          onLayout={(e) => {
+            videoLayoutY.current = e.nativeEvent.layout.y;
+          }}
+        >
           <YoutubePlayer
-            height={Dimensions.get("window").width * 0.5625}
-            width={Dimensions.get("window").width - 64}
-            play={false}
+            ref={playerRef}
+            height={screenWidth * 0.5625}
+            width={screenWidth - 64}
+            play={isPlaying}
             videoId={youtubeIdMatch[1]}
+            webViewProps={{
+              nestedScrollEnabled: true,
+              scrollEnabled: false,
+              showsVerticalScrollIndicator: false,
+            }}
           />
-        </View>
+        </Animated.View>
       );
     }
 
@@ -46,6 +84,31 @@ export const PostCard = ({ post }) => {
   };
 
   const handleUrlPress = (url) => Linking.openURL(url);
+
+  useAnimatedReaction(
+    () => scrollY.value,
+    (currentY) => {
+      const offsetY = videoLayoutY.current;
+      const isOffscreen =
+        offsetY < currentY - 100 || offsetY > currentY + screenHeight - 100;
+
+      fadeAnim.value = withTiming(isOffscreen ? 0.3 : 1, { duration: 250 });
+      sharedIsOffscreen.value = isOffscreen;
+    },
+    [scrollY]
+  );
+
+  const updatePlayback = (shouldPlay) => {
+    setIsPlaying(shouldPlay);
+    playbackCache.set(post?.id, shouldPlay);
+  };
+
+  useDerivedValue(() => {
+    const nextPlaying = !sharedIsOffscreen.value;
+    if (isPlaying !== nextPlaying) {
+      runOnJS(updatePlayback)(nextPlaying);
+    }
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -108,7 +171,7 @@ export const PostCard = ({ post }) => {
         </View>
 
         {post?.commentsList?.slice(0, visibleComments).map((comment, index) => {
-          const isExpanded = expandedComments[index];
+          const isExpanded = expandedComments[index] ?? false;
           const shouldShowToggle = comment.text.length > 120;
 
           return (
@@ -174,7 +237,7 @@ export const PostCard = ({ post }) => {
 export default PostCard;
 
 const styles = StyleSheet.create({
-  container: { paddingBottom: 100 },
+  container: { paddingBottom: 25 },
   card: {
     backgroundColor: "#fff",
     borderRadius: 20,

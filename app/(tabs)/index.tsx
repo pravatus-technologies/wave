@@ -1,3 +1,4 @@
+// HomeScreen with corrected FlatList structure and stable Android animation
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
@@ -8,7 +9,6 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import {
-  Dimensions,
   View,
   Text,
   Image,
@@ -19,9 +19,11 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  Platform,
 } from "react-native";
 import { PostCard } from "@/components";
 import { Home, Video, ShoppingCart, Users, Menu } from "lucide-react-native";
+import { BlurView } from "expo-blur";
 
 const stories = [
   { id: "your", label: "Your Story", image: null, hasNew: true },
@@ -48,18 +50,30 @@ export default function HomeScreen() {
     },
   });
 
+  const collapseThreshold = 80;
+  const expandThreshold = 40;
+  const lastTriggerY = useSharedValue(0);
+  const scollVelocity = useSharedValue(0);
+
   useAnimatedReaction(
     () => scrollY.value,
     (currentY, previousY) => {
-      const diff = currentY - (previousY ?? 0);
-      if (Math.abs(diff) < 10) return;
+      const velocity = currentY - (previousY ?? 0);
+      scollVelocity.value = velocity;
 
-      if (diff > 0) {
-        headerTranslateY.value = withSpring(-300);
-        tabBarTranslateY.value = withSpring(100);
-      } else if (diff < 0) {
-        headerTranslateY.value = withSpring(0);
-        tabBarTranslateY.value = withSpring(0);
+      const config = {
+        damping: 20,
+        stiffness: 30 + Math.min(Math.abs(velocity * 10), 300),
+      };
+
+      if (currentY > collapseThreshold && currentY > lastTriggerY.value) {
+        headerTranslateY.value = withSpring(-300, config);
+        tabBarTranslateY.value = withSpring(100, config);
+        lastTriggerY.value = currentY;
+      } else if (currentY < expandThreshold && currentY < lastTriggerY.value) {
+        headerTranslateY.value = withSpring(0, config);
+        tabBarTranslateY.value = withSpring(0, config);
+        lastTriggerY.value = currentY;
       }
     },
     [scrollY]
@@ -98,8 +112,6 @@ export default function HomeScreen() {
           </View>
         </View>
       </Modal>
-
-      {/* Static header (logo + icons) */}
       <View style={styles.topRowContainer}>
         <View style={styles.topRow}>
           <View style={styles.fbLogo} />
@@ -111,17 +123,34 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* Collapsing content */}
       <Animated.View style={[styles.collapsingHeader, headerStyle]}>
+        {Platform.OS === "android" && Platform.Version < 31 ? (
+          <View
+            style={[
+              StyleSheet.absoluteFill,
+              { backgroundColor: "rgba(255,255,255,0.9)" },
+            ]}
+          />
+        ) : (
+          <BlurView
+            intensity={50}
+            tint="light"
+            style={StyleSheet.absoluteFill}
+          />
+        )}
         <View style={styles.headerWrapper}>
-          <Pressable onPress={() => setModalVisible(true)}>
-            <TextInput
-              placeholder="What's on your mind, Hashem?"
-              style={styles.inputBox}
-              editable={false}
-            />
-          </Pressable>
-
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            activeOpacity={0.7}
+          >
+            <View pointerEvents="none">
+              <TextInput
+                placeholder="What's on your mind, Hashem?"
+                style={styles.inputBox}
+                editable={false}
+              />
+            </View>
+          </TouchableOpacity>
           <View style={styles.shareRow}>
             <TouchableOpacity style={styles.shareBtn}>
               <Text>📷 Photo/video</Text>
@@ -134,7 +163,6 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         </View>
-
         <View style={styles.storyRow}>
           <View>
             <FlatList
@@ -187,6 +215,7 @@ export default function HomeScreen() {
         onScroll={scrollHandler}
       >
         <PostCard
+          scrollY={scrollY}
           post={{
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
@@ -231,6 +260,7 @@ export default function HomeScreen() {
           }}
         />
         <PostCard
+          scrollY={scrollY}
           post={{
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
@@ -275,6 +305,7 @@ export default function HomeScreen() {
           }}
         />
         <PostCard
+          scrollY={scrollY}
           post={{
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
@@ -319,24 +350,6 @@ export default function HomeScreen() {
           }}
         />
       </Animated.ScrollView>
-
-      <Animated.View style={[styles.tabBar, tabBarStyle]}>
-        <TouchableOpacity style={styles.tabBtn}>
-          <Home size={24} color="#246bfd" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabBtn}>
-          <Video size={24} color="#9ca3af" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabBtn}>
-          <ShoppingCart size={24} color="#9ca3af" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabBtn}>
-          <Users size={24} color="#9ca3af" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabBtn}>
-          <Menu size={24} color="#9ca3af" />
-        </TouchableOpacity>
-      </Animated.View>
     </View>
   );
 }
@@ -470,12 +483,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  modalBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.3)",
-  },
   modalBox: {
     width: "90%",
     backgroundColor: "#fff",
@@ -499,5 +506,28 @@ const styles = StyleSheet.create({
   modalClose: {
     marginTop: 16,
     alignSelf: "flex-end",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalFullBox: {
+    flex: 1,
+    width: "100%",
+    padding: 20,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+  },
+
+  modalInputFull: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderRadius: 12,
+    padding: 12,
+    textAlignVertical: "top",
+    backgroundColor: "#f9fafb",
   },
 });
