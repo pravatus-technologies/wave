@@ -7,3 +7,4 @@ export {
   useTranslation,
 } from './useTranslation';
 export * from './useAuth';
+export * from './useScrollDirection';
