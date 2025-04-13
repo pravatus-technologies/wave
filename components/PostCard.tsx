@@ -17,7 +17,8 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { View } from "@/components";
+import { Icon, View } from "@/components";
+import { useTheme } from "@/hooks";
 
 interface Comment {
   name: string;
@@ -58,6 +59,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
   const lastShouldPlay = useRef<boolean>(false);
   const userPaused = useRef(false);
+  const { colors, assets } = useTheme();
 
   const updateFade = (visible: boolean) => {
     fadeAnim.value = withTiming(visible ? 1 : 0.3);
@@ -203,13 +205,13 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
         <View style={styles.actions}>
           <TouchableOpacity style={styles.actionBtn}>
-            <Text style={styles.icon}>👍</Text>
+            <Icon name="ThumbsUpIcon" size={18} color={colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionBtn}>
-            <Text style={styles.icon}>💬</Text>
+            <Icon name="MessageSquareText" size={18} color={colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionBtn}>
-            <Text style={styles.icon}>↗️</Text>
+            <Icon name="Share" size={18} color={colors.text} />
           </TouchableOpacity>
           <View style={{ flex: 1 }} />
           <Text style={styles.reactedBy}>
@@ -328,11 +330,11 @@ const styles = StyleSheet.create({
   actionBtn: {
     width: 36,
     height: 36,
-    backgroundColor: "#f1f5ff",
+
     borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 8,
+    marginRight: 15,
   },
   icon: { fontSize: 16 },
   reactedBy: { fontSize: 12, color: "#999", marginRight: 4 },
