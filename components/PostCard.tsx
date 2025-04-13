@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   View as RNView,
   findNodeHandle,
+  Pressable,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
@@ -19,22 +20,57 @@ import Animated, {
 } from "react-native-reanimated";
 import { View } from "@/components";
 
-export const PostCard = ({ post, scrollY }) => {
+interface Comment {
+  name: string;
+  avatar: string;
+  text: string;
+  time: string;
+}
+
+interface Post {
+  id: string;
+  author: string;
+  avatar?: string;
+  text?: string;
+  media?: string[];
+  link?: string;
+  reactions?: string;
+  commentsList?: Comment[];
+  time?: string;
+  comments?: string;
+  shares?: string;
+  reactedBy?: string;
+}
+
+interface PostCardProps {
+  post: Post;
+  scrollY: Animated.SharedValue<number>;
+}
+
+export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { height: screenHeight, width: screenWidth } = useWindowDimensions();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [visibleComments, setVisibleComments] = useState(1);
-  const [expandedComments, setExpandedComments] = useState({});
+  const [visibleComments, setVisibleComments] = useState<number>(1);
+  const [expandedComments, setExpandedComments] = useState<
+    Record<number, boolean>
+  >({});
   const fadeAnim = useSharedValue(1);
-  const videoRef = useRef(null);
+  const videoRef = useRef<RNView>(null);
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const userPaused = useRef(false);
 
   const pauseVideo = () => {
-    setIsPlaying(false);
-    fadeAnim.value = withTiming(0.3);
+    if (!userPaused.current) {
+      setIsPlaying(false);
+      fadeAnim.value = withTiming(0.3);
+    }
   };
 
   const playVideo = () => {
-    setIsPlaying(true);
-    fadeAnim.value = withTiming(1);
+    if (!userPaused.current) {
+      setIsPlaying(true);
+      fadeAnim.value = withTiming(1);
+    }
   };
 
   const checkVisibility = () => {
@@ -47,12 +83,18 @@ export const PostCard = ({ post, scrollY }) => {
       const screenCenter = screenHeight / 2;
       const distance = Math.abs(midY - screenCenter);
       const shouldPlay = distance < screenHeight * 0.25;
-      shouldPlay ? playVideo() : pauseVideo();
+
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+      debounceTimer.current = setTimeout(() => {
+        if (!userPaused.current) {
+          shouldPlay ? playVideo() : pauseVideo();
+        }
+      }, 150);
     });
   };
 
   useEffect(() => {
-    const interval = setInterval(checkVisibility, 250);
+    const interval = setInterval(checkVisibility, 300);
     return () => clearInterval(interval);
   }, []);
 
@@ -62,13 +104,13 @@ export const PostCard = ({ post, scrollY }) => {
     };
   });
 
-  const toggleExpand = (index) => {
+  const toggleExpand = (index: number) => {
     setExpandedComments((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  const handleUrlPress = (url) => Linking.openURL(url);
+  const handleUrlPress = (url: string) => Linking.openURL(url);
 
-  const renderMediaItem = (src, index) => {
+  const renderMediaItem = (src: string, index: number) => {
     const youtubeIdMatch = src.match(
       /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/
     );
@@ -80,17 +122,24 @@ export const PostCard = ({ post, scrollY }) => {
           ref={videoRef}
           style={[styles.videoContainer, fadeStyle]}
         >
-          <YoutubePlayer
-            height={screenWidth * 0.5625}
-            width={screenWidth - 64}
-            play={isPlaying}
-            videoId={youtubeIdMatch[1]}
-            webViewProps={{
-              nestedScrollEnabled: true,
-              scrollEnabled: false,
-              showsVerticalScrollIndicator: false,
+          <Pressable
+            onPress={() => {
+              userPaused.current = !isPlaying;
+              setIsPlaying((prev) => !prev);
             }}
-          />
+          >
+            <YoutubePlayer
+              height={screenWidth * 0.5625}
+              width={screenWidth - 64}
+              play={isPlaying}
+              videoId={youtubeIdMatch[1]}
+              webViewProps={{
+                nestedScrollEnabled: true,
+                scrollEnabled: false,
+                showsVerticalScrollIndicator: false,
+              }}
+            />
+          </Pressable>
         </Animated.View>
       );
     }
@@ -103,7 +152,7 @@ export const PostCard = ({ post, scrollY }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
       <View style={styles.card}>
         <View style={styles.header}>
           <Image
@@ -111,8 +160,8 @@ export const PostCard = ({ post, scrollY }) => {
             style={styles.avatar}
           />
           <View style={{ flex: 1 }}>
-            <Text style={styles.name}>{post?.author || "Anna Mary"}</Text>
-            <Text style={styles.timestamp}>{post?.time || "2 Hours ago"}</Text>
+            <Text style={styles.name}>{post?.author || "Unknown User"}</Text>
+            <Text style={styles.timestamp}>{post?.time || "Just now"}</Text>
           </View>
           <TouchableOpacity>
             <Text style={styles.more}>•••</Text>
@@ -214,7 +263,7 @@ export const PostCard = ({ post, scrollY }) => {
           );
         })}
 
-        {post?.commentsList?.length > visibleComments && (
+        {(post?.commentsList?.length ?? 0) > visibleComments && (
           <TouchableOpacity
             onPress={() => setVisibleComments(visibleComments + 5)}
           >
