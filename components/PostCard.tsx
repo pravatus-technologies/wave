@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   Text,
   Image,
@@ -7,6 +7,12 @@ import {
   Linking,
   ScrollView,
   useWindowDimensions,
+  Modal,
+  Pressable,
+  TextInput,
+  View as RNView,
+  LayoutChangeEvent,
+  findNodeHandle,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
@@ -14,43 +20,65 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  useAnimatedReaction,
-  useDerivedValue,
-  runOnJS,
 } from "react-native-reanimated";
 import { View } from "@/components";
-
-const playbackCache = new Map();
-
-type ExpandedCommentsState = Record<number, boolean>;
 
 export const PostCard = ({ post, scrollY }) => {
   const { height: screenHeight, width: screenWidth } = useWindowDimensions();
   const [visibleComments, setVisibleComments] = useState(1);
-  const [expandedComments, setExpandedComments] =
-    useState<ExpandedCommentsState>({});
-  const [isPlaying, setIsPlaying] = useState(
-    playbackCache.get(post?.id) || false
-  );
-  const playerRef = useRef(null);
-  const videoLayoutY = useRef(0);
+  const [expandedComments, setExpandedComments] = useState<
+    Record<number, boolean>
+  >({});
+  const [isPlaying, setIsPlaying] = useState(false);
   const fadeAnim = useSharedValue(1);
-  const sharedIsOffscreen = useSharedValue(false);
+  const videoRef = useRef(null);
 
-  const fadeStyle = useAnimatedStyle(() => ({ opacity: fadeAnim.value }));
-
-  const openLink = () => {
-    if (post?.link) Linking.openURL(post.link);
-  };
+  const handleUrlPress = (url: string) => Linking.openURL(url);
 
   const toggleExpand = (index: number) => {
-    setExpandedComments((prev) => ({
-      ...prev,
-      [index]: !(prev[index] ?? false),
-    }));
+    setExpandedComments((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  const renderMediaItem = (src, index) => {
+  const pauseVideo = () => {
+    setIsPlaying(false);
+    fadeAnim.value = withTiming(0.3);
+  };
+
+  const playVideo = () => {
+    setIsPlaying(true);
+    fadeAnim.value = withTiming(1);
+  };
+
+  const checkVisibility = () => {
+    if (!videoRef.current) return;
+    const handle = findNodeHandle(videoRef.current);
+    if (!handle) return;
+
+    videoRef.current.measureInWindow((x, y, w, h) => {
+      const midY = y + h / 2;
+      const screenCenter = screenHeight / 2;
+      const distance = Math.abs(midY - screenCenter);
+
+      if (distance < screenHeight * 0.25) {
+        playVideo();
+      } else {
+        pauseVideo();
+      }
+    });
+  };
+
+  useEffect(() => {
+    const interval = setInterval(checkVisibility, 250);
+    return () => clearInterval(interval);
+  }, []);
+
+  const fadeStyle = useAnimatedStyle(() => {
+    return {
+      opacity: fadeAnim.value,
+    };
+  });
+
+  const renderMediaItem = (src: string, index: number) => {
     const youtubeIdMatch = src.match(
       /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/
     );
@@ -59,13 +87,10 @@ export const PostCard = ({ post, scrollY }) => {
       return (
         <Animated.View
           key={index}
+          ref={videoRef}
           style={[styles.videoContainer, fadeStyle]}
-          onLayout={(e) => {
-            videoLayoutY.current = e.nativeEvent.layout.y;
-          }}
         >
           <YoutubePlayer
-            ref={playerRef}
             height={screenWidth * 0.5625}
             width={screenWidth - 64}
             play={isPlaying}
@@ -82,33 +107,6 @@ export const PostCard = ({ post, scrollY }) => {
 
     return <Image key={index} source={{ uri: src }} style={styles.mediaItem} />;
   };
-
-  const handleUrlPress = (url) => Linking.openURL(url);
-
-  useAnimatedReaction(
-    () => scrollY.value,
-    (currentY) => {
-      const offsetY = videoLayoutY.current;
-      const isOffscreen =
-        offsetY < currentY - 100 || offsetY > currentY + screenHeight - 100;
-
-      fadeAnim.value = withTiming(isOffscreen ? 0.3 : 1, { duration: 250 });
-      sharedIsOffscreen.value = isOffscreen;
-    },
-    [scrollY]
-  );
-
-  const updatePlayback = (shouldPlay) => {
-    setIsPlaying(shouldPlay);
-    playbackCache.set(post?.id, shouldPlay);
-  };
-
-  useDerivedValue(() => {
-    const nextPlaying = !sharedIsOffscreen.value;
-    if (isPlaying !== nextPlaying) {
-      runOnJS(updatePlayback)(nextPlaying);
-    }
-  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

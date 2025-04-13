@@ -264,7 +264,7 @@ export default function HomeScreen() {
           post={{
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
-            media: ["https://youtu.be/eQc_B8ffJsA?feature=shared"],
+            media: ["https://youtu.be/gbPDNsbwotc?feature=shared"],
             time: "2 Hours ago",
             comments: "3.4k Comments",
             shares: "46 Shares",
@@ -309,7 +309,7 @@ export default function HomeScreen() {
           post={{
             author: "Jack Black",
             text: "Guess what? 🎉 I just dropped this kickass tune titled 'Lava Chicken'",
-            media: ["https://youtu.be/eQc_B8ffJsA?feature=shared"],
+            media: ["https://youtu.be/nKhMA5d0adA?feature=shared"],
             time: "2 Hours ago",
             comments: "3.4k Comments",
             shares: "46 Shares",
