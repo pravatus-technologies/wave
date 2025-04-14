@@ -1,28 +1,14 @@
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
-import {
-  Alert,
-  Image,
-  Platform,
-  Pressable,
-  Text,
-  StyleSheet,
-  GestureResponderEvent,
-} from "react-native";
+import { Alert, Image, Text, StyleSheet } from "react-native";
 
-import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { useAuth } from "@/hooks/useAuth";
-import { logInfo } from "@/utils/Logger";
 import { SafeAreaView } from "@/components/SafeAreaView";
 import { useTheme } from "@/hooks";
 import { Icon, View } from "@/components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PVTabBarButton from "@/components/PVTabBarButton";
-import { IconName, ITabButtonProps } from "@/constants/types";
+import { ITabButtonProps } from "@/constants/types";
 
 export const CustomHeader = ({ title, logo }: { title: string; logo: any }) => {
   const insets = useSafeAreaInsets();
@@ -98,7 +84,7 @@ export default function TabLayout() {
       name: "action",
       title: "Wave",
       icon: "Hand",
-      onCustomPress: () => Alert.alert(`Wave hello!`),
+      onCustomPress: handleActionPress,
     },
     {
       name: "messages",
@@ -147,6 +133,7 @@ export default function TabLayout() {
     >
       {tabPages.map((tab) => (
         <Tabs.Screen
+          key={tab.name}
           name={tab.name}
           options={{
             headerShown: false,
