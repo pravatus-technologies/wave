@@ -51,9 +51,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, isVisible }) => {
 
   useEffect(() => {
     if (isVisible) {
-      setInterval(() => {
-        playVideo();
-      }, 1250);
+      playVideo();
     } else {
       pauseVideo();
     }
