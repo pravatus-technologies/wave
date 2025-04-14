@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
-  ScrollView,
   useWindowDimensions,
   View as RNView,
   View,
@@ -13,7 +12,6 @@ import {
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
 import Animated, {
-  SharedValue,
   useSharedValue,
   useAnimatedStyle,
   withTiming,
@@ -23,7 +21,7 @@ import PVIcon from "./controls/PVIcon";
 import { useTheme } from "@/hooks";
 import { PostCardProps } from "@/constants/types";
 
-export const PostCard: React.FC<PostCardProps> = ({ post }) => {
+export const PostCard: React.FC<PostCardProps> = ({ post, isVisible }) => {
   const { height: screenHeight, width: screenWidth } = useWindowDimensions();
   const [isPlaying, setIsPlaying] = useState(false);
   const [visibleComments, setVisibleComments] = useState<number>(1);
@@ -52,31 +50,12 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   useEffect(() => {
-    let mounted = true;
-
-    const loop = () => {
-      if (!mounted || !videoRef.current) return;
-      videoRef.current.measureInWindow((x, y, w, h) => {
-        const midY = y + h / 2;
-        const screenCenter = screenHeight / 2;
-        const distance = Math.abs(midY - screenCenter);
-        const shouldPlay = distance < screenHeight * 0.25;
-
-        updateFade(shouldPlay);
-        if (!userPaused.current && shouldPlay !== lastShouldPlay.current) {
-          lastShouldPlay.current = shouldPlay;
-          if (shouldPlay) playVideo();
-          else pauseVideo();
-        }
-      });
-      requestAnimationFrame(loop);
-    };
-
-    requestAnimationFrame(loop);
-    return () => {
-      mounted = false;
-    };
-  }, []);
+    if (isVisible) {
+      playVideo();
+    } else {
+      pauseVideo();
+    }
+  }, [isVisible]);
 
   const fadeStyle = useAnimatedStyle(() => {
     return {
@@ -96,7 +75,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
     );
 
     if (youtubeIdMatch) {
-      return (
+      return isVisible ? (
         <Animated.View
           key={index}
           ref={videoRef}
@@ -119,6 +98,14 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             }}
           />
         </Animated.View>
+      ) : (
+        <View
+          key={index}
+          style={[
+            styles.videoWrapper,
+            { height: screenWidth * 0.5625, backgroundColor: "#000" },
+          ]}
+        />
       );
     }
 
@@ -136,7 +123,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
+    <View style={styles.container}>
       <View style={[{ ...styles.card, backgroundColor: colors.card }]}>
         <View style={styles.header}>
           <Image
@@ -263,7 +250,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </TouchableOpacity>
         )}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

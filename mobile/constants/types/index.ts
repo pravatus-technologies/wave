@@ -92,6 +92,8 @@ export interface Post {
 export interface PostCardProps {
   post: Post;
   scrollY: SharedValue<number>;
+  index?: number;
+  isVisible?: boolean;
 }
 
 /***

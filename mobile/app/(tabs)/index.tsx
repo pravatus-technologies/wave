@@ -26,6 +26,7 @@ import { useTheme } from "@/hooks";
 import { Post } from "@/constants/types";
 import { getPosts } from "@/services/api";
 import Logger from "@/utils/Logger";
+import HomeScreenFeed from "@/components/HomeScreenFeed";
 
 const stories = [
   { id: "your", label: "Your Story", image: null, hasNew: true },
@@ -49,12 +50,6 @@ export default function HomeScreen() {
   const tabBarTranslateY = useSharedValue(0);
 
   const { assets, colors } = useTheme();
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollY.value = event.contentOffset.y;
-    },
-  });
 
   const collapseThreshold = 80;
   const expandThreshold = 40;
@@ -86,27 +81,12 @@ export default function HomeScreen() {
   );
 
   const headerStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: headerTranslateY.value }],
+    transform: [{ translateY: scrollY.value > collapseThreshold ? -300 : 0 }],
   }));
 
   const tabBarStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: tabBarTranslateY.value }],
   }));
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getPosts();
-        setPosts(data);
-      } catch (error) {
-        Logger.error(error, "HomeScreen", "Unable to fetch data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -227,19 +207,7 @@ export default function HomeScreen() {
         </View>
       </Animated.View>
 
-      <Animated.ScrollView
-        contentContainerStyle={{
-          paddingTop: 240,
-          paddingBottom: 100,
-          paddingHorizontal: 10,
-        }}
-        scrollEventThrottle={16}
-        onScroll={scrollHandler}
-      >
-        {posts.map((post) => (
-          <PostCard key={post.id} scrollY={scrollY} post={post} />
-        ))}
-      </Animated.ScrollView>
+      <HomeScreenFeed scrollY={scrollY} />
     </View>
   );
 }

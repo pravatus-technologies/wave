@@ -1,13 +1,14 @@
 import { API } from "@/constants";
+import { Post } from "@/constants/types";
 import Logger from "@/utils/Logger";
 import axios from "axios";
 
-export const getPosts = async () => {
+export async function getPosts(page = 1, limit = 10): Promise<Post[]> {
   try {
-    const res = await axios.get(API.endpoints.getPosts);
-    return res.data;
-  } catch (error) {
-    Logger.error(error, "API", `Failed to fetch posts ${JSON.stringify(error)}`)
-    throw new Error("Unable to load posts. Please try again later");
+    const response = await axios.get<Post[]>(API.endpoints.getPosts, { params: { page, limit }, });
+    return response.data;
+  } catch (error: any) {
+    Logger.error(error, "API", `Failed to fetch posts ${error.message}`);
+    throw new Error("Failed to fetch posts");
   }
 }
