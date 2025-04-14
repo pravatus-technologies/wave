@@ -51,7 +51,9 @@ export const PostCard: React.FC<PostCardProps> = ({ post, isVisible }) => {
 
   useEffect(() => {
     if (isVisible) {
-      playVideo();
+      setInterval(() => {
+        playVideo();
+      }, 1250);
     } else {
       pauseVideo();
     }
@@ -74,18 +76,33 @@ export const PostCard: React.FC<PostCardProps> = ({ post, isVisible }) => {
       /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/
     );
 
-    if (youtubeIdMatch) {
-      return isVisible ? (
+    if (youtubeIdMatch && youtubeIdMatch[1]) {
+      const videoId = youtubeIdMatch[1];
+
+      if (!isVisible) {
+        return (
+          <View
+            key={index}
+            style={[
+              styles.videoWrapper,
+              { height: screenWidth * 0.5625, backgroundColor: "#000" },
+            ]}
+          />
+        );
+      }
+
+      return (
         <Animated.View
           key={index}
           ref={videoRef}
           style={[styles.videoWrapper, fadeStyle]}
         >
           <YoutubePlayer
+            key={post.id}
             height={screenWidth * 0.5625}
             width={screenWidth}
             play={isPlaying}
-            videoId={youtubeIdMatch[1]}
+            videoId={videoId}
             onChangeState={(event) => {
               if (event === "paused") userPaused.current = true;
               if (event === "playing") userPaused.current = false;
@@ -98,14 +115,6 @@ export const PostCard: React.FC<PostCardProps> = ({ post, isVisible }) => {
             }}
           />
         </Animated.View>
-      ) : (
-        <View
-          key={index}
-          style={[
-            styles.videoWrapper,
-            { height: screenWidth * 0.5625, backgroundColor: "#000" },
-          ]}
-        />
       );
     }
 

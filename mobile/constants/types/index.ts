@@ -67,6 +67,14 @@ export type PVActionButtonProps = {
   spinnerColor?: ColorValue;
 };
 
+export type MainTabParamList = {
+  index: undefined;
+  friends: undefined;
+  action: undefined;
+  messages: undefined;
+  alerts: undefined;
+};
+
 export interface Comment {
   name: string;
   avatar: string;
@@ -94,6 +102,15 @@ export interface PostCardProps {
   scrollY: SharedValue<number>;
   index?: number;
   isVisible?: boolean;
+}
+
+export interface HomeScreenFeedRef {
+  scrollToTop: () => void;
+  refresh: () => void;
+}
+
+export interface HomeScreenFeedProps {
+  scrollY: SharedValue<number>;
 }
 
 /***

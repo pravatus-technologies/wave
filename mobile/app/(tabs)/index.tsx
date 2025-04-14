@@ -1,5 +1,5 @@
 // HomeScreen with corrected FlatList structure and stable Android animation
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   useAnimatedStyle,
@@ -23,10 +23,12 @@ import {
 import { PostCard } from "@/components";
 import { BlurView } from "expo-blur";
 import { useTheme } from "@/hooks";
-import { Post } from "@/constants/types";
+import { HomeScreenFeedRef, MainTabParamList, Post } from "@/constants/types";
 import { getPosts } from "@/services/api";
 import Logger from "@/utils/Logger";
 import HomeScreenFeed from "@/components/HomeScreenFeed";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 const stories = [
   { id: "your", label: "Your Story", image: null, hasNew: true },
@@ -43,12 +45,10 @@ const stories = [
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
   const scrollY = useSharedValue(0);
   const headerTranslateY = useSharedValue(0);
   const tabBarTranslateY = useSharedValue(0);
-
+  const feedRef = useRef<HomeScreenFeedRef>(null);
   const { assets, colors } = useTheme();
 
   const collapseThreshold = 80;
@@ -207,7 +207,7 @@ export default function HomeScreen() {
         </View>
       </Animated.View>
 
-      <HomeScreenFeed scrollY={scrollY} />
+      <HomeScreenFeed ref={feedRef} scrollY={scrollY} />
     </View>
   );
 }
