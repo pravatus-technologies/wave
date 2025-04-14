@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexWrap: "wrap",
   },
-  replyMeta: { fontSize: 12, color: "#888", marginTop: 4 },
+  replyMeta: { fontSize: 12, color: "#888", marginTop: 4, fontWeight: "600" },
   toggleText: {
     color: "#1c6ef2",
     fontSize: 13,
