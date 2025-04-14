@@ -3,8 +3,7 @@ import { ColorValue, StyleProp, ViewStyle } from "react-native";
 import * as LucideIcons from "lucide-react-native";
 import { logWarn } from "@/utils/Logger";
 import { useData, useTheme } from "@/hooks";
-
-type IconName = keyof typeof LucideIcons;
+import { IconName } from "@/constants/types";
 
 type Props = {
   name: IconName;
