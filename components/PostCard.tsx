@@ -166,7 +166,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container} scrollEnabled={false}>
-      <View style={styles.card}>
+      <View style={[{ ...styles.card, backgroundColor: colors.card }]}>
         <View style={styles.header}>
           <Image
             source={{ uri: post?.avatar || "https://i.pravatar.cc/300" }}
@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingTop: 16,
     paddingBottom: 16,
+    borderRadius: 25,
   },
   header: {
     flexDirection: "row",
