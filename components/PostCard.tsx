@@ -8,17 +8,18 @@ import {
   ScrollView,
   useWindowDimensions,
   View as RNView,
-  findNodeHandle,
   View,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
 import Animated, {
+  SharedValue,
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { PVIcon, PVImageButton } from "@/components";
+import PVImageButton from "./controls/PVImageButton";
+import PVIcon from "./controls/PVIcon";
 import { useTheme } from "@/hooks";
 
 interface Comment {
@@ -45,7 +46,7 @@ interface Post {
 
 interface PostCardProps {
   post: Post;
-  scrollY: Animated.SharedValue<number>;
+  scrollY: SharedValue<number>;
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {
@@ -76,35 +77,31 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
     updateFade(true);
   };
 
-  const checkVisibility = () => {
-    if (!videoRef.current) return;
-    const handle = findNodeHandle(videoRef.current);
-    if (!handle) return;
+  useEffect(() => {
+    let mounted = true;
 
-    videoRef.current.measureInWindow((x, y, w, h) => {
-      const midY = y + h / 2;
-      const screenCenter = screenHeight / 2;
-      const distance = Math.abs(midY - screenCenter);
-      const shouldPlay = distance < screenHeight * 0.25;
+    const loop = () => {
+      if (!mounted || !videoRef.current) return;
+      videoRef.current.measureInWindow((x, y, w, h) => {
+        const midY = y + h / 2;
+        const screenCenter = screenHeight / 2;
+        const distance = Math.abs(midY - screenCenter);
+        const shouldPlay = distance < screenHeight * 0.25;
 
-      if (debounceTimer.current) clearTimeout(debounceTimer.current);
-      debounceTimer.current = setTimeout(() => {
         updateFade(shouldPlay);
         if (!userPaused.current && shouldPlay !== lastShouldPlay.current) {
           lastShouldPlay.current = shouldPlay;
-          if (shouldPlay) {
-            playVideo();
-          } else {
-            pauseVideo();
-          }
+          if (shouldPlay) playVideo();
+          else pauseVideo();
         }
-      }, 150);
-    });
-  };
+      });
+      requestAnimationFrame(loop);
+    };
 
-  useEffect(() => {
-    const interval = setInterval(checkVisibility, 300);
-    return () => clearInterval(interval);
+    requestAnimationFrame(loop);
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const fadeStyle = useAnimatedStyle(() => {

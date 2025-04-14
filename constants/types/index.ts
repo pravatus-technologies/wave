@@ -1,6 +1,6 @@
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import * as LucideIcons from "lucide-react-native";
-import { GestureResponderEvent, StyleProp, ViewStyle } from "react-native";
+import { ColorValue, GestureResponderEvent, StyleProp, TextInputProps, TextStyle, ViewStyle } from "react-native";
 
 export * from './IUseData';
 export * from './ITranslate';
@@ -38,6 +38,35 @@ export type NotificationItem = {
 };
 
 /***
+ * PVIconProps
+ */
+export type PVIconProps = {
+  name: IconName;
+  size?: number;
+  color?: ColorValue;
+  style?: StyleProp<ViewStyle>;
+};
+
+export type PVFormInputProps = TextInputProps & {
+  containerStyle?: ViewStyle;
+  inputStyle?: TextStyle;
+  icon?: IconName;
+  iconSize?: number;
+  iconColor?: string;
+};
+
+export type PVActionButtonProps = {
+  title: string;
+  onPress: () => void;
+  loading?: boolean;
+  disabled?: boolean;
+  buttonStyle?: StyleProp<ViewStyle>;
+  textColor?: ColorValue;
+  textStyle?: StyleProp<TextStyle>;
+  spinnerColor?: ColorValue;
+};
+
+/***
  * We define an extension of the default BottomTabBarButtonProps
  * for our PVTabBarButton since we want to have the option of passing
  * in a custom behavior instead of the default provided by react which
@@ -57,3 +86,4 @@ export interface PVImageButtonProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
+

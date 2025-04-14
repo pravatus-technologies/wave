@@ -10,19 +10,10 @@ import {
   Text,
 } from "react-native";
 import * as LucideIcons from "lucide-react-native";
-import { useData, useTheme } from "@/hooks";
+import { useTheme } from "@/hooks";
+import { PVFormInputProps } from "@/constants/types";
 
-type IconName = keyof typeof LucideIcons;
-
-type Props = TextInputProps & {
-  containerStyle?: ViewStyle;
-  inputStyle?: TextStyle;
-  icon?: IconName;
-  iconSize?: number;
-  iconColor?: string;
-};
-
-export const PVFormInput = ({
+export default function PVFormInput({
   containerStyle,
   inputStyle,
   icon,
@@ -30,7 +21,7 @@ export const PVFormInput = ({
   iconColor = "#949494",
   secureTextEntry,
   ...props
-}: Props) => {
+}: PVFormInputProps): JSX.Element {
   const LucideIcon = icon
     ? (LucideIcons[icon] as React.ComponentType<{
         size?: number;
@@ -38,7 +29,7 @@ export const PVFormInput = ({
         style?: any;
       }>)
     : null;
-  const { isDark } = useData();
+
   const { colors } = useTheme();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const isPassword = !!secureTextEntry;
@@ -74,7 +65,7 @@ export const PVFormInput = ({
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

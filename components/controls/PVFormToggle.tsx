@@ -24,7 +24,7 @@ type Props = {
   };
 };
 
-export const PVFormToggle = ({
+export default function PVFormToggle({
   label,
   value,
   onValueChange,
@@ -35,12 +35,15 @@ export const PVFormToggle = ({
     false: "#ccc",
     thumb: "#ffffff",
   },
-}: Props) => {
+}: Props): JSX.Element {
   const { colors } = useTheme();
+
   switchColor = {
     true: colors.primary,
     false: colors.switchOff,
+    thumb: switchColor.thumb,
   };
+
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
@@ -55,7 +58,7 @@ export const PVFormToggle = ({
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -3,23 +3,15 @@ import { ColorValue, StyleProp, ViewStyle } from "react-native";
 import * as LucideIcons from "lucide-react-native";
 import { logWarn } from "@/utils/Logger";
 import { useData, useTheme } from "@/hooks";
-import { IconName } from "@/constants/types";
+import { PVIconProps } from "@/constants/types";
 
-type Props = {
-  name: IconName;
-  size?: number;
-  color?: ColorValue;
-  style?: StyleProp<ViewStyle>;
-};
-
-export const PVIcon: React.FC<Props> = ({
+export default function PVIcon({
   name,
   size = 24,
   color = "#000",
   style,
-}) => {
-  const { colors, sizes } = useTheme();
-  const { isDark } = useData();
+}: PVIconProps): React.ReactNode {
+  const { colors } = useTheme();
 
   const LucideIcon = LucideIcons[name] as React.ComponentType<{
     color?: ColorValue;
@@ -37,6 +29,4 @@ export const PVIcon: React.FC<Props> = ({
   }
 
   return <LucideIcon color={color ?? colors.text} size={size} style={style} />;
-};
-
-export default PVIcon;
+}

@@ -1,27 +1,9 @@
-import { useData, useTheme } from "@/hooks";
+import { PVActionButtonProps } from "@/constants/types";
+import { useTheme } from "@/hooks";
 import React from "react";
-import {
-  Pressable,
-  Text,
-  ActivityIndicator,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
-  ColorValue,
-} from "react-native";
+import { Pressable, Text, ActivityIndicator } from "react-native";
 
-type Props = {
-  title: string;
-  onPress: () => void;
-  loading?: boolean;
-  disabled?: boolean;
-  buttonStyle?: StyleProp<ViewStyle>;
-  textColor?: ColorValue;
-  textStyle?: StyleProp<TextStyle>;
-  spinnerColor?: ColorValue;
-};
-
-export const PVActionButton = ({
+export default function PVActionButton({
   title,
   onPress,
   loading = false,
@@ -30,9 +12,8 @@ export const PVActionButton = ({
   textStyle,
   textColor,
   spinnerColor = "#ffffff",
-}: Props) => {
-  const { isDark } = useData();
-  const { colors, sizes } = useTheme();
+}: PVActionButtonProps): JSX.Element {
+  const { colors } = useTheme();
   const isDisabled = disabled || loading;
 
   return (
@@ -73,4 +54,4 @@ export const PVActionButton = ({
       </Text>
     </Pressable>
   );
-};
+}

@@ -11,7 +11,7 @@ import Animated, {
  * used as a pressable image button such as Like, Share,
  * and Comment buttons in the PostCard component
  */
-export function PVImageButton({
+export default function PVImageButton({
   children,
   onPress,
   style,
