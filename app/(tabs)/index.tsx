@@ -43,7 +43,7 @@ export default function HomeScreen() {
   const headerTranslateY = useSharedValue(0);
   const tabBarTranslateY = useSharedValue(0);
 
-  const { assets } = useTheme();
+  const { assets, colors } = useTheme();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -119,7 +119,7 @@ export default function HomeScreen() {
           <View style={styles.headerIcons}>
             <Image
               src="https://i.pravatar.cc/100?img=10"
-              style={styles.headerIcon}
+              style={[styles.headerIcon, { borderColor: colors.primary }]}
             />
           </View>
         </View>
@@ -223,7 +223,7 @@ export default function HomeScreen() {
             author: "Olivia Park",
             avatar: "https://i.pravatar.cc/100?img=18",
             text: "My vlog from Japan 🇯🇵✨ Hope you enjoy!",
-            media: ["https://youtu.be/nKhMA5d0adA"],
+            media: ["https://youtu.be/41O_MydqxTU?feature=shared"],
             time: "1h ago",
             comments: "1.1k Comments",
             shares: "210 Shares",
@@ -246,7 +246,7 @@ export default function HomeScreen() {
             author: "Tom Morello",
             avatar: "https://i.pravatar.cc/100?img=10",
             text: "This riff changed my life 🤘 #GuitarGod",
-            media: ["https://youtu.be/LXEKuttVRIo"],
+            media: ["https://youtu.be/Q4LBdR-tQHc?feature=shared"],
             time: "5m ago",
             comments: "512 Comments",
             shares: "87 Shares",
@@ -362,6 +362,8 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
     backgroundColor: "#fff",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#eaeaea",
   },
   headerWrapper: {
     paddingHorizontal: 16,
@@ -381,7 +383,6 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 50,
     borderWidth: 3,
-    borderColor: "green",
   },
   inputBox: {
     backgroundColor: "#f3f4f6",

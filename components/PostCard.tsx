@@ -18,7 +18,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import Icon from "@/components/controls/PVIcon";
+import { PVIcon, PVImageButton } from "@/components";
 import { useTheme } from "@/hooks";
 
 interface Comment {
@@ -205,15 +205,21 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </Text>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.actionBtn}>
-            <Icon name="ThumbsUpIcon" size={18} color={colors.text} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionBtn}>
-            <Icon name="MessageSquareText" size={18} color={colors.text} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionBtn}>
-            <Icon name="Share" size={18} color={colors.text} />
-          </TouchableOpacity>
+          <View style={{ marginRight: 20 }}>
+            <PVImageButton style={styles.actionBtn}>
+              <PVIcon name="ThumbsUpIcon" size={21} color={colors.text} />
+            </PVImageButton>
+          </View>
+          <View style={{ marginRight: 20 }}>
+            <PVImageButton style={styles.actionBtn}>
+              <PVIcon name="MessageSquare" size={21} color={colors.text} />
+            </PVImageButton>
+          </View>
+          <View style={{ marginRight: 20 }}>
+            <PVImageButton style={styles.actionBtn}>
+              <PVIcon name="Share" size={21} color={colors.text} />
+            </PVImageButton>
+          </View>
           <View style={{ flex: 1 }} />
           <Text style={styles.reactedBy}>
             {post?.reactedBy || "Q&A with Mark & 361k others"}
@@ -298,6 +304,8 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 16,
     borderRadius: 25,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#eaeaea",
   },
   header: {
     flexDirection: "row",
@@ -327,16 +335,14 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
   },
   actionBtn: {
     width: 36,
     height: 36,
-
     borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 15,
   },
   icon: { fontSize: 16 },
   reactedBy: { fontSize: 12, color: "#999", marginRight: 4 },

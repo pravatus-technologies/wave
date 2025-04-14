@@ -6,8 +6,9 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import { PVIcon } from "@/components";
+import { PVIcon, PVImageButton } from "@/components";
 
 export default function FriendshipsScreen() {
   return (
@@ -24,7 +25,10 @@ export default function FriendshipsScreen() {
 
       <Section title="My friends" count={367}>
         <FriendCard name="Erica Sinclair" mutualCount={34} />
-        <FriendCard name="Erica Sinclair" mutualCount={34} underline />
+        <FriendCard name="Erica Sinclair" mutualCount={34} />
+        <FriendCard name="Erica Sinclair" mutualCount={34} />
+        <FriendCard name="Erica Sinclair" mutualCount={34} />
+        <FriendCard name="Erica Sinclair" mutualCount={34} />
       </Section>
 
       <Section title="Requests" count={367}>
@@ -67,8 +71,12 @@ const FriendCard = ({ name, mutualCount, underline }: any) => (
         {mutualCount} mutual friends
       </Text>
     </View>
-    <PVIcon name="Plus" size={20} style={styles.actionIcon} />
-    <PVIcon name="ChevronDown" size={20} style={styles.actionIcon} />
+    <PVImageButton onPress={() => Alert.alert(`Chat`)}>
+      <PVIcon name="MessageSquare" size={24} style={styles.actionIcon} />
+    </PVImageButton>
+    <PVImageButton onPress={() => Alert.alert(`Options`)}>
+      <PVIcon name="Ellipsis" size={24} style={styles.actionIcon} />
+    </PVImageButton>
   </View>
 );
 
@@ -116,7 +124,7 @@ const SuggestionCard = ({ name, mutualCount, isNew }: any) => (
 );
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f9fafb", paddingHorizontal: 16 },
+  container: { flex: 1, backgroundColor: "#f9fafb", paddingHorizontal: 10 },
   headerContainer: {
     paddingTop: 60,
     flexDirection: "row",

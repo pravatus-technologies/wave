@@ -1,3 +1,4 @@
+import { PVTabBarButtonProps } from "@/constants/types";
 import { useData, useTheme } from "@/hooks";
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { useEffect } from "react";
@@ -17,17 +18,6 @@ import Animated, {
 } from "react-native-reanimated";
 
 /***
- * We define an extension of the default BottomTabBarButtonProps
- * for our PVTabBarButton since we want to have the option of passing
- * in a custom behavior instead of the default provided by react which
- * triggers a navigation to a set Screen.
- */
-interface PVTabBarButtonProps extends BottomTabBarButtonProps {
-  title?: string;
-  onCustomPress?: (event: GestureResponderEvent) => void;
-}
-
-/***
  * This isthe custom PVTabBarButton component to be used
  * as a value for the "tabBarButton" prop inside the Tab.Screen
  * element.
@@ -41,8 +31,7 @@ export default function PVTabBarButton({
   ...props
 }: PVTabBarButtonProps): JSX.Element {
   // Hooks that define the theme settings and current theme
-  const { isDark } = useData();
-  const { assets, sizes, colors } = useTheme();
+  const { colors } = useTheme();
 
   const isSelected = accessibilityState?.selected;
   const scale = useSharedValue(1);
@@ -70,7 +59,7 @@ export default function PVTabBarButton({
   return (
     <Pressable
       {...props}
-      onPress={onCustomPress ?? onPress} // choose custom behavior or the default one
+      onPress={handlePress}
       style={({ pressed }): StyleProp<ViewStyle> => ({
         marginTop: Platform.OS === "ios" ? 12 : 5,
         opacity: pressed ? 0.7 : 1,

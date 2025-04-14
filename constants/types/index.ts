@@ -1,5 +1,6 @@
+import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import * as LucideIcons from "lucide-react-native";
-import { GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, StyleProp, ViewStyle } from "react-native";
 
 export * from './IUseData';
 export * from './ITranslate';
@@ -22,6 +23,9 @@ export interface ITabButtonProps {
   onCustomPress?: (event: GestureResponderEvent) => void;
 }
 
+/***
+ * Shape of Notification data
+ */
 export type NotificationItem = {
   id: number;
   name: string;
@@ -32,3 +36,24 @@ export type NotificationItem = {
   unread?: boolean;
   buttons?: boolean;
 };
+
+/***
+ * We define an extension of the default BottomTabBarButtonProps
+ * for our PVTabBarButton since we want to have the option of passing
+ * in a custom behavior instead of the default provided by react which
+ * triggers a navigation to a set Screen.
+ */
+export interface PVTabBarButtonProps extends BottomTabBarButtonProps {
+  title?: string;
+  onCustomPress?: (event: GestureResponderEvent) => void;
+};
+
+/***
+ * An interface for PVImageButton so we can define the shape
+ * of the parameter being passed to the PVImageButton
+ */
+export interface PVImageButtonProps {
+  onPress?: (event: GestureResponderEvent) => void;
+  children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+}
