@@ -8,3 +8,5 @@ export const View = ({ debug, style, ...props }: Props) => {
   const debugStyle = useDebugStyle(debug);
   return <RNView style={[debugStyle, style]} {...props} />;
 };
+
+export default View;

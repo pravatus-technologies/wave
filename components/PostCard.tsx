@@ -17,7 +17,8 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { Icon, View } from "@/components";
+import View from "@/components/View";
+import Icon from "@/components/Icon";
 import { useTheme } from "@/hooks";
 
 interface Comment {

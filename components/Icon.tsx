@@ -38,3 +38,5 @@ export const Icon: React.FC<Props> = ({
 
   return <LucideIcon color={color ?? colors.text} size={size} style={style} />;
 };
+
+export default Icon;
