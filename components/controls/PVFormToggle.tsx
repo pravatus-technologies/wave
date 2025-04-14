@@ -24,7 +24,7 @@ type Props = {
   };
 };
 
-export const FormToggle = ({
+export const PVFormToggle = ({
   label,
   value,
   onValueChange,

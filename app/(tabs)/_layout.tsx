@@ -1,13 +1,20 @@
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
-import { Alert, Image, Text, StyleSheet } from "react-native";
+import {
+  Alert,
+  Image,
+  Text,
+  StyleSheet,
+  View,
+  SafeAreaView,
+} from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
-import { SafeAreaView } from "@/components/SafeAreaView";
+
 import { useTheme } from "@/hooks";
-import { Icon, View } from "@/components";
+import { PVIcon } from "@/components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import PVTabBarButton from "@/components/PVTabBarButton";
+import PVTabBarButton from "@/components/controls/PVTabBarButton";
 import { ITabButtonProps } from "@/constants/types";
 
 export const CustomHeader = ({ title, logo }: { title: string; logo: any }) => {
@@ -27,7 +34,7 @@ export const CustomHeader = ({ title, logo }: { title: string; logo: any }) => {
           }}
         />
         <View style={{ flex: 1 }} />
-        <Icon name="User2Icon" size={24} color={colors.text} />
+        <PVIcon name="User2Icon" size={24} color={colors.text} />
       </View>
     </View>
   );
@@ -145,7 +152,7 @@ export default function TabLayout() {
                 }
                 {...props}
               >
-                <Icon
+                <PVIcon
                   name={tab.icon}
                   size={sizes.m}
                   color={

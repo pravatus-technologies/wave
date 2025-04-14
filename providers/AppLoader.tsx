@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StatusBar, Platform, Text } from "react-native";
+import { StatusBar, Platform, Text, View } from "react-native";
 import { Slot } from "expo-router";
 import { useFonts } from "expo-font";
 import { useAuth } from "@/hooks/useAuth";
@@ -7,7 +7,6 @@ import { ThemeProvider, useData } from "@/hooks";
 
 import { DebugProvider } from "@/utils/debug/DebugContext";
 import { DebugOverlay } from "@/utils/debug/DebugOverlay";
-import { View } from "@/components/View";
 
 export function AppLoader() {
   const { theme, setTheme, isDark } = useData();
@@ -40,10 +39,7 @@ export function AppLoader() {
 
   return (
     <ThemeProvider theme={theme} setTheme={setTheme}>
-      <DebugProvider>
-        <Slot />
-        <DebugOverlay />
-      </DebugProvider>
+      <Slot />
     </ThemeProvider>
   );
 }

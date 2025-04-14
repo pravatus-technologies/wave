@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Platform, Alert, TextInput, StyleSheet, Image } from "react-native";
+import {
+  Platform,
+  Alert,
+  TextInput,
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { Redirect } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useData, useTheme } from "@/hooks";
 import * as regex from "@/constants/regex";
 import { AuthErrorCodes } from "@/constants/types";
-import {
-  ActionButton,
-  FormInput,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-  View,
-} from "@/components";
+import { PVActionButton, PVFormInput } from "@/components";
 import { useRouter } from "expo-router";
 
 interface ILogin {
@@ -106,14 +109,14 @@ export default function Signin() {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <FormInput
+          <PVFormInput
             autoCapitalize="none"
             placeholder="Email"
             icon="MailIcon"
             value={login.email}
             onChangeText={(text) => handleChange({ email: text })}
           />
-          <FormInput
+          <PVFormInput
             secureTextEntry
             autoCapitalize="none"
             placeholder="Password"
@@ -121,7 +124,7 @@ export default function Signin() {
             value={login.password}
             onChangeText={(text) => handleChange({ password: text })}
           />
-          <ActionButton
+          <PVActionButton
             title="Sign In"
             onPress={handleSignin}
             loading={busy}
@@ -131,7 +134,7 @@ export default function Signin() {
           />
         </ScrollView>
         <View style={styles.footer}>
-          <ActionButton
+          <PVActionButton
             title="Create an account"
             onPress={() => router.push("/signup")}
             textColor={colors.primary}

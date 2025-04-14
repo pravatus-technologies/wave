@@ -12,7 +12,7 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-export const Icon: React.FC<Props> = ({
+export const PVIcon: React.FC<Props> = ({
   name,
   size = 24,
   color = "#000",
@@ -39,4 +39,4 @@ export const Icon: React.FC<Props> = ({
   return <LucideIcon color={color ?? colors.text} size={size} style={style} />;
 };
 
-export default Icon;
+export default PVIcon;

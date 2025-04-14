@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   View as RNView,
   findNodeHandle,
+  View,
 } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import ParsedText from "react-native-parsed-text";
@@ -17,8 +18,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import View from "@/components/View";
-import Icon from "@/components/Icon";
+import Icon from "@/components/controls/PVIcon";
 import { useTheme } from "@/hooks";
 
 interface Comment {

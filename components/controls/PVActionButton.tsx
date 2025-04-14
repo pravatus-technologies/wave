@@ -4,7 +4,6 @@ import {
   Pressable,
   Text,
   ActivityIndicator,
-  View,
   StyleProp,
   ViewStyle,
   TextStyle,
@@ -22,7 +21,7 @@ type Props = {
   spinnerColor?: ColorValue;
 };
 
-export const ActionButton = ({
+export const PVActionButton = ({
   title,
   onPress,
   loading = false,

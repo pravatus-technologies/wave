@@ -1,3 +1,4 @@
+import { NotificationItem } from "@/constants/types";
 import React from "react";
 import {
   Text,
@@ -5,8 +6,8 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { View } from "@/components";
 
 const notifications = [
   {
@@ -70,7 +71,7 @@ const notifications = [
   },
 ];
 
-const NotificationCard = ({ item }) => (
+const NotificationCard = ({ item }: { item: NotificationItem }) => (
   <View style={styles.card}>
     <Image source={{ uri: item.avatar }} style={styles.avatar} />
     <View style={{ flex: 1 }}>

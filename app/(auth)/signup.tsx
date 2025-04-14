@@ -1,17 +1,22 @@
 import {
-  ActionButton,
-  FormInput,
-  FormToggle,
-  Icon,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-  View,
+  PVActionButton,
+  PVFormInput,
+  PVFormToggle,
+  PVIcon,
 } from "@/components";
 import { useAuth, useData, useTheme } from "@/hooks";
 import { useNavigation, useRouter } from "expo-router";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import { Pressable, Image, Platform, StyleSheet } from "react-native";
+import {
+  Pressable,
+  Image,
+  Platform,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { isValidDateFormat, isOfLegalAge } from "@/utils";
 import * as regex from "@/constants/regex";
 
@@ -103,7 +108,7 @@ export default function Signup() {
           onPress={() => navigation.goBack()}
           style={{ paddingHorizontal: 5 }}
         >
-          <Icon name="ArrowLeft" size={24} color={colors.primary} />
+          <PVIcon name="ArrowLeft" size={24} color={colors.primary} />
         </Pressable>
       ),
     });
@@ -131,14 +136,14 @@ export default function Signup() {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <FormInput
+          <PVFormInput
             autoCapitalize="none"
             placeholder="Email"
             icon="MailIcon"
             value={register.email}
             onChangeText={(text) => handleChange({ email: text })}
           />
-          <FormInput
+          <PVFormInput
             secureTextEntry
             autoCapitalize="none"
             placeholder="Password"
@@ -146,30 +151,30 @@ export default function Signup() {
             value={register.password}
             onChangeText={(text) => handleChange({ password: text })}
           />
-          <FormInput
+          <PVFormInput
             autoCapitalize="words"
             placeholder="First Name"
             value={register.firstName}
             onChangeText={(text) => handleChange({ firstName: text })}
           />
-          <FormInput
+          <PVFormInput
             autoCapitalize="words"
             placeholder="Last Name"
             value={register.lastName}
             onChangeText={(text) => handleChange({ lastName: text })}
           />
-          <FormInput
+          <PVFormInput
             autoCapitalize="none"
             placeholder="Birthday (YYYY/MM/DD)"
             value={register.birthday}
             onChangeText={(text) => handleChange({ birthday: text })}
           />
-          <FormToggle
+          <PVFormToggle
             label="Agree to terms"
             value={register.agreeToTerms}
             onValueChange={(v) => handleChange({ agreeToTerms: v })}
           />
-          <ActionButton
+          <PVActionButton
             title="Sign Up"
             onPress={handleSignup}
             loading={busy}
@@ -186,7 +191,7 @@ export default function Signup() {
           />
         </ScrollView>
         <View style={styles.footer}>
-          <ActionButton
+          <PVActionButton
             title="Create an account"
             onPress={() => router.push("/signup")}
             textColor={colors.primary}

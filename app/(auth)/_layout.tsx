@@ -1,4 +1,3 @@
-import { Icon } from "@/components";
 import { Stack } from "expo-router";
 
 export default function AuthLayout() {

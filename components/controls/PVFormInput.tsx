@@ -22,7 +22,7 @@ type Props = TextInputProps & {
   iconColor?: string;
 };
 
-export const FormInput = ({
+export const PVFormInput = ({
   containerStyle,
   inputStyle,
   icon,

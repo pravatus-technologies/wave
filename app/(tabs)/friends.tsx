@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { Icon } from "@/components";
+import { PVIcon } from "@/components";
 
 export default function FriendshipsScreen() {
   return (
@@ -67,8 +67,8 @@ const FriendCard = ({ name, mutualCount, underline }: any) => (
         {mutualCount} mutual friends
       </Text>
     </View>
-    <Icon name="Plus" size={20} style={styles.actionIcon} />
-    <Icon name="ChevronDown" size={20} style={styles.actionIcon} />
+    <PVIcon name="Plus" size={20} style={styles.actionIcon} />
+    <PVIcon name="ChevronDown" size={20} style={styles.actionIcon} />
   </View>
 );
 
@@ -99,7 +99,7 @@ const SuggestionCard = ({ name, mutualCount, isNew }: any) => (
         style={styles.suggestionAvatar}
       />
       <TouchableOpacity>
-        <Icon name="X" size={14} />
+        <PVIcon name="X" size={14} />
       </TouchableOpacity>
     </View>
     <Text style={styles.name}>{name}</Text>

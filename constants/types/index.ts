@@ -21,3 +21,14 @@ export interface ITabButtonProps {
   icon: IconName;
   onCustomPress?: (event: GestureResponderEvent) => void;
 }
+
+export type NotificationItem = {
+  id: number;
+  name: string;
+  action: string;
+  time: string;
+  avatar: string;
+  icon: string;
+  unread?: boolean;
+  buttons?: boolean;
+};

@@ -7,8 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  View,
 } from "react-native";
-import { View } from "@/components";
 
 const newMessages = [
   {

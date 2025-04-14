@@ -17,11 +17,10 @@ import {
   FlatList,
   Modal,
   Pressable,
-  ScrollView,
   Platform,
+  View,
 } from "react-native";
-import { PostCard, View } from "@/components";
-import { Home, Video, ShoppingCart, Users, Menu } from "lucide-react-native";
+import { PostCard } from "@/components";
 import { BlurView } from "expo-blur";
 import { useTheme } from "@/hooks";
 
