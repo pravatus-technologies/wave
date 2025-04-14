@@ -7,6 +7,7 @@ import {
   Pressable,
   Text,
   StyleSheet,
+  GestureResponderEvent,
 } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
@@ -20,10 +21,12 @@ import { SafeAreaView } from "@/components/SafeAreaView";
 import { useTheme } from "@/hooks";
 import { Icon, View } from "@/components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import PVTabBarButton from "@/components/PVTabBarButton";
+import { IconName, ITabButtonProps } from "@/constants/types";
 
 export const CustomHeader = ({ title, logo }: { title: string; logo: any }) => {
   const insets = useSafeAreaInsets();
-  const { colors, assets } = useTheme();
+  const { colors, assets, sizes } = useTheme();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
 });
 
 export default function TabLayout() {
-  const { colors, assets } = useTheme();
+  const { colors, assets, sizes } = useTheme();
   const { user, initializing } = useAuth();
 
   if (initializing) return null;
@@ -79,6 +82,35 @@ export default function TabLayout() {
   const handleActionPress = () => {
     Alert.alert(`Wave action pressed!`);
   };
+
+  const tabPages: ITabButtonProps[] = [
+    {
+      name: "index",
+      title: "Home",
+      icon: "Home",
+    },
+    {
+      name: "friends",
+      title: "Friends",
+      icon: "Users",
+    },
+    {
+      name: "action",
+      title: "Wave",
+      icon: "Hand",
+      onCustomPress: () => Alert.alert(`Wave hello!`),
+    },
+    {
+      name: "messages",
+      title: "Messages",
+      icon: "MessageCircleMore",
+    },
+    {
+      name: "notifications",
+      title: "Alerts",
+      icon: "Bell",
+    },
+  ];
 
   return !user ? (
     <SafeAreaView>
@@ -92,12 +124,11 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           position: "absolute",
-
           borderTopRightRadius: 25, // 👈 round corners
           borderTopLeftRadius: 25,
           backgroundColor: "white",
           height: 70,
-          elevation: 5, // Android shadow
+          elevation: 25, // Android shadow
           shadowColor: "#000", // iOS shadow
           shadowOffset: { width: 0, height: 5 },
           shadowOpacity: 0.1,
@@ -107,71 +138,40 @@ export default function TabLayout() {
           fontSize: 12,
           fontWeight: "600",
         },
+        tabBarItemStyle: {
+          height: 80,
+        },
         tabBarActiveTintColor: colors.primary as string,
         tabBarInactiveTintColor: colors.text as string,
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Icon name="House" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="friends"
-        options={{
-          title: "Friends",
-          tabBarIcon: ({ color }) => (
-            <Icon name="Users" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="action"
-        options={{
-          title: "Wave",
-          tabBarIcon: ({ color }) => (
-            <Icon name="Hand" size={24} color={color} />
-          ),
-          tabBarButton: (props) => (
-            <Pressable
-              {...props}
-              onPress={(e) => {
-                e.preventDefault();
-                handleActionPress();
-              }}
-              style={({ pressed }) => ({
-                marginTop: Platform.OS === "ios" ? 12 : 5,
-                opacity: pressed ? 0.7 : 1,
-                alignItems: "center",
-                justifyContent: "center",
-              })}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="messages"
-        options={{
-          title: "Messages",
-          tabBarIcon: ({ color }) => (
-            <Icon name="MessageCircleMore" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="notifications"
-        options={{
-          headerShown: false,
-          title: "Alerts",
-          tabBarIcon: ({ color }) => (
-            <Icon name="Bell" size={24} color={color} />
-          ),
-        }}
-      />
+      {tabPages.map((tab) => (
+        <Tabs.Screen
+          name={tab.name}
+          options={{
+            headerShown: false,
+            tabBarButton: (props) => (
+              <PVTabBarButton
+                title={tab.title}
+                onCustomPress={
+                  tab.onCustomPress ? tab.onCustomPress : props.onPress
+                }
+                {...props}
+              >
+                <Icon
+                  name={tab.icon}
+                  size={sizes.m}
+                  color={
+                    props.accessibilityState?.selected
+                      ? colors.primary
+                      : colors.text
+                  }
+                />
+              </PVTabBarButton>
+            ),
+          }}
+        />
+      ))}
     </Tabs>
   );
 }
