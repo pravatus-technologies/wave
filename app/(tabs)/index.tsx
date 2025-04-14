@@ -9,7 +9,6 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import {
-  View,
   Text,
   Image,
   StyleSheet,
@@ -21,7 +20,7 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { PostCard } from "@/components";
+import { PostCard, View } from "@/components";
 import { Home, Video, ShoppingCart, Users, Menu } from "lucide-react-native";
 import { BlurView } from "expo-blur";
 import { useTheme } from "@/hooks";
@@ -213,6 +212,7 @@ export default function HomeScreen() {
         contentContainerStyle={{
           paddingTop: 240,
           paddingBottom: 100,
+          paddingHorizontal: 10,
         }}
         scrollEventThrottle={16}
         onScroll={scrollHandler}
@@ -367,8 +367,6 @@ const styles = StyleSheet.create({
   headerWrapper: {
     paddingHorizontal: 16,
     paddingBottom: 20,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 10,
@@ -406,6 +404,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingLeft: 16,
     backgroundColor: "#fff",
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
   },
   storyBubble: {
     alignItems: "center",
