@@ -1,6 +1,7 @@
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import * as LucideIcons from "lucide-react-native";
 import { ColorValue, GestureResponderEvent, StyleProp, TextInputProps, TextStyle, ViewStyle } from "react-native";
+import { SharedValue } from "react-native-reanimated";
 
 export * from './IUseData';
 export * from './ITranslate';
@@ -65,6 +66,33 @@ export type PVActionButtonProps = {
   textStyle?: StyleProp<TextStyle>;
   spinnerColor?: ColorValue;
 };
+
+export interface Comment {
+  name: string;
+  avatar: string;
+  text: string;
+  time: string;
+}
+
+export interface Post {
+  id: string;
+  author: string;
+  avatar?: string;
+  text?: string;
+  media?: string[];
+  link?: string;
+  commentsList?: Comment[];
+  time?: string;
+  comments?: string;
+  shares?: string;
+  reactedBy?: string;
+  reactions?: string;
+}
+
+export interface PostCardProps {
+  post: Post;
+  scrollY: SharedValue<number>;
+}
 
 /***
  * We define an extension of the default BottomTabBarButtonProps

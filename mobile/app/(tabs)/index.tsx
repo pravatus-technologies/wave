@@ -1,5 +1,5 @@
 // HomeScreen with corrected FlatList structure and stable Android animation
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, {
   useAnimatedStyle,
@@ -23,6 +23,9 @@ import {
 import { PostCard } from "@/components";
 import { BlurView } from "expo-blur";
 import { useTheme } from "@/hooks";
+import { Post } from "@/constants/types";
+import { getPosts } from "@/services/api";
+import Logger from "@/utils/Logger";
 
 const stories = [
   { id: "your", label: "Your Story", image: null, hasNew: true },
@@ -39,6 +42,8 @@ const stories = [
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
   const scrollY = useSharedValue(0);
   const headerTranslateY = useSharedValue(0);
   const tabBarTranslateY = useSharedValue(0);
@@ -87,6 +92,21 @@ export default function HomeScreen() {
   const tabBarStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: tabBarTranslateY.value }],
   }));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getPosts();
+        setPosts(data);
+      } catch (error) {
+        Logger.error(error, "HomeScreen", "Unable to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -216,125 +236,9 @@ export default function HomeScreen() {
         scrollEventThrottle={16}
         onScroll={scrollHandler}
       >
-        <PostCard
-          scrollY={scrollY}
-          post={{
-            id: "yt3",
-            author: "Olivia Park",
-            avatar: "https://i.pravatar.cc/100?img=18",
-            text: "My vlog from Japan 🇯🇵✨ Hope you enjoy!",
-            media: ["https://youtu.be/41O_MydqxTU?feature=shared"],
-            time: "1h ago",
-            comments: "1.1k Comments",
-            shares: "210 Shares",
-            reactedBy: "Travel Junkies & 5k others",
-            reactions: "🌸🍣✈️",
-            commentsList: [
-              {
-                name: "Mina Tanaka",
-                avatar: "https://i.pravatar.cc/100?img=17",
-                text: "Love your Kyoto shots 😍",
-                time: "8m",
-              },
-            ],
-          }}
-        />
-        <PostCard
-          scrollY={scrollY}
-          post={{
-            id: "yt1",
-            author: "Tom Morello",
-            avatar: "https://i.pravatar.cc/100?img=10",
-            text: "This riff changed my life 🤘 #GuitarGod",
-            media: ["https://youtu.be/Q4LBdR-tQHc?feature=shared"],
-            time: "5m ago",
-            comments: "512 Comments",
-            shares: "87 Shares",
-            reactedBy: "Tommy & 1.2k others",
-            reactions: "🔥🎸💯",
-            commentsList: [
-              {
-                name: "Zoe Nguyen",
-                avatar: "https://i.pravatar.cc/100?img=20",
-                text: "@Tom that solo hits so hard 🔥",
-                time: "2m",
-              },
-            ],
-          }}
-        />
-        <PostCard
-          scrollY={scrollY}
-          post={{
-            id: "img1",
-            author: "ArtByLevi",
-            avatar: "https://i.pravatar.cc/100?img=6",
-            text: "A surreal cityscape I painted over the weekend 🌆✨",
-            media: [
-              "https://images.unsplash.com/photo-1501594907352-04cda38ebc29",
-            ],
-            time: "30m ago",
-            comments: "300 Comments",
-            shares: "51 Shares",
-            reactedBy: "Gallery Viewers & 3k others",
-            reactions: "🎨🖌️🧠",
-            commentsList: [
-              {
-                name: "Jin Soo",
-                avatar: "https://i.pravatar.cc/100?img=13",
-                text: "This deserves a spot in MoMA. So good.",
-                time: "10m",
-              },
-            ],
-          }}
-        />
-        <PostCard
-          scrollY={scrollY}
-          post={{
-            id: "yt2",
-            author: "FilmBros",
-            avatar: "https://i.pravatar.cc/100?img=12",
-            text: "Trailer breakdown for the upcoming sci-fi epic!",
-            media: ["https://youtu.be/EXeTwQWrcwY"],
-            time: "25m ago",
-            comments: "189 Comments",
-            shares: "46 Shares",
-            reactedBy: "Sarah & 820 others",
-            reactions: "🎬🛸🍿",
-            commentsList: [
-              {
-                name: "Rick Dalton",
-                avatar: "https://i.pravatar.cc/100?img=25",
-                text: "This scene gave me goosebumps 😱 #Cinema",
-                time: "4m",
-              },
-            ],
-          }}
-        />
-        <PostCard
-          scrollY={scrollY}
-          post={{
-            id: "img3",
-            author: "NeoCanvas",
-            avatar: "https://i.pravatar.cc/100?img=30",
-            text: "AI meets traditional. Prompt + Paint 🧠🎨",
-            media: [
-              "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-            ],
-            time: "1h ago",
-            comments: "430 Comments",
-            shares: "99 Shares",
-            reactedBy: "Artists & 2.4k others",
-            reactions: "🤖🎨🔥",
-            commentsList: [
-              {
-                name: "Drew Fields",
-                avatar: "https://i.pravatar.cc/100?img=31",
-                text: "This is hauntingly beautiful 💀💡",
-                time: "12m",
-              },
-            ],
-          }}
-        />
+        {posts.map((post) => (
+          <PostCard key={post.id} scrollY={scrollY} post={post} />
+        ))}
       </Animated.ScrollView>
     </View>
   );

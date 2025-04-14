@@ -21,33 +21,7 @@ import Animated, {
 import PVImageButton from "./controls/PVImageButton";
 import PVIcon from "./controls/PVIcon";
 import { useTheme } from "@/hooks";
-
-interface Comment {
-  name: string;
-  avatar: string;
-  text: string;
-  time: string;
-}
-
-interface Post {
-  id: string;
-  author: string;
-  avatar?: string;
-  text?: string;
-  media?: string[];
-  link?: string;
-  commentsList?: Comment[];
-  time?: string;
-  comments?: string;
-  shares?: string;
-  reactedBy?: string;
-  reactions?: string;
-}
-
-interface PostCardProps {
-  post: Post;
-  scrollY: SharedValue<number>;
-}
+import { PostCardProps } from "@/constants/types";
 
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { height: screenHeight, width: screenWidth } = useWindowDimensions();
@@ -186,7 +160,8 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         <View style={styles.content}>
           {post?.media && (
             <View style={styles.mediaRow}>
-              {post.media.map((src, index) => renderMediaItem(src, index))}
+              {Array.isArray(post.media) &&
+                post.media.map((src, index) => renderMediaItem(src, index))}
             </View>
           )}
 

@@ -16,7 +16,8 @@ if (!apiBaseUrl) {
 const apiEndpoints = {
   baseUrl: apiBaseUrl,
   endpoints: {
-    newRegistration: `${apiBaseUrl}/user/`
+    newRegistration: `${apiBaseUrl}/user/`,
+    getPosts: `${apiBaseUrl}/posts/`
   }
 };
 
