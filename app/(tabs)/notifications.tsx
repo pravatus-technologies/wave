@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  View,
   Text,
   ScrollView,
   Image,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { View } from "@/components";
 
 const notifications = [
   {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 24,
+    paddingHorizontal: 10,
     paddingTop: 60,
     paddingBottom: 20,
     backgroundColor: "#fff",
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#2e3c6d",
   },
   scrollContent: {
-    padding: 16,
+    padding: 10,
   },
   section: {
     fontSize: 16,
