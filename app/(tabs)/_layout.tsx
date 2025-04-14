@@ -83,7 +83,7 @@ export default function TabLayout() {
       icon: "Home",
     },
     {
-      name: "friends",
+      name: "(friends)",
       title: "Friends",
       icon: "Users",
     },
