@@ -9,12 +9,11 @@ import {
   View,
 } from 'react-native';
 
+import * as ScreenOrientation from 'expo-screen-orientation';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import ParsedText from 'react-native-parsed-text';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import YoutubePlayer from 'react-native-youtube-iframe';
-
-import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { PVIcon, PVImageButton } from '@components/presentational';
 import { PostCardProps } from '@constants/types';
