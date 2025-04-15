@@ -1,3 +1,7 @@
+/* eslint-disable no-undef */
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
+const path = require('path');
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -51,13 +55,15 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['node_modules/', 'dist/'],
   settings: {
     'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: path.resolve(__dirname, './tsconfig.json'),
+      },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
-      typescript: {},
     },
   },
 };

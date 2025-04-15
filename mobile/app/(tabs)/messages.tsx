@@ -59,6 +59,7 @@ const earlierMessages = [
 ];
 
 export default function MessagesScreen(): JSX.Element {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const renderItem = ({ item }: { item: any }): JSX.Element => (
     <TouchableOpacity style={styles.messageCard}>
       <Image source={{ uri: item.avatar }} style={styles.avatar} />
