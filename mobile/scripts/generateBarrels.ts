@@ -2,12 +2,13 @@ import fs from 'fs';
 import path from 'path';
 
 const TARGET_DIRECTORIES = [
-  '../mobile/components/module',
-  '../mobile/components/presentational',
+  '../mobile/components',
+  '../mobile/components/containers',
+  '../mobile/components/controls',
   '../mobile/components/form',
   '../mobile/components/layout',
-  '../mobile/components',
-  '../mobile/containers',
+  '../mobile/components/module',
+  '../mobile/components/presentational',
   '../mobile/context',
   '../mobile/hooks',
   '../mobile/navigation',

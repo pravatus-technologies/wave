@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Alert } fr
 
 import React from 'react';
 
-import { PVIcon, PVImageButton } from '@components/presentational';
+import { CTRLIcon, CTRLImageButton } from '@components/controls';
 
 export default function FriendshipsScreen(): JSX.Element {
   return (
@@ -75,12 +75,12 @@ const FriendCard = ({
         {mutualCount} mutual friends
       </Text>
     </View>
-    <PVImageButton onPress={() => Alert.alert(`Chat`)}>
-      <PVIcon name="MessageSquare" size={24} style={styles.actionIcon} />
-    </PVImageButton>
-    <PVImageButton onPress={() => Alert.alert(`Options`)}>
-      <PVIcon name="Ellipsis" size={24} style={styles.actionIcon} />
-    </PVImageButton>
+    <CTRLImageButton onPress={() => Alert.alert(`Chat`)}>
+      <CTRLIcon name="MessageSquare" size={24} style={styles.actionIcon} />
+    </CTRLImageButton>
+    <CTRLImageButton onPress={() => Alert.alert(`Options`)}>
+      <CTRLIcon name="Ellipsis" size={24} style={styles.actionIcon} />
+    </CTRLImageButton>
   </View>
 );
 
@@ -113,7 +113,7 @@ const SuggestionCard = ({
     <View style={styles.suggestionHeader}>
       <Image source={{ uri: 'https://i.pravatar.cc/100' }} style={styles.suggestionAvatar} />
       <TouchableOpacity>
-        <PVIcon name="X" size={14} />
+        <CTRLIcon name="X" size={14} />
       </TouchableOpacity>
     </View>
     <Text style={styles.name}>{name}</Text>

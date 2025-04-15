@@ -22,7 +22,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
-import { HomeScreenFeed } from '@components';
+import { CNTHomeScreenFeed } from '@components/containers';
 import { HomeScreenFeedRef } from '@constants/types';
 import { useTheme } from '@context';
 
@@ -174,13 +174,13 @@ export default function HomeScreen(): JSX.Element {
         </View>
       </Animated.View>
 
-      <HomeScreenFeed ref={feedRef} scrollY={scrollY} />
+      <CNTHomeScreenFeed ref={feedRef} scrollY={scrollY} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f9fafb' },
+  container: { flex: 1, backgroundColor: '#F1F4F5' },
   topRowContainer: {
     paddingTop: 60,
     paddingHorizontal: 16,

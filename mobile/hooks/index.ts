@@ -1,2 +1,2 @@
-export * from './useColorScheme';
-export * from './useScrollDirection';
+export * from "./useColorScheme";
+export * from "./useScrollDirection";

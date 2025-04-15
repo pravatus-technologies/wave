@@ -11,7 +11,7 @@ import {
 import { useEffect } from 'react';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
-import { PVTabBarButtonProps } from '@constants/types';
+import { TabBarButtonProps } from '@constants/types';
 import { useTheme } from '@context';
 
 /***
@@ -19,14 +19,14 @@ import { useTheme } from '@context';
  * as a value for the "tabBarButton" prop inside the Tab.Screen
  * element.
  */
-export default function PVTabBarButton({
+export default function CTRLTabButton({
   children,
   onPress,
   onCustomPress,
   accessibilityState,
   title,
   ...props
-}: PVTabBarButtonProps): JSX.Element {
+}: TabBarButtonProps): JSX.Element {
   // Hooks that define the theme settings and current theme
   const { colors } = useTheme();
 
