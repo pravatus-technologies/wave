@@ -39,7 +39,7 @@ export default function Signin(): JSX.Element {
     setLoginData(prev => ({ ...prev, ...value }));
   }, []);
 
-  const handleSignin = async () => {
+  const handleSignin = async (): Promise<void> => {
     try {
       setBusy(true);
       await loginWithEmail(login.email, login.password);

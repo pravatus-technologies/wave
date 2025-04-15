@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { useNavigation, useRouter } from 'expo-router';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 import { PVActionButton, PVFormInput, PVFormToggle, PVIcon } from '@components/presentational';
 import * as regex from '@constants/regex';
@@ -65,11 +65,11 @@ export default function Signup(): JSX.Element {
     agreeToTerms: false,
   });
 
-  const handleChange = (value: Partial<IRegisterForm>) => {
+  const handleChange = (value: Partial<IRegisterForm>): void => {
     setRegisterData(prev => ({ ...prev, ...value }));
   };
 
-  const handleSignup = async () => {
+  const handleSignup = async (): Promise<void> => {
     try {
       setBusy(true);
       await registerUserWithEmail(register.email, register.password, register.firstName);

@@ -2,13 +2,13 @@ import { SUPPORTED_LOCALES } from '@env';
 import Storage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import { I18n, Scope, TranslateOptions } from 'i18n-js';
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, { useCallback, useEffect, useState, useContext, createContext } from 'react';
 
 import translations from '@constants/translations';
 import { ITranslate } from '@constants/types';
 import { logWarn } from '@utils/Logger';
 
-export const TranslationContext = React.createContext({});
+export const TranslationContext = createContext({});
 const i18n = new I18n(translations);
 
 export const TranslationProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {

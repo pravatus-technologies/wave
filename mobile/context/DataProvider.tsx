@@ -1,10 +1,10 @@
 import Storage from '@react-native-async-storage/async-storage';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { light, dark } from '@constants';
 import { IUseData, ITheme, IFriend, IFriendRequest } from '@constants/types';
 
-export const DataContext = React.createContext({});
+export const DataContext = createContext({});
 
 export const DataProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [isDark, setIsDark] = useState(false);

@@ -3,14 +3,14 @@ import { SafeAreaView, Text } from 'react-native';
 
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import axios from 'axios';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { Logger } from '@utils/Logger';
 
 import { API } from '../constants';
 import { AuthContextType } from '../constants/types';
 
-const AuthContext = React.createContext<AuthContextType>({
+const AuthContext = createContext<AuthContextType>({
   user: null,
   initializing: true,
   registerUserWithEmail: async () => {
