@@ -2,11 +2,10 @@ import {
   ThemeColors,
   ThemeGradients,
   ThemeSizes,
-  ThemeSpacing
-} from "./theme";
-
-import { THEME as commonTheme } from './theme';
-import { ITheme } from "./types";
+  ThemeSpacing,
+  THEME as commonTheme,
+} from './theme';
+import { ITheme } from './types';
 
 export const COLORS: ThemeColors = {
   // default text color
@@ -91,11 +90,7 @@ export const GRADIENTS: ThemeGradients = {
   black: [String(COLORS.black), '#141727'],
 
   divider: ['rgba(255,255,255,0)', 'rgba(102, 116, 142, 0.6)'],
-  menu: [
-    'rgba(255, 255, 255, 0.0)',
-    'rgba(255, 255, 255, 0.5)',
-    'rgba(255, 255, 255, 0.0)',
-  ],
+  menu: ['rgba(255, 255, 255, 0.0)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.0)'],
 };
 
 export const SIZES: ThemeSizes = {

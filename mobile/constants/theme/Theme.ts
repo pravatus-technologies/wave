@@ -1,18 +1,23 @@
 import { Dimensions, Platform } from 'react-native';
+
+import { Bell } from 'lucide-react-native';
+
 import {
-  ThemeColors,
-  ThemeGradients,
-  ThemeSizes,
-  ThemeSpacing,
   ThemeAssets,
   ThemeIcons,
   ICommonTheme,
   ThemeFonts,
   ThemeLineHeights,
-  ThemeWeights
-} from './';
+  ThemeWeights,
+} from '@constants/theme';
 
-import { Bell } from 'lucide-react-native';
+import OpenSansBold from '../../assets/fonts/OpenSans-Bold.ttf';
+import OpenSansExtraBold from '../../assets/fonts/OpenSans-ExtraBold.ttf';
+import OpenSansLight from '../../assets/fonts/OpenSans-Light.ttf';
+import OpenSansRegular from '../../assets/fonts/OpenSans-Regular.ttf';
+import OpenSansSemiBold from '../../assets/fonts/OpenSans-SemiBold.ttf';
+import logoText from '../../assets/images/logo-text.png';
+import logo from '../../assets/images/logo.png';
 
 const { width, height } = Dimensions.get('window');
 
@@ -38,15 +43,14 @@ export const WEIGHTS: ThemeWeights = {
 
 export const ASSETS: ThemeAssets = {
   // fonts
-  OpenSansLight: require('../../assets/fonts/OpenSans-Light.ttf'),
-  OpenSansRegular: require('../../assets/fonts/OpenSans-Regular.ttf'),
-  OpenSansSemiBold: require('../../assets/fonts/OpenSans-SemiBold.ttf'),
-  OpenSansExtraBold: require('../../assets/fonts/OpenSans-ExtraBold.ttf'),
-  OpenSansBold: require('../../assets/fonts/OpenSans-Bold.ttf'),
-
-  logo: require('../../assets/images/logo.png'),
-  logoText: require('../../assets/images/logo-text.png'),
-}
+  OpenSansLight,
+  OpenSansRegular,
+  OpenSansSemiBold,
+  OpenSansExtraBold,
+  OpenSansBold,
+  logo,
+  logoText,
+};
 
 export const FONTS: ThemeFonts = {
   // based on font size
@@ -82,8 +86,8 @@ export const LINE_HEIGHTS: ThemeLineHeights = {
 };
 
 export const ICONS: ThemeIcons = {
-  bell: Bell
-}
+  bell: Bell,
+};
 
 export const THEME: ICommonTheme = {
   assets: { ...ASSETS },
@@ -93,4 +97,3 @@ export const THEME: ICommonTheme = {
   lines: LINE_HEIGHTS,
   sizes: { width, height },
 };
-

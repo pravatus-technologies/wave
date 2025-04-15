@@ -1,7 +1,15 @@
-import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
-import * as LucideIcons from "lucide-react-native";
-import { ColorValue, GestureResponderEvent, StyleProp, TextInputProps, TextStyle, ViewStyle } from "react-native";
-import { SharedValue } from "react-native-reanimated";
+import {
+  ColorValue,
+  GestureResponderEvent,
+  StyleProp,
+  TextInputProps,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+
+import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+import * as LucideIcons from 'lucide-react-native';
+import { SharedValue } from 'react-native-reanimated';
 
 export * from './IUseData';
 export * from './ITranslate';
@@ -23,6 +31,24 @@ export interface ITabButtonProps {
   icon: IconName;
   onCustomPress?: (event: GestureResponderEvent) => void;
 }
+
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface ILoginValidation {
+  email: boolean;
+  password: boolean;
+}
+
+export type FirebaseAuthError = {
+  code: string;
+  message: string;
+  name: string;
+};
+
+export type PostOrPlaceholder = Post | { id: string; placeholder: boolean };
 
 /***
  * Shape of Notification data
@@ -122,7 +148,7 @@ export interface HomeScreenFeedProps {
 export interface PVTabBarButtonProps extends BottomTabBarButtonProps {
   title?: string;
   onCustomPress?: (event: GestureResponderEvent) => void;
-};
+}
 
 /***
  * An interface for PVImageButton so we can define the shape
@@ -133,4 +159,3 @@ export interface PVImageButtonProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
-

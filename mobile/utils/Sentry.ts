@@ -1,8 +1,7 @@
-import * as Sentry from "@sentry/react-native";
-
 import { SENTRY_DSN, APP_ENV } from '@env';
+import * as Sentry from '@sentry/react-native';
 
-if ((APP_ENV === 'production') || (APP_ENV === 'preview') && SENTRY_DSN) {
+if (APP_ENV === 'production' || (APP_ENV === 'preview' && SENTRY_DSN)) {
   Sentry.init({
     dsn: SENTRY_DSN,
     // Adds more context data to events (IP address, cookies, user, etc.)
@@ -14,6 +13,6 @@ if ((APP_ENV === 'production') || (APP_ENV === 'preview') && SENTRY_DSN) {
     // profilesSampleRate is relative to tracesSampleRate.
     // Here, we'll capture profiles for 100% of transactions.
     profilesSampleRate: 1.0,
-    debug: __DEV__
+    debug: __DEV__,
   });
 }

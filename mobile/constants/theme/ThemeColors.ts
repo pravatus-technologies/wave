@@ -1,7 +1,7 @@
 /**
  * Theme Colors interface
  */
-import { ColorValue } from "react-native";
+import { ColorValue } from 'react-native';
 
 export interface ThemeColors {
   text: ColorValue;

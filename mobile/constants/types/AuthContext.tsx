@@ -1,4 +1,4 @@
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 export type AuthContextType = {
   user: FirebaseAuthTypes.User | null;
@@ -9,14 +9,8 @@ export type AuthContextType = {
     displayName: string,
     avatarUrl?: string
   ) => Promise<FirebaseAuthTypes.UserCredential>;
-  loginWithEmail: (
-    email: string,
-    password: string
-  ) => Promise<FirebaseAuthTypes.UserCredential>;
+  loginWithEmail: (email: string, password: string) => Promise<FirebaseAuthTypes.UserCredential>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
-  updateProfile: (updates: {
-    displayName?: string;
-    photoURL?: string;
-  }) => Promise<void>;
+  updateProfile: (updates: { displayName?: string; photoURL?: string }) => Promise<void>;
 };

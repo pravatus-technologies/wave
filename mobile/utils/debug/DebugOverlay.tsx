@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import {
   Animated,
   PanResponder,
@@ -6,16 +5,19 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-} from "react-native";
-import { useDebug } from "@/utils/debug/DebugContext";
+} from 'react-native';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+import React, { useRef } from 'react';
+
+import { useDebug } from '@utils/debug/DebugContext';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const OVERLAY_WIDTH = 140;
 const OVERLAY_HEIGHT = 50;
 const PADDING = 10;
 
-export const DebugOverlay = () => {
+export const DebugOverlay = (): JSX.Element => {
   const { debug, toggleDebug } = useDebug();
   const pan = useRef(new Animated.ValueXY({ x: 20, y: 100 })).current;
 
@@ -25,10 +27,7 @@ export const DebugOverlay = () => {
       onPanResponderMove: (_, gestureState) => {
         const x = Math.max(
           PADDING,
-          Math.min(
-            gestureState.moveX - OVERLAY_WIDTH / 2,
-            SCREEN_WIDTH - OVERLAY_WIDTH - PADDING
-          )
+          Math.min(gestureState.moveX - OVERLAY_WIDTH / 2, SCREEN_WIDTH - OVERLAY_WIDTH - PADDING)
         );
         const y = Math.max(
           PADDING,
@@ -41,9 +40,7 @@ export const DebugOverlay = () => {
       },
       onPanResponderRelease: () => {
         const finalX =
-          pan.x._value < SCREEN_WIDTH / 2
-            ? PADDING
-            : SCREEN_WIDTH - OVERLAY_WIDTH - PADDING;
+          pan.x._value < SCREEN_WIDTH / 2 ? PADDING : SCREEN_WIDTH - OVERLAY_WIDTH - PADDING;
         Animated.spring(pan.x, {
           toValue: finalX,
           useNativeDriver: false,
@@ -63,9 +60,7 @@ export const DebugOverlay = () => {
       ]}
     >
       <TouchableOpacity onPress={toggleDebug} style={styles.button}>
-        <Text style={styles.text}>
-          {debug ? "🟢 Debug ON" : "⚪ Debug OFF"}
-        </Text>
+        <Text style={styles.text}>{debug ? '🟢 Debug ON' : '⚪ Debug OFF'}</Text>
       </TouchableOpacity>
     </Animated.View>
   );
@@ -73,13 +68,13 @@ export const DebugOverlay = () => {
 
 const styles = StyleSheet.create({
   overlay: {
-    position: "absolute",
+    position: 'absolute',
     width: OVERLAY_WIDTH,
     height: OVERLAY_HEIGHT,
-    backgroundColor: "#000",
+    backgroundColor: '#000',
     borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 9999,
     elevation: 20,
   },
@@ -88,7 +83,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   text: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
   },
 });

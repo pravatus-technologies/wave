@@ -1,21 +1,12 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import { PVIcon, PVImageButton } from "@/components";
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Alert } from 'react-native';
 
-export default function FriendshipsScreen() {
+import React from 'react';
+
+import { PVIcon, PVImageButton } from '@components/presentational';
+
+export default function FriendshipsScreen(): JSX.Element {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: 100 }}
-    >
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100 }}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Friendships</Text>
         <View style={styles.headerIconWrapper}>
@@ -45,7 +36,15 @@ export default function FriendshipsScreen() {
   );
 }
 
-const Section = ({ title, count, children }: any) => (
+const Section = ({
+  title,
+  count,
+  children,
+}: {
+  title: string;
+  count: number;
+  children: React.ReactNode;
+}): JSX.Element => (
   <View style={styles.section}>
     <View style={styles.sectionHeader}>
       <Text style={styles.sectionTitle}>
@@ -59,12 +58,17 @@ const Section = ({ title, count, children }: any) => (
   </View>
 );
 
-const FriendCard = ({ name, mutualCount, underline }: any) => (
+const FriendCard = ({
+  name,
+  mutualCount,
+  underline,
+}: {
+  name: string;
+  mutualCount: number;
+  underline: boolean;
+}): JSX.Element => (
   <View style={styles.friendCard}>
-    <Image
-      source={{ uri: "https://i.pravatar.cc/100" }}
-      style={styles.avatar}
-    />
+    <Image source={{ uri: 'https://i.pravatar.cc/100' }} style={styles.avatar} />
     <View style={{ flex: 1 }}>
       <Text style={styles.name}>{name}</Text>
       <Text style={[styles.mutualText, underline && styles.underline]}>
@@ -80,12 +84,9 @@ const FriendCard = ({ name, mutualCount, underline }: any) => (
   </View>
 );
 
-const RequestCard = ({ name, mutualCount }: any) => (
+const RequestCard = ({ name, mutualCount }: { name: string; mutualCount: number }): JSX.Element => (
   <View style={styles.friendCard}>
-    <Image
-      source={{ uri: "https://i.pravatar.cc/100?img=5" }}
-      style={styles.avatar}
-    />
+    <Image source={{ uri: 'https://i.pravatar.cc/100?img=5' }} style={styles.avatar} />
     <View style={{ flex: 1 }}>
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.mutualText}>{mutualCount} mutual friends</Text>
@@ -99,13 +100,18 @@ const RequestCard = ({ name, mutualCount }: any) => (
   </View>
 );
 
-const SuggestionCard = ({ name, mutualCount, isNew }: any) => (
+const SuggestionCard = ({
+  name,
+  mutualCount,
+  isNew,
+}: {
+  name: string;
+  mutualCount: number;
+  isNew: boolean;
+}): JSX.Element => (
   <View style={styles.suggestionCard}>
     <View style={styles.suggestionHeader}>
-      <Image
-        source={{ uri: "https://i.pravatar.cc/100" }}
-        style={styles.suggestionAvatar}
-      />
+      <Image source={{ uri: 'https://i.pravatar.cc/100' }} style={styles.suggestionAvatar} />
       <TouchableOpacity>
         <PVIcon name="X" size={14} />
       </TouchableOpacity>
@@ -124,86 +130,86 @@ const SuggestionCard = ({ name, mutualCount, isNew }: any) => (
 );
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f9fafb", paddingHorizontal: 10 },
+  container: { flex: 1, backgroundColor: '#f9fafb', paddingHorizontal: 10 },
   headerContainer: {
     paddingTop: 60,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 20,
   },
-  headerText: { fontSize: 24, fontWeight: "700", color: "#2563eb" },
+  headerText: { fontSize: 24, fontWeight: '700', color: '#2563eb' },
   headerIconWrapper: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#e5e7eb",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#e5e7eb',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   statusDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: "#1e3a8a",
+    backgroundColor: '#1e3a8a',
   },
   section: { marginBottom: 32 },
   sectionHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 12,
   },
-  sectionTitle: { fontSize: 18, fontWeight: "700", color: "#1e3a8a" },
-  countText: { color: "#dc2626" },
-  seeAll: { color: "#2563eb", fontWeight: "500" },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#1e3a8a' },
+  countText: { color: '#dc2626' },
+  seeAll: { color: '#2563eb', fontWeight: '500' },
   friendCard: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 24,
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
   },
   avatar: { width: 48, height: 48, borderRadius: 24, marginRight: 12 },
-  name: { fontWeight: "700", fontSize: 16, color: "#1e3a8a" },
-  mutualText: { color: "#6b7280", fontSize: 13, marginTop: 2 },
-  underline: { textDecorationLine: "underline" },
-  actionIcon: { marginLeft: 10, color: "#6b7280" },
+  name: { fontWeight: '700', fontSize: 16, color: '#1e3a8a' },
+  mutualText: { color: '#6b7280', fontSize: 13, marginTop: 2 },
+  underline: { textDecorationLine: 'underline' },
+  actionIcon: { marginLeft: 10, color: '#6b7280' },
   acceptBtn: {
-    backgroundColor: "#2563eb",
+    backgroundColor: '#2563eb',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 20,
     marginLeft: 6,
   },
-  acceptText: { color: "#fff", fontWeight: "600" },
+  acceptText: { color: '#fff', fontWeight: '600' },
   rejectBtn: {
-    backgroundColor: "#f3f4f6",
+    backgroundColor: '#f3f4f6',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 20,
     marginLeft: 6,
   },
-  rejectText: { color: "#2563eb", fontWeight: "600" },
+  rejectText: { color: '#2563eb', fontWeight: '600' },
   suggestionRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     gap: 12,
   },
   suggestionCard: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 24,
     flex: 1,
-    alignItems: "center",
-    position: "relative",
+    alignItems: 'center',
+    position: 'relative',
   },
   suggestionHeader: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   suggestionAvatar: {
     width: 56,
@@ -212,21 +218,21 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   addFriendBtn: {
-    backgroundColor: "#2563eb",
+    backgroundColor: '#2563eb',
     marginTop: 12,
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 20,
   },
-  addFriendText: { color: "#fff", fontWeight: "700" },
+  addFriendText: { color: '#fff', fontWeight: '700' },
   newBadge: {
-    position: "absolute",
+    position: 'absolute',
     top: 46,
     left: 34,
-    backgroundColor: "#2563eb",
+    backgroundColor: '#2563eb',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 8,
   },
-  newBadgeText: { fontSize: 10, color: "#fff", fontWeight: "700" },
+  newBadgeText: { fontSize: 10, color: '#fff', fontWeight: '700' },
 });

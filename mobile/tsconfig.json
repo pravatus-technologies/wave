@@ -4,17 +4,20 @@
     "baseUrl": "./",
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@env": [
-        "node_modules/react-native-dotenv"
-      ]
+      "@components": ["components/index"],
+      "@components/*": ["components/*"],
+      "@containers/*": ["containers/*"],
+      "@constants": ["constants/index"],
+      "@constants/*": ["constants/*"],
+      "@context": ["context/index"],
+      "@context/*": ["context/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["utils/*"],
+      "@utils/": ["utils/index"],
+      "@navigation/*": ["navigation/*"],
+      "@services/*": ["services/*"],
+      "@env": ["node_modules/react-native-dotenv"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "env.d.ts"]
 }

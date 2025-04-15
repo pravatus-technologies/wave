@@ -1,4 +1,4 @@
-import { ITheme } from "./ITheme";
+import { ITheme } from './ITheme';
 
 export interface IUseData {
   isDark: boolean;

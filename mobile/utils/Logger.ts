@@ -1,11 +1,8 @@
+import { APP_ENV, SENTRY_DSN, DISCORD_WEBHOOK_URL } from '@env';
 import crashlytics from '@react-native-firebase/crashlytics';
 import * as Sentry from '@sentry/react-native';
-import {
-  APP_ENV,
-  SENTRY_DSN,
-  DISCORD_WEBHOOK_URL
-} from '@env';
-import { ILogger } from '@/constants/types';
+
+import { ILogger } from '@constants/types';
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -20,7 +17,7 @@ const levelOrder = ['debug', 'info', 'warn', 'error'];
 const minLevelForEnv: Record<string, LogLevel> = {
   development: 'debug',
   staging: 'info',
-  production: 'warn'
+  production: 'warn',
 };
 
 const isLogLevelEnabled = (level: LogLevel): boolean => {
@@ -33,7 +30,7 @@ export const log = async (
   message: string,
   context?: string,
   error?: unknown
-) => {
+): Promise<void> => {
   if (!isLogLevelEnabled(level)) return;
 
   const tag = context ? `[${context}]` : '';
@@ -62,23 +59,27 @@ export const log = async (
       await fetch(DISCORD_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: fullMessage })
+        body: JSON.stringify({ content: fullMessage }),
       });
     }
   }
 };
 
 // Updated helper function signatures
-export const logDebug = (ctx: string | undefined, msg: string) => log('debug', msg, ctx);
-export const logInfo = (ctx: string | undefined, msg: string) => log('info', msg, ctx);
-export const logWarn = (err: unknown, ctx: string | undefined, msg: string) => log('warn', msg, `${ctx ?? "NOCTX"}`, err);
-export const logError = (err: unknown, ctx: string | undefined, msg: string) => log('error', msg, `${ctx ?? "NOCTX"}`, err);
+export const logDebug = (ctx: string | undefined, msg: string): Promise<void> =>
+  log('debug', msg, ctx);
+export const logInfo = (ctx: string | undefined, msg: string): Promise<void> =>
+  log('info', msg, ctx);
+export const logWarn = (err: unknown, ctx: string | undefined, msg: string): Promise<void> =>
+  log('warn', msg, `${ctx ?? 'NOCTX'}`, err);
+export const logError = (err: unknown, ctx: string | undefined, msg: string): Promise<void> =>
+  log('error', msg, `${ctx ?? 'NOCTX'}`, err);
 
 export const Logger: ILogger = {
   debug: logDebug,
   info: logInfo,
   warn: logWarn,
-  error: logError
+  error: logError,
 };
 
 export default Logger;
