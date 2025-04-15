@@ -39,7 +39,7 @@ export default function Signin(): JSX.Element {
     setLoginData(prev => ({ ...prev, ...value }));
   }, []);
 
-  const handleSignin = useCallback(async () => {
+  const handleSignin = async () => {
     try {
       setBusy(true);
       await loginWithEmail(login.email, login.password);
@@ -65,7 +65,7 @@ export default function Signin(): JSX.Element {
     } finally {
       setBusy(false);
     }
-  }, [login, loginWithEmail]);
+  };
 
   useEffect(() => {
     setIsValid({

@@ -65,11 +65,11 @@ export default function Signup(): JSX.Element {
     agreeToTerms: false,
   });
 
-  const handleChange = useCallback((value: Partial<IRegisterForm>) => {
+  const handleChange = (value: Partial<IRegisterForm>) => {
     setRegisterData(prev => ({ ...prev, ...value }));
-  }, []);
+  };
 
-  const handleSignup = useCallback(async () => {
+  const handleSignup = async () => {
     try {
       setBusy(true);
       await registerUserWithEmail(register.email, register.password, register.firstName);
@@ -79,7 +79,7 @@ export default function Signup(): JSX.Element {
       Logger.error(error, 'Signup', err.message);
     }
     setBusy(false);
-  }, [register, registerUserWithEmail, router]);
+  };
 
   useEffect(() => {
     setIsValid({
@@ -91,7 +91,6 @@ export default function Signup(): JSX.Element {
       isLegalAge: isOfLegalAge(register.birthday),
       agreeToTerms: register.agreeToTerms,
     });
-    console.log(`Validity: ${JSON.stringify(isValid)}`);
   }, [register, isValid]);
 
   useLayoutEffect(() => {
