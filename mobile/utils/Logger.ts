@@ -5,7 +5,7 @@ import {
   SENTRY_DSN,
   DISCORD_WEBHOOK_URL
 } from '@env';
-import { ILogger } from '@/constants/types';
+import { ILogger } from '@constants/types';
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 

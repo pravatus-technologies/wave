@@ -1,6 +1,5 @@
-import { PVTabBarButtonProps } from "@/constants/types";
-import { useData, useTheme } from "@/hooks";
-import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
+import { PVTabBarButtonProps } from "@constants/types";
+import { useTheme } from "@context";
 import { useEffect } from "react";
 import {
   GestureResponderEvent,

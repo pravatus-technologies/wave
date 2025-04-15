@@ -1,19 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Storage from "@react-native-async-storage/async-storage";
 
-import { IUseData, ITheme, IFriend, IFriendRequest } from "@/constants/types";
-
-import { FRIENDS, FRIEND_REQUESTS } from "@/constants/mocks";
-import { light, dark } from "../constants";
+import { IUseData, ITheme, IFriend, IFriendRequest } from "@constants/types";
+import { light, dark } from "@constants";
 
 export const DataContext = React.createContext({});
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(false);
   const [theme, setTheme] = useState<ITheme>(light);
-  const [friends, setFriends] = useState<IFriend[]>(FRIENDS);
-  const [friendRequests, setFriendRequests] =
-    useState<IFriendRequest[]>(FRIEND_REQUESTS);
+  const [friends, setFriends] = useState<IFriend[]>([]);
+  const [friendRequests, setFriendRequests] = useState<IFriendRequest[]>([]);
 
   // get isDark mode from storage
   const getIsDark = useCallback(async () => {

@@ -8,10 +8,10 @@ import {
   createStackNavigator,
 } from "@react-navigation/stack";
 
-import { useData } from "./useData";
-import { useTranslation } from "./useTranslation";
+import { useData } from "../context/DataProvider";
+import { useTranslation } from "../context/TranslationProvider";
 
-import useTheme from "../hooks/useTheme";
+import useTheme from "../context/ThemeProvider";
 
 import { Feather } from "@expo/vector-icons";
 import { useAuth } from "./useAuth";

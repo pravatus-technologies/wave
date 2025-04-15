@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { PVIcon, PVImageButton } from "@/components";
+import { PVIcon, PVImageButton } from "@components/presentational";
 
 export default function FriendshipsScreen() {
   return (

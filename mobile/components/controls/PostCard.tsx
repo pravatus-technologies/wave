@@ -16,10 +16,9 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import PVImageButton from "./controls/PVImageButton";
-import PVIcon from "./controls/PVIcon";
-import { useTheme } from "@/hooks";
-import { PostCardProps } from "@/constants/types";
+import { PostCardProps } from "@constants/types";
+import { useTheme } from "@context";
+import { PVIcon, PVImageButton } from "@components/presentational";
 
 export const PostCard: React.FC<PostCardProps> = ({ post, isVisible }) => {
   const { height: screenHeight, width: screenWidth } = useWindowDimensions();

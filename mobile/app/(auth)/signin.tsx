@@ -11,12 +11,12 @@ import {
   ScrollView,
 } from "react-native";
 import { Redirect } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
-import { useData, useTheme } from "@/hooks";
-import * as regex from "@/constants/regex";
-import { AuthErrorCodes } from "@/constants/types";
-import { PVActionButton, PVFormInput } from "@/components";
+import { useAuth, useData, useTheme } from "@context";
+import * as regex from "@constants/regex";
+import { AuthErrorCodes } from "@constants/types";
+
 import { useRouter } from "expo-router";
+import { PVActionButton, PVFormInput } from "@components/presentational";
 
 interface ILogin {
   email: string;
@@ -114,7 +114,7 @@ export default function Signin() {
             placeholder="Email"
             icon="MailIcon"
             value={login.email}
-            onChangeText={(text) => handleChange({ email: text })}
+            onChangeText={(text: any) => handleChange({ email: text })}
           />
           <PVFormInput
             secureTextEntry
@@ -122,7 +122,7 @@ export default function Signin() {
             placeholder="Password"
             icon="Lock"
             value={login.password}
-            onChangeText={(text) => handleChange({ password: text })}
+            onChangeText={(text: any) => handleChange({ password: text })}
           />
           <PVActionButton
             title="Sign In"

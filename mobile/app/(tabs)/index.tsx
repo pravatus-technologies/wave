@@ -20,15 +20,11 @@ import {
   Platform,
   View,
 } from "react-native";
-import { PostCard } from "@/components";
+
 import { BlurView } from "expo-blur";
-import { useTheme } from "@/hooks";
-import { HomeScreenFeedRef, MainTabParamList, Post } from "@/constants/types";
-import { getPosts } from "@/services/api";
-import Logger from "@/utils/Logger";
-import HomeScreenFeed from "@/components/HomeScreenFeed";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { HomeScreenFeedRef } from "@constants/types";
+import { useTheme } from "@context";
+import { HomeScreenFeed } from "@components";
 
 const stories = [
   { id: "your", label: "Your Story", image: null, hasNew: true },

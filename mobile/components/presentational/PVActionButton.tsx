@@ -1,5 +1,5 @@
-import { PVActionButtonProps } from "@/constants/types";
-import { useTheme } from "@/hooks";
+import { PVActionButtonProps } from "@constants/types";
+import { useTheme } from "@context";
 import React from "react";
 import { Pressable, Text, ActivityIndicator } from "react-native";
 

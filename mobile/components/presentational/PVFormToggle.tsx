@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks";
+import { useTheme } from "@context";
 import React from "react";
 import {
   View,

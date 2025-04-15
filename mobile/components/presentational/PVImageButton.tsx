@@ -1,4 +1,4 @@
-import { PVImageButtonProps } from "@/constants/types";
+import { PVImageButtonProps } from "@constants/types";
 import { Pressable, StyleProp, ViewStyle } from "react-native";
 import Animated, {
   useAnimatedStyle,

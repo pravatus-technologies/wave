@@ -6,7 +6,7 @@ import axios from "axios";
 import { API } from "../constants";
 import { AuthContextType } from "../constants/types";
 import { SafeAreaView, Text } from "react-native";
-import { Logger } from "@/utils/Logger";
+import { Logger } from "@utils/Logger";
 
 const AuthContext = React.createContext<AuthContextType>({
   user: null,

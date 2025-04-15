@@ -3,8 +3,8 @@ import {
   PVFormInput,
   PVFormToggle,
   PVIcon,
-} from "@/components";
-import { useAuth, useData, useTheme } from "@/hooks";
+} from "@components/presentational";
+import { useAuth, useData, useTheme } from "@context";
 import { useNavigation, useRouter } from "expo-router";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import {
@@ -17,8 +17,9 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { isValidDateFormat, isOfLegalAge } from "@/utils";
-import * as regex from "@/constants/regex";
+
+import * as regex from "@constants/regex";
+import { isOfLegalAge, isValidDateFormat } from "@utils/helpers";
 
 interface IRegisterForm {
   email: string;
@@ -141,7 +142,7 @@ export default function Signup() {
             placeholder="Email"
             icon="MailIcon"
             value={register.email}
-            onChangeText={(text) => handleChange({ email: text })}
+            onChangeText={(text: any) => handleChange({ email: text })}
           />
           <PVFormInput
             secureTextEntry
@@ -149,25 +150,25 @@ export default function Signup() {
             placeholder="Password"
             icon="Lock"
             value={register.password}
-            onChangeText={(text) => handleChange({ password: text })}
+            onChangeText={(text: any) => handleChange({ password: text })}
           />
           <PVFormInput
             autoCapitalize="words"
             placeholder="First Name"
             value={register.firstName}
-            onChangeText={(text) => handleChange({ firstName: text })}
+            onChangeText={(text: any) => handleChange({ firstName: text })}
           />
           <PVFormInput
             autoCapitalize="words"
             placeholder="Last Name"
             value={register.lastName}
-            onChangeText={(text) => handleChange({ lastName: text })}
+            onChangeText={(text: any) => handleChange({ lastName: text })}
           />
           <PVFormInput
             autoCapitalize="none"
             placeholder="Birthday (YYYY/MM/DD)"
             value={register.birthday}
-            onChangeText={(text) => handleChange({ birthday: text })}
+            onChangeText={(text: any) => handleChange({ birthday: text })}
           />
           <PVFormToggle
             label="Agree to terms"

@@ -2,13 +2,9 @@ import { useEffect } from "react";
 import { StatusBar, Platform, Text, View } from "react-native";
 import { Slot } from "expo-router";
 import { useFonts } from "expo-font";
-import { useAuth } from "@/hooks/useAuth";
-import { ThemeProvider, useData } from "@/hooks";
+import { ThemeProvider, useAuth, useData } from "@context";
 
-import { DebugProvider } from "@/utils/debug/DebugContext";
-import { DebugOverlay } from "@/utils/debug/DebugOverlay";
-
-export function AppLoader() {
+export function AppProvider() {
   const { theme, setTheme, isDark } = useData();
   const { initializing } = useAuth();
 

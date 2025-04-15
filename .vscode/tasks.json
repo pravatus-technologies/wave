@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "generate-barrels",
+      "path": "mobile",
+      "problemMatcher": [],
+      "label": "npm: generate-barrels - mobile",
+      "detail": "ts-node scripts/generateBarrels.ts"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
-import { API } from "@/constants";
-import { Post } from "@/constants/types";
-import Logger from "@/utils/Logger";
+
+import { API } from "@constants";
+import { Post } from "@constants/types";
+import Logger from "@utils/Logger";
 import axios from "axios";
 
 export async function getPosts(page = 1, limit = 10): Promise<Post[]> {

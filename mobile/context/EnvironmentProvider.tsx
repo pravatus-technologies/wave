@@ -13,7 +13,7 @@ import * as Sentry from "@sentry/react-native";
 import crashlytics from "@react-native-firebase/crashlytics";
 
 import { APP_ENV } from "@env";
-import { Logger } from "@/utils/Logger";
+import { Logger } from "@utils/Logger";
 
 const isDev = APP_ENV === "development";
 

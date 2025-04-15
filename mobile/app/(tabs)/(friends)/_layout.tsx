@@ -1,13 +1,1 @@
-import { Stack } from "expo-router";
-
-export default function FriendsStack() {
-  return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="index" />
-    </Stack>
-  );
-}
+export { default } from "@navigation/NVFriendStackLayout";

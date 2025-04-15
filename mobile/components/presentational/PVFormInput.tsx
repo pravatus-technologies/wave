@@ -10,8 +10,8 @@ import {
   Text,
 } from "react-native";
 import * as LucideIcons from "lucide-react-native";
-import { useTheme } from "@/hooks";
-import { PVFormInputProps } from "@/constants/types";
+import { PVFormInputProps } from "@constants/types";
+import { useTheme } from "@context";
 
 export default function PVFormInput({
   containerStyle,

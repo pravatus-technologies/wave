@@ -1,9 +1,9 @@
 import React from "react";
 import { ColorValue, StyleProp, ViewStyle } from "react-native";
 import * as LucideIcons from "lucide-react-native";
-import { logWarn } from "@/utils/Logger";
-import { useData, useTheme } from "@/hooks";
-import { PVIconProps } from "@/constants/types";
+import { PVIconProps } from "@constants/types";
+import { useTheme } from "@context";
+import { Logger } from "@utils/Logger";
 
 export default function PVIcon({
   name,
@@ -20,7 +20,7 @@ export default function PVIcon({
   }>;
 
   if (!LucideIcon) {
-    logWarn(
+    Logger.warn(
       new Error("Unknown Icon"),
       "Icon",
       `Icon "${name}" not found in lucide-react-native.`

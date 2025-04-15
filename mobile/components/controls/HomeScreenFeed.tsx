@@ -16,18 +16,18 @@ import {
   ViewToken,
   FlatList,
 } from "react-native";
+
+import PostCardPlaceholder from "./PostCardPlaceholder";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
   HomeScreenFeedProps,
   HomeScreenFeedRef,
   MainTabParamList,
   Post,
-} from "@/constants/types";
-import { getPosts } from "@/services/api";
-import { SharedValue } from "react-native-reanimated";
-import { PostCard } from "@/components";
-import PostCardPlaceholder from "./PostCardPlaceholder";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+} from "@constants/types";
+import { getPosts } from "@services/api";
+import PostCard from "./PostCard";
 
 export const HomeScreenFeed = forwardRef<
   HomeScreenFeedRef,
