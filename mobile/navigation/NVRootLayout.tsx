@@ -1,11 +1,7 @@
+import '@utils/Sentry';
 // navigation/NVRootLayout.tsx
-import { RootProvider } from "@context";
-import { Slot } from "expo-router";
+import { RootProvider } from '@context';
 
-export default function NVRootLayout() {
-  return (
-    <RootProvider>
-      <Slot />
-    </RootProvider>
-  );
+export default function NVRootLayout(): JSX.Element {
+  return <RootProvider />;
 }

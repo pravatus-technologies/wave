@@ -1,14 +1,16 @@
-import React from "react";
-import { ColorValue, StyleProp, ViewStyle } from "react-native";
-import * as LucideIcons from "lucide-react-native";
-import { PVIconProps } from "@constants/types";
-import { useTheme } from "@context";
-import { Logger } from "@utils/Logger";
+import { ColorValue, StyleProp, ViewStyle } from 'react-native';
+
+import * as LucideIcons from 'lucide-react-native';
+import React from 'react';
+
+import { PVIconProps } from '@constants/types';
+import { useTheme } from '@context';
+import { Logger } from '@utils/Logger';
 
 export default function PVIcon({
   name,
   size = 24,
-  color = "#000",
+  color = '#000',
   style,
 }: PVIconProps): React.ReactNode {
   const { colors } = useTheme();
@@ -21,8 +23,8 @@ export default function PVIcon({
 
   if (!LucideIcon) {
     Logger.warn(
-      new Error("Unknown Icon"),
-      "Icon",
+      new Error('Unknown Icon'),
+      'Icon',
       `Icon "${name}" not found in lucide-react-native.`
     );
     return null;

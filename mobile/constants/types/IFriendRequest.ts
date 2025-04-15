@@ -1,4 +1,4 @@
-import { IFriend } from "./IFriend";
+import { IFriend } from './IFriend';
 
 export interface IFriendRequest {
   id: number | string;

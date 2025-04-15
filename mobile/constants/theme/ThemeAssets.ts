@@ -1,14 +1,16 @@
 /**
  * Theme Assets interface
  */
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType } from 'react-native';
+
+import { FontSource } from 'expo-font';
 
 export interface ThemeAssets {
-  OpenSansLight?: any;
-  OpenSansRegular?: any;
-  OpenSansSemiBold?: any;
-  OpenSansExtraBold?: any;
-  OpenSansBold?: any;
+  OpenSansLight?: FontSource;
+  OpenSansRegular?: FontSource;
+  OpenSansSemiBold?: FontSource;
+  OpenSansExtraBold?: FontSource;
+  OpenSansBold?: FontSource;
 
   logo: ImageSourcePropType;
   logoText: ImageSourcePropType;

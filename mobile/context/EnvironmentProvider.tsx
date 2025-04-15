@@ -1,21 +1,15 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { Platform } from "react-native";
-import * as Device from "expo-device";
-import * as Application from "expo-application";
+import { Platform } from 'react-native';
 
-import * as Sentry from "@sentry/react-native";
-import crashlytics from "@react-native-firebase/crashlytics";
+import { APP_ENV } from '@env';
+import crashlytics from '@react-native-firebase/crashlytics';
+import * as Sentry from '@sentry/react-native';
+import * as Application from 'expo-application';
+import * as Device from 'expo-device';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
-import { APP_ENV } from "@env";
-import { Logger } from "@utils/Logger";
+import { Logger } from '@utils/Logger';
 
-const isDev = APP_ENV === "development";
+const isDev = APP_ENV === 'development';
 
 type DeviceInfo = {
   model: string | null;
@@ -26,7 +20,7 @@ type DeviceInfo = {
 
 type AppEnvironment = {
   isDev: boolean;
-  platform: "ios" | "android" | "windows" | "macos" | "web";
+  platform: 'ios' | 'android' | 'windows' | 'macos' | 'web';
   logger: typeof Logger;
   telemetry: typeof Sentry | typeof crashlytics;
   device: DeviceInfo;
@@ -34,12 +28,8 @@ type AppEnvironment = {
 
 const EnvironmentContext = createContext<AppEnvironment | undefined>(undefined);
 
-export const EnvironmentProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const [device, setDevice] = useState<DeviceInfo>({
+export const EnvironmentProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
+  const [device] = useState<DeviceInfo>({
     model: Device.modelName,
     os: `${Device.osName} ${Device.osVersion}`,
     appVersion: Application.nativeApplicationVersion,
@@ -51,22 +41,17 @@ export const EnvironmentProvider = ({
       isDev,
       platform: Platform.OS,
       logger: Logger,
-      telemetry: Platform.OS === "ios" ? Sentry : crashlytics,
+      telemetry: Platform.OS === 'ios' ? Sentry : crashlytics,
       device: device,
     }),
-    []
+    [device]
   );
 
-  return (
-    <EnvironmentContext.Provider value={env}>
-      {children}
-    </EnvironmentContext.Provider>
-  );
+  return <EnvironmentContext.Provider value={env}>{children}</EnvironmentContext.Provider>;
 };
 
-export const useAppEnv = () => {
+export const useAppEnv = (): AppEnvironment => {
   const context = useContext(EnvironmentContext);
-  if (!context)
-    throw new Error("useAppEnv must be used within EnvironmentProvider");
+  if (!context) throw new Error('useAppEnv must be used within EnvironmentProvider');
   return context;
 };

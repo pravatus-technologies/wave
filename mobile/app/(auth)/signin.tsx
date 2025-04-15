@@ -1,35 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
 import {
   Platform,
   Alert,
-  TextInput,
   StyleSheet,
   Image,
   SafeAreaView,
   View,
   KeyboardAvoidingView,
   ScrollView,
-} from "react-native";
-import { Redirect } from "expo-router";
-import { useAuth, useData, useTheme } from "@context";
-import * as regex from "@constants/regex";
-import { AuthErrorCodes } from "@constants/types";
+} from 'react-native';
 
-import { useRouter } from "expo-router";
-import { PVActionButton, PVFormInput } from "@components/presentational";
+import { Redirect, useRouter } from 'expo-router';
+import React, { useState, useEffect, useCallback } from 'react';
 
-interface ILogin {
-  email: string;
-  password: string;
-}
+import { PVActionButton, PVFormInput } from '@components/presentational';
+import * as regex from '@constants/regex';
+import { AuthErrorCodes, FirebaseAuthError, ILogin, ILoginValidation } from '@constants/types';
+import { useAuth, useData, useTheme } from '@context';
 
-interface ILoginValidation {
-  email: boolean;
-  password: boolean;
-}
-
-export default function Signin() {
-  const { isDark, theme } = useData();
+export default function Signin(): JSX.Element {
+  const { isDark } = useData();
   const { colors, assets, sizes } = useTheme();
   const { user, loginWithEmail } = useAuth();
   const router = useRouter();
@@ -37,8 +26,8 @@ export default function Signin() {
   const [busy, setBusy] = useState(false);
 
   const [login, setLoginData] = useState<ILogin>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [isValid, setIsValid] = useState<ILoginValidation>({
@@ -47,36 +36,36 @@ export default function Signin() {
   });
 
   const handleChange = useCallback((value: Partial<ILogin>) => {
-    setLoginData((prev) => ({ ...prev, ...value }));
+    setLoginData(prev => ({ ...prev, ...value }));
   }, []);
 
   const handleSignin = useCallback(async () => {
     try {
       setBusy(true);
       await loginWithEmail(login.email, login.password);
-    } catch (error: any) {
-      let errorMessage = "Something went wrong. Please try again";
-
-      switch (error.code) {
+    } catch (error: unknown) {
+      let errorMessage = 'Something went wrong. Please try again';
+      const err = error as FirebaseAuthError;
+      switch (err.code) {
         case AuthErrorCodes.INVALID_CREDENTIAL:
-          errorMessage = "Your login has expired or is invalid.";
+          errorMessage = 'Your login has expired or is invalid.';
           break;
         case AuthErrorCodes.USER_NOT_FOUND:
-          errorMessage = "No user found with that email.";
+          errorMessage = 'No user found with that email.';
           break;
         case AuthErrorCodes.WRONG_PASSWORD:
-          errorMessage = "Incorrect password.";
+          errorMessage = 'Incorrect password.';
           break;
         case AuthErrorCodes.NETWORK_FAILED:
-          errorMessage = "Network error. Check your connection.";
+          errorMessage = 'Network error. Check your connection.';
           break;
       }
 
-      Alert.alert("Login Error", errorMessage);
+      Alert.alert('Login Error', errorMessage);
     } finally {
       setBusy(false);
     }
-  }, [login]);
+  }, [login, loginWithEmail]);
 
   useEffect(() => {
     setIsValid({
@@ -91,9 +80,9 @@ export default function Signin() {
     <SafeAreaView style={{ flex: 1, paddingHorizontal: 20 }}>
       <View
         style={{
-          margin: "auto",
-          alignContent: "center",
-          alignItems: "center",
+          margin: 'auto',
+          alignContent: 'center',
+          alignItems: 'center',
           marginTop: sizes.height * 0.15,
         }}
       >
@@ -101,7 +90,7 @@ export default function Signin() {
       </View>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={60}
       >
         <ScrollView
@@ -114,7 +103,7 @@ export default function Signin() {
             placeholder="Email"
             icon="MailIcon"
             value={login.email}
-            onChangeText={(text: any) => handleChange({ email: text })}
+            onChangeText={(text: string) => handleChange({ email: text })}
           />
           <PVFormInput
             secureTextEntry
@@ -122,7 +111,7 @@ export default function Signin() {
             placeholder="Password"
             icon="Lock"
             value={login.password}
-            onChangeText={(text: any) => handleChange({ password: text })}
+            onChangeText={(text: string) => handleChange({ password: text })}
           />
           <PVActionButton
             title="Sign In"
@@ -136,10 +125,10 @@ export default function Signin() {
         <View style={styles.footer}>
           <PVActionButton
             title="Create an account"
-            onPress={() => router.push("/signup")}
+            onPress={() => router.push('/signup')}
             textColor={colors.primary}
             buttonStyle={{
-              backgroundColor: "transparent",
+              backgroundColor: 'transparent',
               borderWidth: 1,
               borderColor: isDark ? colors.gray : colors.primary,
             }}
@@ -153,19 +142,19 @@ export default function Signin() {
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingVertical: 24,
   },
   input: {
     borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "transparent",
+    borderColor: 'gray',
+    backgroundColor: 'transparent',
     padding: 12,
     marginVertical: 8,
     borderRadius: 10,
   },
   footer: {
-    marginTop: "auto",
+    marginTop: 'auto',
     marginBottom: 20,
   },
 });

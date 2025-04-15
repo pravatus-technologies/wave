@@ -1,6 +1,6 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
-export default function NVAuthStackLayout() {
+export default function NVAuthStackLayout(): JSX.Element {
   return (
     <Stack
       screenOptions={{

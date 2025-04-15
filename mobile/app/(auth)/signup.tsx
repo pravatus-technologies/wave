@@ -1,13 +1,4 @@
 import {
-  PVActionButton,
-  PVFormInput,
-  PVFormToggle,
-  PVIcon,
-} from "@components/presentational";
-import { useAuth, useData, useTheme } from "@context";
-import { useNavigation, useRouter } from "expo-router";
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import {
   Pressable,
   Image,
   Platform,
@@ -16,10 +7,17 @@ import {
   View,
   KeyboardAvoidingView,
   ScrollView,
-} from "react-native";
+} from 'react-native';
 
-import * as regex from "@constants/regex";
-import { isOfLegalAge, isValidDateFormat } from "@utils/helpers";
+import { useNavigation, useRouter } from 'expo-router';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+
+import { PVActionButton, PVFormInput, PVFormToggle, PVIcon } from '@components/presentational';
+import * as regex from '@constants/regex';
+import { FirebaseAuthError } from '@constants/types';
+import { useAuth, useData, useTheme } from '@context';
+import { isOfLegalAge, isValidDateFormat } from '@utils/helpers';
+import { Logger } from '@utils/Logger';
 
 interface IRegisterForm {
   email: string;
@@ -40,7 +38,7 @@ interface IRegisterValidation {
   agreeToTerms: boolean;
 }
 
-export default function Signup() {
+export default function Signup(): JSX.Element {
   const navigation = useNavigation();
   const { colors, sizes, assets } = useTheme();
   const { registerUserWithEmail } = useAuth();
@@ -49,11 +47,11 @@ export default function Signup() {
 
   const [busy, setBusy] = useState(false);
   const [register, setRegisterData] = useState<IRegisterForm>({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    birthday: "",
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    birthday: '',
     agreeToTerms: false,
   });
 
@@ -68,23 +66,20 @@ export default function Signup() {
   });
 
   const handleChange = useCallback((value: Partial<IRegisterForm>) => {
-    setRegisterData((prev) => ({ ...prev, ...value }));
+    setRegisterData(prev => ({ ...prev, ...value }));
   }, []);
 
   const handleSignup = useCallback(async () => {
     try {
       setBusy(true);
-      await registerUserWithEmail(
-        register.email,
-        register.password,
-        register.firstName
-      );
-      router.replace("/");
-    } catch (error: any) {
-      let errorMessage = "Something went wrong. Please try again";
+      await registerUserWithEmail(register.email, register.password, register.firstName);
+      router.replace('/');
+    } catch (error: unknown) {
+      const err = error as FirebaseAuthError;
+      Logger.error(error, 'Signup', err.message);
     }
     setBusy(false);
-  }, [register]);
+  }, [register, registerUserWithEmail, router]);
 
   useEffect(() => {
     setIsValid({
@@ -92,36 +87,32 @@ export default function Signup() {
       password: regex.password.test(register.password),
       firstName: regex.name.test(register.firstName),
       lastName: regex.name.test(register.lastName),
-      birthday:
-        isValidDateFormat(register.birthday) && isOfLegalAge(register.birthday),
+      birthday: isValidDateFormat(register.birthday) && isOfLegalAge(register.birthday),
       isLegalAge: isOfLegalAge(register.birthday),
       agreeToTerms: register.agreeToTerms,
     });
     console.log(`Validity: ${JSON.stringify(isValid)}`);
-  }, [register]);
+  }, [register, isValid]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
-      headerTitle: "",
+      headerTitle: '',
       headerLeft: () => (
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={{ paddingHorizontal: 5 }}
-        >
+        <Pressable onPress={() => navigation.goBack()} style={{ paddingHorizontal: 5 }}>
           <PVIcon name="ArrowLeft" size={24} color={colors.primary} />
         </Pressable>
       ),
     });
-  }, [navigation]);
+  }, [navigation, colors.primary]);
 
   return (
     <SafeAreaView style={{ flex: 1, paddingHorizontal: 20 }}>
       <View
         style={{
-          margin: "auto",
-          alignContent: "center",
-          alignItems: "center",
+          margin: 'auto',
+          alignContent: 'center',
+          alignItems: 'center',
           marginTop: sizes.height * 0.15,
         }}
       >
@@ -129,7 +120,7 @@ export default function Signup() {
       </View>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={60}
       >
         <ScrollView
@@ -142,7 +133,7 @@ export default function Signup() {
             placeholder="Email"
             icon="MailIcon"
             value={register.email}
-            onChangeText={(text: any) => handleChange({ email: text })}
+            onChangeText={(text: string) => handleChange({ email: text })}
           />
           <PVFormInput
             secureTextEntry
@@ -150,30 +141,30 @@ export default function Signup() {
             placeholder="Password"
             icon="Lock"
             value={register.password}
-            onChangeText={(text: any) => handleChange({ password: text })}
+            onChangeText={(text: string) => handleChange({ password: text })}
           />
           <PVFormInput
             autoCapitalize="words"
             placeholder="First Name"
             value={register.firstName}
-            onChangeText={(text: any) => handleChange({ firstName: text })}
+            onChangeText={(text: string) => handleChange({ firstName: text })}
           />
           <PVFormInput
             autoCapitalize="words"
             placeholder="Last Name"
             value={register.lastName}
-            onChangeText={(text: any) => handleChange({ lastName: text })}
+            onChangeText={(text: string) => handleChange({ lastName: text })}
           />
           <PVFormInput
             autoCapitalize="none"
             placeholder="Birthday (YYYY/MM/DD)"
             value={register.birthday}
-            onChangeText={(text: any) => handleChange({ birthday: text })}
+            onChangeText={(text: string) => handleChange({ birthday: text })}
           />
           <PVFormToggle
             label="Agree to terms"
             value={register.agreeToTerms}
-            onValueChange={(v) => handleChange({ agreeToTerms: v })}
+            onValueChange={v => handleChange({ agreeToTerms: v })}
           />
           <PVActionButton
             title="Sign Up"
@@ -194,10 +185,10 @@ export default function Signup() {
         <View style={styles.footer}>
           <PVActionButton
             title="Create an account"
-            onPress={() => router.push("/signup")}
+            onPress={() => router.push('/signup')}
             textColor={colors.primary}
             buttonStyle={{
-              backgroundColor: "transparent",
+              backgroundColor: 'transparent',
               borderWidth: 1,
               borderColor: isDark ? colors.gray : colors.primary,
             }}
@@ -211,19 +202,19 @@ export default function Signup() {
 const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingVertical: 24,
   },
   input: {
     borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "transparent",
+    borderColor: 'gray',
+    backgroundColor: 'transparent',
     padding: 12,
     marginVertical: 8,
     borderRadius: 10,
   },
   footer: {
-    marginTop: "auto",
+    marginTop: 'auto',
     marginBottom: 20,
   },
 });

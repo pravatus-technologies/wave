@@ -1,9 +1,10 @@
 // components/PostCardPlaceholder.tsx
 
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet } from 'react-native';
 
-export default function PostCardPlaceholder() {
+import React from 'react';
+
+export default function PostCardPlaceholder(): JSX.Element {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -22,44 +23,44 @@ export default function PostCardPlaceholder() {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 20,
     padding: 16,
     marginBottom: 12,
     elevation: 2,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
   },
   avatar: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: '#e5e7eb',
     marginRight: 12,
   },
   textBlock: {
     height: 16,
-    width: "60%",
-    backgroundColor: "#e5e7eb",
+    width: '60%',
+    backgroundColor: '#e5e7eb',
     borderRadius: 4,
   },
   body: {
     height: 160,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: '#f3f4f6',
     borderRadius: 8,
     marginBottom: 16,
   },
   footer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   action: {
     height: 30,
     width: 30,
     borderRadius: 15,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: '#e5e7eb',
   },
 });

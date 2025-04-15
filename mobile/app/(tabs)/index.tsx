@@ -1,13 +1,4 @@
 // HomeScreen with corrected FlatList structure and stable Android animation
-import React, { useEffect, useRef, useState } from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  useAnimatedReaction,
-  useAnimatedScrollHandler,
-  withSpring,
-} from "react-native-reanimated";
 import {
   Text,
   Image,
@@ -19,27 +10,36 @@ import {
   Pressable,
   Platform,
   View,
-} from "react-native";
+} from 'react-native';
 
-import { BlurView } from "expo-blur";
-import { HomeScreenFeedRef } from "@constants/types";
-import { useTheme } from "@context";
-import { HomeScreenFeed } from "@components";
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useRef, useState } from 'react';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  useAnimatedReaction,
+  withSpring,
+} from 'react-native-reanimated';
+
+import { HomeScreenFeed } from '@components';
+import { HomeScreenFeedRef } from '@constants/types';
+import { useTheme } from '@context';
 
 const stories = [
-  { id: "your", label: "Your Story", image: null, hasNew: true },
+  { id: 'your', label: 'Your Story', image: null, hasNew: true },
   {
-    id: "1",
-    label: "Erica Sinclair",
-    image: "https://i.pravatar.cc/100?img=1",
+    id: '1',
+    label: 'Erica Sinclair',
+    image: 'https://i.pravatar.cc/100?img=1',
     hasNew: true,
   },
-  { id: "2", label: "Will Byers", image: "https://i.pravatar.cc/100?img=2" },
-  { id: "3", label: "Millie Brown", image: "https://i.pravatar.cc/100?img=3" },
-  { id: "4", label: "Rachel Podrez", image: "https://i.pravatar.cc/100?img=4" },
+  { id: '2', label: 'Will Byers', image: 'https://i.pravatar.cc/100?img=2' },
+  { id: '3', label: 'Millie Brown', image: 'https://i.pravatar.cc/100?img=3' },
+  { id: '4', label: 'Rachel Podrez', image: 'https://i.pravatar.cc/100?img=4' },
 ];
 
-export default function HomeScreen() {
+export default function HomeScreen(): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
   const scrollY = useSharedValue(0);
   const headerTranslateY = useSharedValue(0);
@@ -80,10 +80,6 @@ export default function HomeScreen() {
     transform: [{ translateY: scrollY.value > collapseThreshold ? -300 : 0 }],
   }));
 
-  const tabBarStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: tabBarTranslateY.value }],
-  }));
-
   return (
     <View style={styles.container}>
       <Modal
@@ -95,16 +91,9 @@ export default function HomeScreen() {
         <View style={styles.modalBackground}>
           <View style={styles.modalBox}>
             <Text style={styles.modalTitle}>What's on your mind?</Text>
-            <TextInput
-              style={styles.modalInput}
-              placeholder="Share your thoughts..."
-              multiline
-            />
-            <Pressable
-              style={styles.modalClose}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={{ color: "#246bfd" }}>Close</Text>
+            <TextInput style={styles.modalInput} placeholder="Share your thoughts..." multiline />
+            <Pressable style={styles.modalClose} onPress={() => setModalVisible(false)}>
+              <Text style={{ color: '#246bfd' }}>Close</Text>
             </Pressable>
           </View>
         </View>
@@ -122,25 +111,13 @@ export default function HomeScreen() {
       </View>
 
       <Animated.View style={[styles.collapsingHeader, headerStyle]}>
-        {Platform.OS === "android" && Platform.Version < 31 ? (
-          <View
-            style={[
-              StyleSheet.absoluteFill,
-              { backgroundColor: "rgba(255,255,255,0.9)" },
-            ]}
-          />
+        {Platform.OS === 'android' && Platform.Version < 31 ? (
+          <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(255,255,255,0.9)' }]} />
         ) : (
-          <BlurView
-            intensity={50}
-            tint="light"
-            style={StyleSheet.absoluteFill}
-          />
+          <BlurView intensity={50} tint="light" style={StyleSheet.absoluteFill} />
         )}
         <View style={styles.headerWrapper}>
-          <TouchableOpacity
-            onPress={() => setModalVisible(true)}
-            activeOpacity={0.7}
-          >
+          <TouchableOpacity onPress={() => setModalVisible(true)} activeOpacity={0.7}>
             <View pointerEvents="none">
               <TextInput
                 placeholder="What's on your mind, Hashem?"
@@ -167,28 +144,22 @@ export default function HomeScreen() {
               horizontal
               showsHorizontalScrollIndicator={false}
               data={stories}
-              keyExtractor={(item) => item.id}
+              keyExtractor={item => item.id}
               renderItem={({ item }) => (
                 <View style={styles.storyBubble}>
-                  <View style={{ position: "relative" }}>
+                  <View style={{ position: 'relative' }}>
                     {item.image ? (
                       item.hasNew ? (
                         <LinearGradient
-                          colors={["#4f46e5", "#3b82f6"]}
+                          colors={['#4f46e5', '#3b82f6']}
                           style={styles.ringWrapperGradient}
                         >
-                          <Image
-                            source={{ uri: item.image }}
-                            style={styles.storyImage}
-                          />
+                          <Image source={{ uri: item.image }} style={styles.storyImage} />
                           <View style={styles.unreadBadge} />
                         </LinearGradient>
                       ) : (
                         <View style={styles.ringWrapper}>
-                          <Image
-                            source={{ uri: item.image }}
-                            style={styles.storyImage}
-                          />
+                          <Image source={{ uri: item.image }} style={styles.storyImage} />
                         </View>
                       )
                     ) : (
@@ -209,34 +180,34 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f9fafb" },
+  container: { flex: 1, backgroundColor: '#f9fafb' },
   topRowContainer: {
     paddingTop: 60,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     zIndex: 11,
   },
   topRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 12,
   },
   collapsingHeader: {
     paddingTop: 20,
-    position: "absolute",
+    position: 'absolute',
     top: 96,
     left: 0,
     right: 0,
     zIndex: 10,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#eaeaea",
+    borderColor: '#eaeaea',
   },
   headerWrapper: {
     paddingHorizontal: 16,
     paddingBottom: 20,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 10,
   },
@@ -245,7 +216,7 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
   },
-  headerIcons: { flexDirection: "row", gap: 8 },
+  headerIcons: { flexDirection: 'row', gap: 8 },
   headerIcon: {
     width: 36,
     height: 36,
@@ -253,35 +224,35 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   inputBox: {
-    backgroundColor: "#f3f4f6",
+    backgroundColor: '#f3f4f6',
     borderRadius: 20,
     padding: 12,
     marginBottom: 12,
   },
   shareRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   shareBtn: {
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: '#e5e7eb',
     borderRadius: 20,
   },
   storyRow: {
     paddingVertical: 12,
     paddingLeft: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderBottomRightRadius: 25,
     borderBottomLeftRadius: 25,
   },
   storyBubble: {
-    alignItems: "center",
+    alignItems: 'center',
     marginRight: 16,
   },
   ringWrapper: {
     borderWidth: 2,
-    borderColor: "#246bfd",
+    borderColor: '#246bfd',
     borderRadius: 30,
     padding: 2,
   },
@@ -295,94 +266,94 @@ const styles = StyleSheet.create({
     borderRadius: 28,
   },
   unreadBadge: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     right: 0,
     width: 10,
     height: 10,
-    backgroundColor: "#34D399",
+    backgroundColor: '#34D399',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: '#fff',
   },
   storyPlaceholder: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: "#cbd5e1",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#cbd5e1',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   storyLabel: {
     fontSize: 12,
     marginTop: 4,
-    color: "#111827",
+    color: '#111827',
   },
   tabBar: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     height: 70,
-    flexDirection: "row",
-    backgroundColor: "#fff",
+    flexDirection: 'row',
+    backgroundColor: '#fff',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 6,
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   tabBtn: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalBox: {
-    width: "90%",
-    backgroundColor: "#fff",
+    width: '90%',
+    backgroundColor: '#fff',
     borderRadius: 20,
     padding: 20,
-    alignItems: "stretch",
+    alignItems: 'stretch',
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: '600',
     marginBottom: 12,
   },
   modalInput: {
     minHeight: 100,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: '#e5e7eb',
     borderRadius: 12,
     padding: 12,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
   },
   modalClose: {
     marginTop: 16,
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
   },
   modalBackground: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   modalFullBox: {
     flex: 1,
-    width: "100%",
+    width: '100%',
     padding: 20,
-    backgroundColor: "#fff",
-    justifyContent: "flex-start",
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
   },
 
   modalInputFull: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: '#e5e7eb',
     borderRadius: 12,
     padding: 12,
-    textAlignVertical: "top",
-    backgroundColor: "#f9fafb",
+    textAlignVertical: 'top',
+    backgroundColor: '#f9fafb',
   },
 });

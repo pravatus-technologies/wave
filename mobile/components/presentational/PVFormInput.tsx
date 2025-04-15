@@ -1,24 +1,17 @@
-import React, { useState } from "react";
-import {
-  TextInput,
-  StyleSheet,
-  TextInputProps,
-  View,
-  ViewStyle,
-  TextStyle,
-  Pressable,
-  Text,
-} from "react-native";
-import * as LucideIcons from "lucide-react-native";
-import { PVFormInputProps } from "@constants/types";
-import { useTheme } from "@context";
+import { TextInput, StyleSheet, View, ViewStyle, Pressable, Text, StyleProp } from 'react-native';
+
+import * as LucideIcons from 'lucide-react-native';
+import React, { useState } from 'react';
+
+import { PVFormInputProps } from '@constants/types';
+import { useTheme } from '@context';
 
 export default function PVFormInput({
   containerStyle,
   inputStyle,
   icon,
   iconSize = 20,
-  iconColor = "#949494",
+  iconColor = '#949494',
   secureTextEntry,
   ...props
 }: PVFormInputProps): JSX.Element {
@@ -26,29 +19,27 @@ export default function PVFormInput({
     ? (LucideIcons[icon] as React.ComponentType<{
         size?: number;
         color?: string;
-        style?: any;
+        style?: StyleProp<ViewStyle>;
       }>)
     : null;
 
   const { colors } = useTheme();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const isPassword = !!secureTextEntry;
-  const togglePassword = () => setIsPasswordVisible((prev) => !prev);
+  const togglePassword = (): void => setIsPasswordVisible(prev => !prev);
 
   const ToggleIcon = (
     isPasswordVisible ? LucideIcons.EyeOff : LucideIcons.Eye
   ) as React.ComponentType<{
     size?: number;
     color?: string;
-    style?: any;
+    style?: StyleProp<ViewStyle>;
   }>;
 
   return (
     <View style={[styles.container, containerStyle]}>
       <View style={styles.inputWrapper}>
-        {LucideIcon && (
-          <LucideIcon size={iconSize} color={iconColor} style={styles.icon} />
-        )}
+        {LucideIcon && <LucideIcon size={iconSize} color={iconColor} style={styles.icon} />}
         <TextInput
           style={[styles.input, inputStyle]}
           placeholderTextColor="#949494"
@@ -72,11 +63,11 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   inputWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
-    borderColor: "gray",
-    backgroundColor: "#eaeaea",
+    borderColor: 'gray',
+    backgroundColor: '#eaeaea',
     borderRadius: 10,
     paddingHorizontal: 10,
   },
@@ -89,7 +80,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   toggleText: {
-    fontWeight: "500",
+    fontWeight: '500',
     paddingLeft: 8,
   },
 });

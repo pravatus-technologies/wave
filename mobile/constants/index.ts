@@ -4,21 +4,25 @@ import Constants from 'expo-constants';
 const extra = Constants.expoConfig?.extra;
 
 if (!extra) {
-  throw new Error('❌ `extra` config is missing from Constants.expoConfig. Check your app.config.js.');
+  throw new Error(
+    '❌ `extra` config is missing from Constants.expoConfig. Check your app.config.js.'
+  );
 }
 
 const { apiBaseUrl, env } = extra;
 
 if (!apiBaseUrl) {
-  throw new Error('❌ API_BASE_URL is not defined. Check your app.config.js or environment variables.');
+  throw new Error(
+    '❌ API_BASE_URL is not defined. Check your app.config.js or environment variables.'
+  );
 }
 
 const apiEndpoints = {
   baseUrl: apiBaseUrl,
   endpoints: {
     newRegistration: `${apiBaseUrl}/user/`,
-    getPosts: `${apiBaseUrl}/posts/`
-  }
+    getPosts: `${apiBaseUrl}/posts/`,
+  },
 };
 
 export const API = apiEndpoints;

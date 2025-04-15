@@ -1,6 +1,8 @@
-import { NotificationItem } from '@constants/types';
-import React from 'react';
 import { Text, ScrollView, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+import React from 'react';
+
+import { NotificationItem } from '@constants/types';
 
 const notifications = [
   {
@@ -64,7 +66,7 @@ const notifications = [
   },
 ];
 
-const NotificationCard = ({ item }: { item: NotificationItem }) => (
+const NotificationCard = ({ item }: { item: NotificationItem }): JSX.Element => (
   <View style={styles.card}>
     <Image source={{ uri: item.avatar }} style={styles.avatar} />
     <View style={{ flex: 1 }}>
@@ -87,7 +89,7 @@ const NotificationCard = ({ item }: { item: NotificationItem }) => (
   </View>
 );
 
-export default function NotificationScreen() {
+export default function NotificationScreen(): JSX.Element {
   return (
     <View style={styles.container}>
       <View style={styles.header}>

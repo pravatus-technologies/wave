@@ -1,7 +1,9 @@
-import { PVActionButtonProps } from "@constants/types";
-import { useTheme } from "@context";
-import React from "react";
-import { Pressable, Text, ActivityIndicator } from "react-native";
+import { Pressable, Text, ActivityIndicator } from 'react-native';
+
+import React from 'react';
+
+import { PVActionButtonProps } from '@constants/types';
+import { useTheme } from '@context';
 
 export default function PVActionButton({
   title,
@@ -11,7 +13,7 @@ export default function PVActionButton({
   buttonStyle,
   textStyle,
   textColor,
-  spinnerColor = "#ffffff",
+  spinnerColor = '#ffffff',
 }: PVActionButtonProps): JSX.Element {
   const { colors } = useTheme();
   const isDisabled = disabled || loading;
@@ -29,27 +31,18 @@ export default function PVActionButton({
           borderWidth: 1,
           borderColor: loading ? colors.gray : colors.primary,
           borderRadius: 25,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
           opacity: isDisabled ? 0.7 : 1,
         },
         buttonStyle,
       ]}
     >
       {loading && (
-        <ActivityIndicator
-          size="small"
-          color={spinnerColor}
-          style={{ marginRight: 8 }}
-        />
+        <ActivityIndicator size="small" color={spinnerColor} style={{ marginRight: 8 }} />
       )}
-      <Text
-        style={[
-          { color: textColor ?? colors.white, fontWeight: "bold" },
-          textStyle,
-        ]}
-      >
+      <Text style={[{ color: textColor ?? colors.white, fontWeight: 'bold' }, textStyle]}>
         {title}
       </Text>
     </Pressable>

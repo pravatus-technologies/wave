@@ -1,21 +1,21 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import Storage from "@react-native-async-storage/async-storage";
+import Storage from '@react-native-async-storage/async-storage';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import { IUseData, ITheme, IFriend, IFriendRequest } from "@constants/types";
-import { light, dark } from "@constants";
+import { light, dark } from '@constants';
+import { IUseData, ITheme, IFriend, IFriendRequest } from '@constants/types';
 
 export const DataContext = React.createContext({});
 
-export const DataProvider = ({ children }: { children: React.ReactNode }) => {
+export const DataProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [isDark, setIsDark] = useState(false);
   const [theme, setTheme] = useState<ITheme>(light);
-  const [friends, setFriends] = useState<IFriend[]>([]);
-  const [friendRequests, setFriendRequests] = useState<IFriendRequest[]>([]);
+  const [friends] = useState<IFriend[]>([]);
+  const [friendRequests] = useState<IFriendRequest[]>([]);
 
   // get isDark mode from storage
   const getIsDark = useCallback(async () => {
     // get preferance gtom storage
-    const isDarkJSON = await Storage.getItem("isDark");
+    const isDarkJSON = await Storage.getItem('isDark');
 
     if (isDarkJSON !== null) {
       // set isDark / compare if has updated
@@ -29,7 +29,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       // set isDark / compare if has updated
       setIsDark(payload);
       // save preferance to storage
-      Storage.setItem("isDark", JSON.stringify(payload));
+      Storage.setItem('isDark', JSON.stringify(payload));
     },
     [setIsDark]
   );
@@ -53,9 +53,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     friendRequests,
   };
 
-  return (
-    <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
-  );
+  return <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>;
 };
 
-export const useData = () => useContext(DataContext) as IUseData;
+export const useData = (): IUseData => useContext(DataContext) as IUseData;

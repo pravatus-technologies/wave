@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 type DebugContextType = {
   debug: boolean;
@@ -16,21 +16,19 @@ const DebugContext = createContext<DebugContextType>({
   decreaseLevel: () => {},
 });
 
-export const DebugProvider = ({ children }: { children: React.ReactNode }) => {
+export const DebugProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [debug, setDebug] = useState(false);
   const [level, setLevel] = useState(0);
 
-  const toggleDebug = () => setDebug((prev) => !prev);
-  const increaseLevel = () => setLevel((lvl) => lvl + 1);
-  const decreaseLevel = () => setLevel((lvl) => Math.max(0, lvl - 1));
+  const toggleDebug = (): void => setDebug(prev => !prev);
+  const increaseLevel = (): void => setLevel(lvl => lvl + 1);
+  const decreaseLevel = (): void => setLevel(lvl => Math.max(0, lvl - 1));
 
   return (
-    <DebugContext.Provider
-      value={{ debug, toggleDebug, level, increaseLevel, decreaseLevel }}
-    >
+    <DebugContext.Provider value={{ debug, toggleDebug, level, increaseLevel, decreaseLevel }}>
       {children}
     </DebugContext.Provider>
   );
 };
 
-export const useDebug = () => useContext(DebugContext);
+export const useDebug = (): DebugContextType => useContext(DebugContext);

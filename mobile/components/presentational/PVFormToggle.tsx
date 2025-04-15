@@ -1,5 +1,3 @@
-import { useTheme } from "@context";
-import React from "react";
 import {
   View,
   Text,
@@ -9,7 +7,11 @@ import {
   ViewStyle,
   TextStyle,
   ColorValue,
-} from "react-native";
+} from 'react-native';
+
+import React from 'react';
+
+import { useTheme } from '@context';
 
 type Props = {
   label: string;
@@ -31,9 +33,9 @@ export default function PVFormToggle({
   containerStyle,
   labelStyle,
   switchColor = {
-    true: "#34C759", // iOS green
-    false: "#ccc",
-    thumb: "#ffffff",
+    true: '#34C759', // iOS green
+    false: '#ccc',
+    thumb: '#ffffff',
   },
 }: Props): JSX.Element {
   const { colors } = useTheme();
@@ -63,12 +65,12 @@ export default function PVFormToggle({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 12,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   label: {
     fontSize: 16,
-    color: "#333",
+    color: '#333',
   },
 });

@@ -2,11 +2,10 @@ import {
   ThemeColors,
   ThemeGradients,
   ThemeSizes,
-  ThemeSpacing
-} from "./theme";
-
-import { THEME as commonTheme } from './theme';
-import { ITheme } from "./types";
+  ThemeSpacing,
+  THEME as commonTheme,
+} from './theme';
+import { ITheme } from './types';
 
 export const COLORS: ThemeColors = {
   // default text color
@@ -74,8 +73,7 @@ export const COLORS: ThemeColors = {
 
   /** product link color */
   link: '#5A8DEE',
-
-}
+};
 
 export const GRADIENTS: ThemeGradients = {
   primary: ['#30D5C8', '#7B61FF'],
@@ -92,11 +90,7 @@ export const GRADIENTS: ThemeGradients = {
   black: [String(COLORS.black), '#141727'],
 
   divider: ['rgba(255,255,255,0.3)', 'rgba(102, 116, 142, 0.6)'],
-  menu: [
-    'rgba(255, 255, 255, 0.2)',
-    'rgba(112, 125, 149, 0.5)',
-    'rgba(255, 255, 255, 0.2)',
-  ],
+  menu: ['rgba(255, 255, 255, 0.2)', 'rgba(112, 125, 149, 0.5)', 'rgba(255, 255, 255, 0.2)'],
 };
 
 export const SIZES: ThemeSizes = {
@@ -186,4 +180,4 @@ export const THEME: ITheme = {
   colors: COLORS,
   gradients: GRADIENTS,
   sizes: { ...SIZES, ...commonTheme.sizes, ...SPACING },
-}
+};

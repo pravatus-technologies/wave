@@ -1,5 +1,6 @@
-import { ScaledSize } from "react-native";
-import { ThemeAssets, ThemeFonts, ThemeWeights, ThemeLineHeights, ThemeIcons } from "./";
+import { ScaledSize } from 'react-native';
+
+import { ThemeAssets, ThemeFonts, ThemeWeights, ThemeLineHeights, ThemeIcons } from './';
 
 /**
  * Common Theme interface

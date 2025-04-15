@@ -1,20 +1,19 @@
-import * as Sentry from "@sentry/react-native";
+import { Text } from 'react-native';
 
-import { TranslationProvider } from "@context/TranslationProvider";
+import * as Sentry from '@sentry/react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { Text } from "react-native";
-import { EnvironmentProvider } from "./EnvironmentProvider";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { AuthProvider, DataProvider } from "@context";
-import { AppProvider } from "./AppProvider";
+import { AuthProvider, DataProvider } from '@context';
+import { TranslationProvider } from '@context/TranslationProvider';
 
-const SentryFallback = () => (
-  <Text style={{ margin: 20 }}>
-    Oops! Something went wrong. Please restart the app.
-  </Text>
+import { AppProvider } from './AppProvider';
+import { EnvironmentProvider } from './EnvironmentProvider';
+
+const SentryFallback = (): JSX.Element => (
+  <Text style={{ margin: 20 }}>Oops! Something went wrong. Please restart the app.</Text>
 );
 
-export function RootProvider() {
+export function RootProvider(): JSX.Element {
   return (
     <EnvironmentProvider>
       <Sentry.ErrorBoundary fallback={SentryFallback} showDialog>
