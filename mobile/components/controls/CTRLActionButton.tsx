@@ -5,7 +5,7 @@ import React from 'react';
 import { PVActionButtonProps } from '@constants/types';
 import { useTheme } from '@context';
 
-export default function PVActionButton({
+export default function CTRLActionButton({
   title,
   onPress,
   loading = false,

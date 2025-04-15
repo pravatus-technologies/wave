@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 import React from 'react';
 
-export default function PostCardPlaceholder(): JSX.Element {
+export default function CNTPostCardPlaceholder(): JSX.Element {
   return (
     <View style={styles.card}>
       <View style={styles.header}>

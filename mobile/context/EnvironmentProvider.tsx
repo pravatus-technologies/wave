@@ -7,24 +7,10 @@ import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
+import { AppEnvironment, DeviceInfo } from '@constants/types';
 import { Logger } from '@utils/Logger';
 
 const isDev = APP_ENV === 'development';
-
-type DeviceInfo = {
-  model: string | null;
-  os: string;
-  appVersion: string | null;
-  buildNumber: string | null;
-};
-
-type AppEnvironment = {
-  isDev: boolean;
-  platform: 'ios' | 'android' | 'windows' | 'macos' | 'web';
-  logger: typeof Logger;
-  telemetry: typeof Sentry | typeof crashlytics;
-  device: DeviceInfo;
-};
 
 const EnvironmentContext = createContext<AppEnvironment | undefined>(undefined);
 

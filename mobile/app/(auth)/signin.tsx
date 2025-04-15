@@ -12,7 +12,7 @@ import {
 import { Redirect, useRouter } from 'expo-router';
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { PVActionButton, PVFormInput } from '@components/presentational';
+import { CTRLActionButton, CTRLFormInput } from '@components/controls';
 import * as regex from '@constants/regex';
 import { AuthErrorCodes, FirebaseAuthError, ILogin, ILoginValidation } from '@constants/types';
 import { useAuth, useData, useTheme } from '@context';
@@ -98,14 +98,14 @@ export default function Signin(): JSX.Element {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <PVFormInput
+          <CTRLFormInput
             autoCapitalize="none"
             placeholder="Email"
             icon="MailIcon"
             value={login.email}
             onChangeText={(text: string) => handleChange({ email: text })}
           />
-          <PVFormInput
+          <CTRLFormInput
             secureTextEntry
             autoCapitalize="none"
             placeholder="Password"
@@ -113,7 +113,7 @@ export default function Signin(): JSX.Element {
             value={login.password}
             onChangeText={(text: string) => handleChange({ password: text })}
           />
-          <PVActionButton
+          <CTRLActionButton
             title="Sign In"
             onPress={handleSignin}
             loading={busy}
@@ -123,7 +123,7 @@ export default function Signin(): JSX.Element {
           />
         </ScrollView>
         <View style={styles.footer}>
-          <PVActionButton
+          <CTRLActionButton
             title="Create an account"
             onPress={() => router.push('/signup')}
             textColor={colors.primary}

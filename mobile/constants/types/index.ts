@@ -7,9 +7,13 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import crashlytics from '@react-native-firebase/crashlytics';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+import * as Sentry from '@sentry/react-native';
 import * as LucideIcons from 'lucide-react-native';
 import { SharedValue } from 'react-native-reanimated';
+
+import { Logger } from '@utils/Logger';
 
 export * from './IUseData';
 export * from './ITranslate';
@@ -93,6 +97,21 @@ export type PVActionButtonProps = {
   spinnerColor?: ColorValue;
 };
 
+export type DeviceInfo = {
+  model: string | null;
+  os: string;
+  appVersion: string | null;
+  buildNumber: string | null;
+};
+
+export type AppEnvironment = {
+  isDev: boolean;
+  platform: 'ios' | 'android' | 'windows' | 'macos' | 'web';
+  logger: typeof Logger;
+  telemetry: typeof Sentry | typeof crashlytics;
+  device: DeviceInfo;
+};
+
 export type MainTabParamList = {
   index: undefined;
   friends: undefined;
@@ -145,7 +164,7 @@ export interface HomeScreenFeedProps {
  * in a custom behavior instead of the default provided by react which
  * triggers a navigation to a set Screen.
  */
-export interface PVTabBarButtonProps extends BottomTabBarButtonProps {
+export interface TabBarButtonProps extends BottomTabBarButtonProps {
   title?: string;
   onCustomPress?: (event: GestureResponderEvent) => void;
 }
@@ -154,7 +173,7 @@ export interface PVTabBarButtonProps extends BottomTabBarButtonProps {
  * An interface for PVImageButton so we can define the shape
  * of the parameter being passed to the PVImageButton
  */
-export interface PVImageButtonProps {
+export interface ImageButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;

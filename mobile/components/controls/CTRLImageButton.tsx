@@ -2,14 +2,14 @@ import { Pressable, StyleProp, ViewStyle } from 'react-native';
 
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
-import { PVImageButtonProps } from '@constants/types';
+import { ImageButtonProps } from '@constants/types';
 
 /***
- * This is the custom PVImageButton component to be
+ * This is the custom CTRLImageButton component to be
  * used as a pressable image button such as Like, Share,
  * and Comment buttons in the PostCard component
  */
-export default function PVImageButton({ children, onPress }: PVImageButtonProps): JSX.Element {
+export default function CTRLImageButton({ children, onPress }: ImageButtonProps): JSX.Element {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],

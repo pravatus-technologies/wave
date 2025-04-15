@@ -15,11 +15,11 @@ import ParsedText from 'react-native-parsed-text';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
-import { PVIcon, PVImageButton } from '@components/presentational';
+import { CTRLIcon, CTRLImageButton } from '@components/controls';
 import { PostCardProps } from '@constants/types';
 import { useTheme } from '@context';
 
-export default function PostCard({ post, isVisible }: PostCardProps): React.ReactNode {
+export default function CNTPostCard({ post, isVisible }: PostCardProps): React.ReactNode {
   const { width: screenWidth } = useWindowDimensions();
   const [isPlaying, setIsPlaying] = useState(false);
   const [visibleComments, setVisibleComments] = useState<number>(1);
@@ -163,19 +163,19 @@ export default function PostCard({ post, isVisible }: PostCardProps): React.Reac
 
         <View style={styles.actions}>
           <View style={{ marginRight: 20 }}>
-            <PVImageButton style={styles.actionBtn}>
-              <PVIcon name="ThumbsUpIcon" size={21} color={colors.text} />
-            </PVImageButton>
+            <CTRLImageButton style={styles.actionBtn}>
+              <CTRLIcon name="ThumbsUpIcon" size={21} color={colors.text} />
+            </CTRLImageButton>
           </View>
           <View style={{ marginRight: 20 }}>
-            <PVImageButton style={styles.actionBtn}>
-              <PVIcon name="MessageSquare" size={21} color={colors.text} />
-            </PVImageButton>
+            <CTRLImageButton style={styles.actionBtn}>
+              <CTRLIcon name="MessageSquare" size={21} color={colors.text} />
+            </CTRLImageButton>
           </View>
           <View style={{ marginRight: 20 }}>
-            <PVImageButton style={styles.actionBtn}>
-              <PVIcon name="Share" size={21} color={colors.text} />
-            </PVImageButton>
+            <CTRLImageButton style={styles.actionBtn}>
+              <CTRLIcon name="Share" size={21} color={colors.text} />
+            </CTRLImageButton>
           </View>
           <View style={{ flex: 1 }} />
           <Text style={styles.reactedBy}>{post?.reactedBy || 'Q&A with Mark & 361k others'}</Text>

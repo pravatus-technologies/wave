@@ -7,7 +7,7 @@ import { PVIconProps } from '@constants/types';
 import { useTheme } from '@context';
 import { Logger } from '@utils/Logger';
 
-export default function PVIcon({
+export default function CTRLIcon({
   name,
   size = 24,
   color = '#000',

@@ -3,7 +3,7 @@ import { Alert, Text, SafeAreaView } from 'react-native';
 import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
-import { PVIcon, PVTabBarButton } from '@components/presentational';
+import { CTRLIcon, CTRLTabButton } from '@components/controls';
 import { ITabButtonProps } from '@constants/types';
 import { useAuth, useTheme } from '@context';
 
@@ -88,17 +88,17 @@ export default function NVMainTabLayout(): React.ReactNode {
           options={{
             headerShown: false,
             tabBarButton: props => (
-              <PVTabBarButton
+              <CTRLTabButton
                 title={tab.title}
                 onCustomPress={tab.onCustomPress ? tab.onCustomPress : props.onPress}
                 {...props}
               >
-                <PVIcon
+                <CTRLIcon
                   name={tab.icon}
                   size={sizes.m}
                   color={props.accessibilityState?.selected ? colors.primary : colors.text}
                 />
-              </PVTabBarButton>
+              </CTRLTabButton>
             ),
           }}
         />

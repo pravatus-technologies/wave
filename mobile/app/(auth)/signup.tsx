@@ -12,7 +12,7 @@ import {
 import { useNavigation, useRouter } from 'expo-router';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
-import { PVActionButton, PVFormInput, PVFormToggle, PVIcon } from '@components/presentational';
+import { CTRLActionButton, CTRLFormInput, CTRLFormToggle, CTRLIcon } from '@components/controls';
 import * as regex from '@constants/regex';
 import { FirebaseAuthError } from '@constants/types';
 import { useAuth, useData, useTheme } from '@context';
@@ -99,7 +99,7 @@ export default function Signup(): JSX.Element {
       headerTitle: '',
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()} style={{ paddingHorizontal: 5 }}>
-          <PVIcon name="ArrowLeft" size={24} color={colors.primary} />
+          <CTRLIcon name="ArrowLeft" size={24} color={colors.primary} />
         </Pressable>
       ),
     });
@@ -127,14 +127,14 @@ export default function Signup(): JSX.Element {
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          <PVFormInput
+          <CTRLFormInput
             autoCapitalize="none"
             placeholder="Email"
             icon="MailIcon"
             value={register.email}
             onChangeText={(text: string) => handleChange({ email: text })}
           />
-          <PVFormInput
+          <CTRLFormInput
             secureTextEntry
             autoCapitalize="none"
             placeholder="Password"
@@ -142,30 +142,30 @@ export default function Signup(): JSX.Element {
             value={register.password}
             onChangeText={(text: string) => handleChange({ password: text })}
           />
-          <PVFormInput
+          <CTRLFormInput
             autoCapitalize="words"
             placeholder="First Name"
             value={register.firstName}
             onChangeText={(text: string) => handleChange({ firstName: text })}
           />
-          <PVFormInput
+          <CTRLFormInput
             autoCapitalize="words"
             placeholder="Last Name"
             value={register.lastName}
             onChangeText={(text: string) => handleChange({ lastName: text })}
           />
-          <PVFormInput
+          <CTRLFormInput
             autoCapitalize="none"
             placeholder="Birthday (YYYY/MM/DD)"
             value={register.birthday}
             onChangeText={(text: string) => handleChange({ birthday: text })}
           />
-          <PVFormToggle
+          <CTRLFormToggle
             label="Agree to terms"
             value={register.agreeToTerms}
             onValueChange={v => handleChange({ agreeToTerms: v })}
           />
-          <PVActionButton
+          <CTRLActionButton
             title="Sign Up"
             onPress={handleSignup}
             loading={busy}
@@ -182,7 +182,7 @@ export default function Signup(): JSX.Element {
           />
         </ScrollView>
         <View style={styles.footer}>
-          <PVActionButton
+          <CTRLActionButton
             title="Create an account"
             onPress={() => router.push('/signup')}
             textColor={colors.primary}

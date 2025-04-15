@@ -26,7 +26,7 @@ type Props = {
   };
 };
 
-export default function PVFormToggle({
+export default function CTRLFormToggle({
   label,
   value,
   onValueChange,

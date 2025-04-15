@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { PVFormInputProps } from '@constants/types';
 import { useTheme } from '@context';
 
-export default function PVFormInput({
+export default function CTRLFormInput({
   containerStyle,
   inputStyle,
   icon,
