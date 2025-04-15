@@ -9,10 +9,12 @@ import {
   View,
 } from 'react-native';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import ParsedText from 'react-native-parsed-text';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import YoutubePlayer from 'react-native-youtube-iframe';
+
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { PVIcon, PVImageButton } from '@components/presentational';
 import { PostCardProps } from '@constants/types';
@@ -66,6 +68,14 @@ export default function PostCard({ post, isVisible }: PostCardProps): React.Reac
 
   const handleUrlPress = (url: string): Promise<void> => Linking.openURL(url);
 
+  const handleFullScreenChange = useCallback(async (isFullscreen: boolean): Promise<void> => {
+    if (isFullscreen) {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    } else {
+      await ScreenOrientation.unlockAsync();
+    }
+  }, []);
+
   const renderMediaItem = (src: string, index: number): JSX.Element => {
     const youtubeIdMatch = src.match(
       /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/
@@ -91,6 +101,7 @@ export default function PostCard({ post, isVisible }: PostCardProps): React.Reac
             width={screenWidth}
             play={isPlaying}
             videoId={videoId}
+            onFullScreenChange={handleFullScreenChange}
             onChangeState={event => {
               if (event === 'paused') userPaused.current = true;
               if (event === 'playing') userPaused.current = false;
