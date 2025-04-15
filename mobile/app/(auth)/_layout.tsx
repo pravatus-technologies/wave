@@ -1,1 +1,1 @@
-export { default } from "@navigation/NVAuthStackLayout";
+export { default } from '@navigation/NVAuthStackLayout';

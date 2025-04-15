@@ -1,1 +1,1 @@
-export { default } from "@navigation/NVMainTabLayout";
+export { default } from '@navigation/NVMainTabLayout';

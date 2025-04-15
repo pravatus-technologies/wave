@@ -1,1 +1,1 @@
-export { default } from "@navigation/NVRootLayout";
+export { default } from '@navigation/NVRootLayout';

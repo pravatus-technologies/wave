@@ -1,1 +1,1 @@
-export { default } from "@navigation/NVFriendStackLayout";
+export { default } from '@navigation/NVFriendStackLayout';
