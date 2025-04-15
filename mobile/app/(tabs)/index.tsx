@@ -77,7 +77,7 @@ export default function HomeScreen(): JSX.Element {
   );
 
   const headerStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: scrollY.value > collapseThreshold ? -300 : 0 }],
+    transform: [{ translateY: headerTranslateY.value }],
   }));
 
   return (

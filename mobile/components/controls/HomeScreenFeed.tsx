@@ -1,13 +1,5 @@
 // HomeScreenFeed.tsx
-import {
-  RefreshControl,
-  View,
-  ActivityIndicator,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-  ViewToken,
-  FlatList,
-} from 'react-native';
+import { RefreshControl, View, ActivityIndicator, ViewToken, FlatList } from 'react-native';
 
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated';
 
 import { PostCard, PostCardPlaceholder } from '@components';
 import {
@@ -35,56 +28,31 @@ export const HomeScreenFeed = forwardRef<HomeScreenFeedRef, HomeScreenFeedProps>
     const [posts, setPosts] = useState<Post[]>([]);
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const listRef = useRef<FlatList>(null);
 
     const navigation = useNavigation<BottomTabNavigationProp<MainTabParamList>>();
 
     const [visibleIndeces, setVisibleIndeces] = useState<number[]>([]);
-    const cacheRef = useRef<{ [key: number]: Post[] }>({});
 
-    const loadPosts = useCallback(
-      async (reset = false): Promise<void> => {
-        try {
-          const nextPage = reset ? 1 : page;
+    const loadPosts = async (reset = false): Promise<void> => {
+      const nextPage = reset ? 1 : page;
 
-          if (cacheRef.current[nextPage]) {
-            if (reset) {
-              setLoading(true);
-              setPosts(cacheRef.current[nextPage]);
-              setPage(2);
-            } else {
-              setPosts(prev => [...prev, ...cacheRef.current[nextPage]]);
-              setPage(nextPage + 1);
-            }
-            return;
-          }
+      const response = await getPosts(nextPage, 10);
+      if (reset) {
+        setPosts(response);
+        setPage(2); // set up for next page
+      } else {
+        setPosts(prev => [...prev, ...response]);
+        setPage(prev => prev + 1); // use functional setState!
+      }
+    };
 
-          const response = await getPosts(nextPage, 10);
-          cacheRef.current[nextPage] = response;
-
-          if (reset) {
-            setPosts(response);
-            setPage(2);
-          } else {
-            setPosts(prev => [...prev, ...response]);
-            setPage(nextPage + 1);
-          }
-        } catch (err) {
-          console.error('Failed to fetch posts', err);
-        } finally {
-          if (reset) {
-            setLoading(false);
-          }
-        }
-      },
-      [page]
-    );
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
       loadPosts(true);
-    }, [loadPosts]);
+    }, []);
 
     useEffect(() => {
       const unsubscribe = navigation.addListener('tabPress', () => {
@@ -112,9 +80,11 @@ export const HomeScreenFeed = forwardRef<HomeScreenFeedRef, HomeScreenFeedProps>
       setRefreshing(false);
     };
 
-    const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-      scrollY.value = event.nativeEvent.contentOffset.y;
-    };
+    const scrollHandler = useAnimatedScrollHandler({
+      onScroll: event => {
+        scrollY.value = event.contentOffset.y;
+      },
+    });
 
     useImperativeHandle(ref, () => ({
       scrollToTop: () => {
@@ -143,7 +113,7 @@ export const HomeScreenFeed = forwardRef<HomeScreenFeedRef, HomeScreenFeedProps>
 
     return (
       <View style={{ flex: 1 }}>
-        <FlatList
+        <Animated.FlatList
           contentContainerStyle={{
             paddingTop: 240,
             paddingBottom: 100,
@@ -170,8 +140,8 @@ export const HomeScreenFeed = forwardRef<HomeScreenFeedRef, HomeScreenFeedProps>
             )
           }
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.7}
-          onScroll={onScroll}
+          onEndReachedThreshold={0.1}
+          onScroll={scrollHandler}
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50,
