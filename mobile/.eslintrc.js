@@ -1,43 +1,40 @@
 module.exports = {
   root: true,
-  plugins: ["import"],
+  plugins: ['import', 'prettier'],
   extends: [
-    "eslint:recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript", // if you're using TypeScript
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended',
   ],
   rules: {
-    "import/order": [
-      "warn",
+    'prettier/prettier': 'warn',
+    'import/order': [
+      'warn',
       {
-        groups: [
-          "builtin", // React, React Native, Node.js built-ins
-          "external", // npm packages
-          "internal", // Your aliases (e.g., @components, @utils)
-          ["parent", "sibling", "index"], // Relative paths
-        ],
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
         pathGroups: [
           {
-            pattern: "react-native",
-            group: "builtin",
-            position: "before",
+            pattern: 'react-native',
+            group: 'builtin',
+            position: 'before',
           },
           {
-            pattern: "@/**",
-            group: "internal",
+            pattern: '@/**',
+            group: 'internal',
           },
         ],
-        pathGroupsExcludedImportTypes: ["builtin"],
+        pathGroupsExcludedImportTypes: ['builtin'],
         alphabetize: {
-          order: "asc",
+          order: 'asc',
           caseInsensitive: true,
         },
-        "newlines-between": "always",
+        'newlines-between': 'always',
       },
     ],
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       typescript: {},
     },
   },

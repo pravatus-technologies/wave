@@ -1,6 +1,6 @@
+import { SENTRY_DSN, APP_ENV } from '@env';
 import * as Sentry from "@sentry/react-native";
 
-import { SENTRY_DSN, APP_ENV } from '@env';
 
 if ((APP_ENV === 'production') || (APP_ENV === 'preview') && SENTRY_DSN) {
   Sentry.init({
