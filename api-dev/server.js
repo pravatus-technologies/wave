@@ -5,22 +5,55 @@ const faker = require("faker");
 const app = express();
 app.use(cors());
 
+// Generate fake friends
+function generateRandomFriends(count) {
+  const bios = [
+    "Loves hiking and collects vinyl records.",
+    "Speaks 4 languages and makes a mean lasagna.",
+    "Dreams of visiting every national park in North America.",
+    "Amateur astronomer and karaoke enthusiast.",
+    "Runs a book club and hates spoilers.",
+    "Bakes sourdough on weekends, gamer at night.",
+    "Tech nerd by day, salsa dancer by night.",
+    "Keeps a terrarium named Kevin.",
+    "Has a rescue cat that acts like a dog.",
+    "Writes poetry on napkins during coffee breaks.",
+  ];
+
+  const friends = [];
+
+  for (let i = 0; i < count; i++) {
+    friends.push({
+      id: faker.datatype.uuid(),
+      avatar: `https://i.pravatar.cc/150?img=${faker.datatype.number({
+        min: 1,
+        max: 70,
+      })}`,
+      friendName: faker.name.findName(),
+      shortBio: faker.random.arrayElement(bios),
+      mutualFriends: faker.datatype.number({ min: 0, max: 50 }),
+    });
+  }
+
+  return friends;
+}
+
 function generateRandomPosts(count, startId = 0, page = 1) {
   const youtubeLinks = [
-    "https://youtu.be/kPa7bsKwL-c",
-    "https://youtu.be/ekr2nIex040",
-    "https://youtu.be/fLexgOxsZu0",
-    "https://youtu.be/qMxX-QOV9tI",
-    "https://youtu.be/DhzDmhytrTI",
-    "https://youtu.be/LXEKuttVRIo",
-    "https://youtu.be/CcS1fsuT10M",
-    "https://youtu.be/L215z9C4Zd8",
-    "https://youtu.be/WW7EFEJUUlE",
-    "https://youtu.be/SlPhMPnQ58k",
-    "https://youtu.be/cBVGlBWQzuc",
-    "https://youtu.be/DzwkcbTQ7ZE",
-    "https://youtu.be/pSAtptOY7dI",
-    "https://youtu.be/rgHHJkzn5TU",
+    "https://youtu.be/kPa7bsKwL-c?feature=shared",
+    "https://youtu.be/ekr2nIex040?feature=shared",
+    "https://youtu.be/fLexgOxsZu0?feature=shared",
+    "https://youtu.be/qMxX-QOV9tI?feature=shared",
+    "https://youtu.be/DhzDmhytrTI?feature=shared",
+    "https://youtu.be/LXEKuttVRIo?feature=shared",
+    "https://youtu.be/CcS1fsuT10M?feature=shared",
+    "https://youtu.be/L215z9C4Zd8?feature=shared",
+    "https://youtu.be/WW7EFEJUUlE?feature=shared",
+    "https://youtu.be/SlPhMPnQ58k?feature=shared",
+    "https://youtu.be/cBVGlBWQzuc?feature=shared",
+    "https://youtu.be/DzwkcbTQ7ZE?feature=shared",
+    "https://youtu.be/pSAtptOY7dI?feature=shared",
+    "https://youtu.be/rgHHJkzn5TU?feature=shared",
     // add more as needed...
   ];
 
@@ -89,6 +122,12 @@ app.get("/posts", (req, res) => {
 
   const posts = generateRandomPosts(limit, startIndex, page);
   res.json(posts);
+});
+
+app.get("/friends", (req, res) => {
+  const count = parseInt(req.query.count) || 10;
+  const friends = generateRandomFriends(count);
+  res.json(friends);
 });
 
 const PORT = process.env.PORT || 3000;
