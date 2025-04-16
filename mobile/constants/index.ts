@@ -22,6 +22,7 @@ const apiEndpoints = {
   endpoints: {
     newRegistration: `${apiBaseUrl}/user/`,
     getPosts: `${apiBaseUrl}/posts/`,
+    getFriends: `${apiBaseUrl}/friends`,
   },
 };
 

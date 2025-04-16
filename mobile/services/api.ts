@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { API } from '@constants';
-import { Post } from '@constants/types';
+import { Friend, Post } from '@constants/types';
 import { Logger } from '@utils/Logger';
 
 export async function getPosts(page = 1, limit = 10): Promise<Post[]> {
@@ -12,5 +12,16 @@ export async function getPosts(page = 1, limit = 10): Promise<Post[]> {
     const err = error as AxiosError;
     Logger.error(error, 'API', `Failed to fetch posts ${err.message}`);
     throw new Error('Failed to fetch posts');
+  }
+}
+
+export async function getFriends(page = 1, limit = 10): Promise<Friend[]> {
+  try {
+    const response = await axios.get<Friend[]>(API.endpoints.getFriends, { params: { page, limit } });
+    return response.data;
+  } catch (error: unknown) {
+    const err = error as AxiosError;
+    Logger.error(error, 'API', `Failed to fetch posts ${err.message}`);
+    throw new Error('Failed to fetch friends');
   }
 }

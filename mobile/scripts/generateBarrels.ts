@@ -8,7 +8,7 @@ const TARGET_DIRECTORIES = [
   '../mobile/components/form',
   '../mobile/components/layout',
   '../mobile/components/module',
-  '../mobile/components/presentational',
+  '../mobile/components/screens',
   '../mobile/context',
   '../mobile/hooks',
   '../mobile/navigation',

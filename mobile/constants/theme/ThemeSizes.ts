@@ -2,6 +2,8 @@
  * Theme Sizes interface
  */
 export interface ThemeSizes {
+  headerHeight: number;
+
   base: number;
   text: number;
   radius: number;
