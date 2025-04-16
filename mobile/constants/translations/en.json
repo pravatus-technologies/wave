@@ -1,7 +1,16 @@
 {
+  "common": {
+    "search": "Search..."
+  },
   "app": {
     "name": "wave",
     "fullname": "wave social",
     "link": "waveapp.social"
+  },
+  "screens": {
+    "home": {},
+    "friends": {
+      "title": "Friendships"
+    }
   }
 }

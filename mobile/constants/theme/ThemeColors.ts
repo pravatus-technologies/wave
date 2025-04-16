@@ -19,6 +19,7 @@ export interface ThemeColors {
   info: ColorValue;
   card: ColorValue;
   background: ColorValue;
+  borderColor: ColorValue;
   shadow: ColorValue;
   overlay: ColorValue;
   focus: ColorValue;

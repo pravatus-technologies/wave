@@ -142,6 +142,14 @@ export interface Post {
   reactions?: string;
 }
 
+export interface Friend {
+  id: string;
+  avatar: string;
+  friendName: string;
+  shortBio: string;
+  mutualFriends: number;
+}
+
 export interface PostCardProps {
   post: Post;
   scrollY: SharedValue<number>;

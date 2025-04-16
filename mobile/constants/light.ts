@@ -43,6 +43,7 @@ export const COLORS: ThemeColors = {
   /** UI colors for navigation & card */
   card: '#FFFFFF',
   background: '#F5F7FA',
+  borderColor: '#e1e3e6',
 
   /** UI color for shadowColor */
   shadow: '#000000',
@@ -94,6 +95,9 @@ export const GRADIENTS: ThemeGradients = {
 };
 
 export const SIZES: ThemeSizes = {
+  // top header size
+  headerHeight: 60,
+
   // global sizes
   base: 8,
   text: 14,
@@ -129,7 +133,7 @@ export const SIZES: ThemeSizes = {
   inputPadding: 12,
 
   // card sizes
-  cardRadius: 16,
+  cardRadius: 24,
   cardPadding: 10,
 
   // image sizes
