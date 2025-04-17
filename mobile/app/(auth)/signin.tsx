@@ -13,9 +13,10 @@ import { useAuth, useTheme } from '@context';
 import Logger from '@utils/Logger';
 
 import wave from '../../assets/images/wave.png';
+import ImageButton from '@components/controls/ImageButton';
 
 export default function Signin(): JSX.Element {
-  const { colors, sizes } = useTheme();
+  const { colors, sizes, assets } = useTheme();
   const { user, loginWithEmail } = useAuth();
   // const router = useRouter();
 
@@ -171,7 +172,36 @@ export default function Signin(): JSX.Element {
         </View>
       </View>
       {/* Bottom Section */}
-      <View style={{ flex: 0.25, backgroundColor: 'yellow' }} />
+      <View style={{ flex: 0.25 }}>
+        <View style={{ marginTop: sizes.s, alignItems: 'center' }}>
+          <Text>or use your social media accounts</Text>
+        </View>
+        <View
+          style={{
+            marginTop: sizes.l,
+            marginHorizontal: sizes.l,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+          }}
+        >
+          <ImageButton onPress={() => Alert.alert(`X Logo clicked`)}>
+            <Image source={assets.xLogo} style={{ height: 24, width: 24, resizeMode: 'contain' }} />
+          </ImageButton>
+          <ImageButton onPress={() => Alert.alert(`Facebook clicked`)}>
+            <Image
+              source={assets.fbLogo}
+              style={{ height: 24, width: 24, resizeMode: 'contain' }}
+            />
+          </ImageButton>
+          <ImageButton onPress={() => Alert.alert(`Google clicked`)}>
+            <Image
+              source={assets.googleLogo}
+              style={{ height: 24, width: 24, resizeMode: 'contain' }}
+            />
+          </ImageButton>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }

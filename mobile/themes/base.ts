@@ -29,6 +29,10 @@ import AppLogo from '../assets/images/logo.png';
 import AppSplashLogo from '../assets/images/splash-icon.png';
 import AppSplashScreen from '../assets/images/splash.png';
 
+import FbLogo from '../assets/external/fb.png';
+import GoogleLogo from '../assets/external/google.png';
+import xLogo from '../assets/external/x.png';
+
 // Define the width and height for the screen
 const { width, height } = Dimensions.get('window');
 
@@ -104,6 +108,10 @@ export const ASSETS: IAssets = {
   appSplashScreen: AppSplashScreen,
   appFavicon: AppFavicon,
   appAdaptiveIcon: AppAdaptiveIcon,
+
+  fbLogo: FbLogo,
+  googleLogo: GoogleLogo,
+  xLogo: xLogo,
 };
 
 // export the base theme settings

@@ -15,4 +15,8 @@ export interface IAssets {
   appSplashScreen: ImageSourcePropType;
   appFavicon: ImageSourcePropType;
   appAdaptiveIcon: ImageSourcePropType;
+
+  fbLogo: ImageSourcePropType;
+  googleLogo: ImageSourcePropType;
+  xLogo: ImageSourcePropType;
 }

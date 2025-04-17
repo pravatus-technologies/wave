@@ -5,4 +5,5 @@ export * from "./DeviceInfo";
 export * from "./FormButtonProps";
 export * from "./FormInputProps";
 export * from "./IconName";
+export * from "./ImageButtonProps";
 export * from "./LogLevel";
