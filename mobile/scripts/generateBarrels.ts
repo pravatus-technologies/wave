@@ -2,17 +2,16 @@ import fs from 'fs';
 import path from 'path';
 
 const TARGET_DIRECTORIES = [
-  '../mobile/components',
-  '../mobile/components/containers',
-  '../mobile/components/controls',
-  '../mobile/components/form',
-  '../mobile/components/layout',
-  '../mobile/components/module',
-  '../mobile/components/screens',
-  '../mobile/context',
-  '../mobile/hooks',
-  '../mobile/navigation',
-  '../mobile/utils',
+  '../mobile/src/components',
+  '../mobile/src/constants',
+  '../mobile/src/constants/interfaces',
+  '../mobile/src/constants/translations',
+  '../mobile/src/constants/types',
+  '../mobile/src/features',
+  '../mobile/src/hooks',
+  '../mobile/src/services',
+  '../mobile/src/themes',
+  '../mobile/src/utils',
 ];
 
 const NAMED_EXPORT_DIRS = ['hooks', 'utils', 'context'];
