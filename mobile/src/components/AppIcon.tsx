@@ -1,8 +1,8 @@
 import { HelpCircle } from 'lucide-react-native';
 import React from 'react';
 
-import { icons } from '@constants';
-import { IAppIconProps } from '@constants/interfaces';
+import { icons } from 'constants';
+import { IAppIconProps } from 'constants/types/interfaces';
 
 /***
  * AppIcon

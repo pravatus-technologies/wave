@@ -1,53 +1,55 @@
+/* eslint-disable no-undef */
 // app.config.js
-import "dotenv/config";
-import * as dotenv from "dotenv";
-import path from "path";
+import 'dotenv/config';
+import path from 'path';
+
+import * as dotenv from 'dotenv';
 
 export default ({ config }) => {
   // Set environment from system variable or fallback to 'development'
-  const appEnv = process.env.APP_ENV || "development";
+  const appEnv = process.env.APP_ENV || 'development';
 
   // Load corresponding .env file
   dotenv.config({ path: path.resolve(__dirname, `.env.${appEnv}`) });
 
-  const isProd = appEnv === "production";
-  const isPreview = appEnv === "preview";
+  const isProd = appEnv === 'production';
+  const isPreview = appEnv === 'preview';
 
   return {
     ...config,
-    name: "Wave",
-    slug: "Wave",
-    scheme: "waveapp",
-    owner: "egeneral",
-    version: "0.0.1",
-    orientation: "portrait",
-    primaryColor: "#19295C",
+    name: 'Wave',
+    slug: 'Wave',
+    scheme: 'waveapp',
+    owner: 'egeneral',
+    version: '0.0.1',
+    orientation: 'portrait',
+    primaryColor: '#19295C',
 
-    icon: "./assets/images/icon.png",
+    icon: './assets/images/icon.png',
     splash: {
-      image: "./assets/images/splash.png",
-      resizeMode: "cover",
-      backgroundColor: "#19295C",
+      image: './assets/images/splash.png',
+      resizeMode: 'contain',
+      backgroundColor: '#19295C',
     },
 
     updates: {
       fallbackToCacheTimeout: 0,
     },
 
-    assetBundlePatterns: ["**/*"],
+    assetBundlePatterns: ['**/*'],
 
     ios: {
       supportsTablet: true,
       bundleIdentifier: isProd
-        ? "com.pravatustech.waveapp"
+        ? 'com.pravatustech.waveapp'
         : isPreview
-        ? "com.pravatustech.waveapp.preview"
-        : "com.pravatustech.waveapp.dev",
+          ? 'com.pravatustech.waveapp.preview'
+          : 'com.pravatustech.waveapp.dev',
       googleServicesFile: isProd
-        ? ".plist/GoogleService-Info.prod.plist"
+        ? '.plist/GoogleService-Info.prod.plist'
         : isPreview
-        ? ".plist/GoogleService-Info.prev.plist"
-        : ".plist/GoogleService-Info.dev.plist",
+          ? '.plist/GoogleService-Info.prev.plist'
+          : '.plist/GoogleService-Info.dev.plist',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },
@@ -55,43 +57,43 @@ export default ({ config }) => {
 
     android: {
       package: isProd
-        ? "com.pravatustech.waveapp"
+        ? 'com.pravatustech.waveapp'
         : isPreview
-        ? "com.pravatustech.waveapp.preview"
-        : "com.pravatustech.waveapp.dev",
+          ? 'com.pravatustech.waveapp.preview'
+          : 'com.pravatustech.waveapp.dev',
       googleServicesFile: isProd
-        ? ".plist/google-services.prod.json"
+        ? '.plist/google-services.prod.json'
         : isPreview
-        ? ".plist/google-services.prev.json"
-        : ".plist/google-services.dev.json",
+          ? '.plist/google-services.prev.json'
+          : '.plist/google-services.dev.json',
       adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
-        backgroundColor: "#F8F9FC",
+        foregroundImage: './assets/images/adaptive-icon.png',
+        backgroundColor: '#F8F9FC',
       },
     },
 
-    platforms: ["ios", "android"],
+    platforms: ['ios', 'android'],
 
     web: {
-      favicon: "./assets/favicon.png",
+      favicon: './assets/favicon.png',
     },
 
     newArchEnabled: false,
 
     plugins: [
       [
-        "expo-build-properties",
+        'expo-build-properties',
         {
           ios: {
-            useFrameworks: "static",
+            useFrameworks: 'static',
           },
         },
       ],
-      "expo-router",
-      "expo-localization",
-      "@react-native-firebase/app",
-      "@react-native-firebase/auth",
-      "@react-native-firebase/crashlytics",
+      'expo-router',
+      'expo-localization',
+      '@react-native-firebase/app',
+      '@react-native-firebase/auth',
+      '@react-native-firebase/crashlytics',
     ],
 
     extra: {
@@ -100,7 +102,7 @@ export default ({ config }) => {
       sentryDsn: process.env.SENTRY_DSN,
       discordWebhook: process.env.DISCORD_WEBHOOK_URL,
       eas: {
-        projectId: "80b525fe-d626-46aa-81f9-cc24af489c3e",
+        projectId: '80b525fe-d626-46aa-81f9-cc24af489c3e',
       },
     },
   };

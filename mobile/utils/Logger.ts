@@ -2,7 +2,7 @@ import { APP_ENV, SENTRY_DSN, DISCORD_WEBHOOK_URL } from '@env';
 import crashlytics from '@react-native-firebase/crashlytics';
 import * as Sentry from '@sentry/react-native';
 
-import { ILogger } from '@constants/types';
+import { ILogger } from 'constants/types';
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 

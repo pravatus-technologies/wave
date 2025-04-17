@@ -185,3 +185,103 @@ In `package.json`:
 ---
 
 > Let’s keep our codebase elegant, clean, and scalable 💫
+
+## 📦 Directory Breakdown
+
+```
+app/                          # Main entry point for screens and routes
+├── (auth)/                   # Auth stack (login, signup)
+│   ├── login.tsx
+│   ├── signup.tsx
+│   └── _layout.tsx
+├── (tabs)/                   # Main tabs (home, messages, profile, etc.)
+│   ├── home.tsx
+│   ├── messages.tsx
+│   ├── profile.tsx
+│   └── _layout.tsx
+├── index.tsx                 # Default route
+├── _layout.tsx              # Layout handler for Expo Router
+├── _app.tsx                 # Global app entry (optional, for layout wrappers)
+├── _sitemap.ts              # For static export sitemap (optional)
+src/                          # Core logic and non-screen files
+├── features/                 # Domain-driven features
+│   ├── auth/                 # Authentication logic
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types.ts
+│   ├── feed/                 # Social feed logic
+│   │   ├── components/       # Feed-specific UI like PostCard, MediaCard
+│   │   │   ├── FeedList.tsx
+│   │   │   ├── PostCard.tsx
+│   │   │   ├── MediaRenderer.tsx
+│   │   │   └── GradientBackground.tsx
+│   │   ├── hooks/            # useFeed, usePostActions, etc.
+│   │   ├── services/         # API calls: fetchFeed, likePost, etc.
+│   │   ├── types.ts          # Feed/Post types
+│   │   └── utils.ts          # Visibility detection, etc.
+│   ├── messaging/            # Messaging features
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types.ts
+│   ├── profile/              # User profile logic
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types.ts
+│   └── story/                # Stories and media uploads
+│       ├── components/
+│       │   ├── StoryCard.tsx
+│       │   ├── StoryList.tsx
+│       │   └── StoryUploader.tsx
+│       ├── hooks/
+│       │   ├── useStories.ts
+│       │   ├── useStoryUpload.ts
+│       │   └── useStoryProgress.ts
+│       ├── services/
+│       │   ├── storyApi.ts    # CRUD operations for stories
+│       │   ├── uploadMedia.ts # Background uploads, compression
+│       │   └── firebase.ts    # Firebase specific logic
+│       ├── types.ts           # Story and media types
+│       └── utils.ts           # Sorting, time remaining, etc.
+├── components/               # Global presentational components
+│   ├── Avatar.tsx
+│   ├── Button.tsx
+│   ├── FormToggle.tsx
+│   ├── Modal.tsx
+│   ├── TextInput.tsx
+│   └── Loading.tsx
+├── hooks/                    # Global reusable hooks
+│   ├── useDebounce.ts
+│   ├── useSafeArea.ts
+│   ├── useKeyboard.ts
+│   └── useAppTheme.ts
+├── services/                 # Global service clients (not feature-specific)
+│   ├── firebase.ts
+│   ├── api.ts                # Axios config, interceptors
+│   ├── auth.ts               # Generic auth helpers (e.g., Firebase Auth)
+│   └── logger.ts             # Unified logging system
+├── utils/                    # Pure utilities and helpers
+│   ├── date.ts
+│   ├── number.ts
+│   ├── color.ts
+│   └── visibility.ts
+├── constants/                # Enums, icon maps, error codes, etc.
+│   ├── icons.ts
+│   ├── routes.ts
+│   ├── strings.ts
+│   └── config.ts
+├── themes/                   # App theming
+│   ├── colors.ts
+│   ├── fonts.ts
+│   ├── spacing.ts
+│   └── index.ts
+├── assets/                   # Static assets
+│   ├── fonts/
+│   ├── images/
+│   └── icons/
+navigation/                   # Optional custom navigation logic
+│   ├── stackOptions.ts
+│   └── tabOptions.ts
+
+```

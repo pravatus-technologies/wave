@@ -1,4 +1,4 @@
-import * as regex from '@constants/regex';
+import * as regex from 'constants/regex';
 
 export const isValidDateFormat = (dateStr: string): boolean => regex.date.test(dateStr);
 

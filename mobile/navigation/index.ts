@@ -1,4 +1,3 @@
-export { default as NVAuthStackLayout } from "./NVAuthStackLayout";
-export { default as NVFriendStackLayout } from "./NVFriendStackLayout";
-export { default as NVMainTabLayout } from "./NVMainTabLayout";
-export { default as NVRootLayout } from "./NVRootLayout";
+export { default as auth } from "./auth";
+export { default as main } from "./main";
+export { default as root } from "./root";

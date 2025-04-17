@@ -1,27 +1,23 @@
-import {
-  Platform,
-  Alert,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-  View,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
+import { Alert, Text, Image, View } from 'react-native';
 
-import { Redirect, useRouter } from 'expo-router';
-import React, { useState, useEffect, useCallback } from 'react';
+import { Redirect } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { CTRLActionButton, CTRLFormInput } from '@components/controls';
-import * as regex from '@constants/regex';
-import { AuthErrorCodes, FirebaseAuthError, ILogin, ILoginValidation } from '@constants/types';
-import { useAuth, useData, useTheme } from '@context';
+import { FormButton, FormInput } from '@components/controls';
+import { LinkButton } from '@components/controls/LinkButton';
+import * as regex from '@constants';
+import { AuthErrorCodes } from '@constants';
+import { FirebaseAuthError, ILogin, ILoginValidation } from '@constants/types/interfaces';
+import { useAuth, useTheme } from '@context';
+import Logger from '@utils/Logger';
+
+import wave from '../../assets/images/wave.png';
 
 export default function Signin(): JSX.Element {
-  const { isDark } = useData();
-  const { colors, assets, sizes } = useTheme();
+  const { colors, sizes } = useTheme();
   const { user, loginWithEmail } = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
 
   const [busy, setBusy] = useState(false);
 
@@ -47,21 +43,58 @@ export default function Signin(): JSX.Element {
       let errorMessage = 'Something went wrong. Please try again';
       const err = error as FirebaseAuthError;
       switch (err.code) {
-        case AuthErrorCodes.INVALID_CREDENTIAL:
-          errorMessage = 'Your login has expired or is invalid.';
+        case AuthErrorCodes.INVALID_EMAIL:
+          errorMessage = 'Please enter a valid email address.';
+          break;
+        case AuthErrorCodes.USER_DISABLED:
+          errorMessage = 'This account has been disabled. Please contact support.';
           break;
         case AuthErrorCodes.USER_NOT_FOUND:
-          errorMessage = 'No user found with that email.';
+          errorMessage = "We couldn't find an account with that email.";
           break;
         case AuthErrorCodes.WRONG_PASSWORD:
-          errorMessage = 'Incorrect password.';
+          errorMessage = 'Incorrect password. Please try again or reset your password.';
           break;
-        case AuthErrorCodes.NETWORK_FAILED:
-          errorMessage = 'Network error. Check your connection.';
+        case AuthErrorCodes.INVALID_CREDENTIAL:
+          errorMessage = 'Invalid credentials. Please try again.';
           break;
+        default:
+          errorMessage = 'An unkonwn error has occured.';
+          Logger.error(err, 'handleSignin', err.message);
       }
 
       Alert.alert('Login Error', errorMessage);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleCreateAccount = async (): Promise<void> => {
+    try {
+      setBusy(true);
+    } catch (error: unknown) {
+      let errorMessage = 'something went wrong. Please try again.';
+      const err = error as FirebaseAuthError;
+      switch (err.code) {
+        case AuthErrorCodes.EMAIL_ALREADY_IN_USE:
+          errorMessage =
+            'This email is already registered. Try logging in or use a different email.';
+          break;
+        case AuthErrorCodes.INVALID_EMAIL:
+          errorMessage = 'Please enter a valid email address.';
+          break;
+        case AuthErrorCodes.OPERATION_NOT_ALLOWED:
+          errorMessage = 'Account creation is currently disabled. Please contact support for help.';
+          break;
+        case AuthErrorCodes.WEAK_PASSWORD:
+          errorMessage = 'Your password is too weak. Please use at least 6 characters.';
+          break;
+        default:
+          errorMessage = 'Unknown error.';
+          Logger.error(err, 'handleCreateAccount', err.message);
+      }
+
+      Alert.alert('error ', errorMessage);
     } finally {
       setBusy(false);
     }
@@ -77,84 +110,68 @@ export default function Signin(): JSX.Element {
   if (user) return <Redirect href="/" />;
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingHorizontal: 20 }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.background, paddingHorizontal: sizes.padding }}
+    >
+      {/* Top Section */}
       <View
         style={{
-          margin: 'auto',
-          alignContent: 'center',
+          flex: 0.33,
           alignItems: 'center',
-          marginTop: sizes.height * 0.15,
+          justifyContent: 'center',
         }}
       >
-        <Image source={assets.logo} style={{ width: 64, height: 64 }} />
+        <Image source={wave} />
       </View>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={60}
-      >
-        <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <CTRLFormInput
+      {/* Form Section */}
+      <View style={{ flex: 0.55 }}>
+        <View>
+          <FormInput
+            placeholder="Username"
+            placeholderTextColor={colors.hint}
             autoCapitalize="none"
-            placeholder="Email"
-            icon="MailIcon"
-            value={login.email}
-            onChangeText={(text: string) => handleChange({ email: text })}
+            autoCorrect={false}
+            iconColor={colors.icon}
+            inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
+            containerStyle={{ marginVertical: sizes.s / 2 }}
+            onChangeText={text => handleChange({ email: text })}
           />
-          <CTRLFormInput
+          <FormInput
             secureTextEntry
-            autoCapitalize="none"
             placeholder="Password"
-            icon="Lock"
-            value={login.password}
-            onChangeText={(text: string) => handleChange({ password: text })}
+            placeholderTextColor={colors.hint}
+            autoCapitalize="none"
+            autoCorrect={false}
+            iconColor={colors.icon}
+            inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
+            containerStyle={{ marginVertical: sizes.s / 2 }}
+            onChangeText={text => handleChange({ password: text })}
           />
-          <CTRLActionButton
-            title="Sign In"
-            onPress={handleSignin}
+          <FormButton
             loading={busy}
-            disabled={!isValid.email || !isValid.password}
-            buttonStyle={{ backgroundColor: colors.primary, marginTop: 16 }}
-            spinnerColor={colors.white}
+            disabled={!isValid || busy}
+            title={'Login'}
+            onPress={handleSignin}
           />
-        </ScrollView>
-        <View style={styles.footer}>
-          <CTRLActionButton
-            title="Create an account"
-            onPress={() => router.push('/signup')}
-            textColor={colors.primary}
-            buttonStyle={{
-              backgroundColor: 'transparent',
-              borderWidth: 1,
-              borderColor: isDark ? colors.gray : colors.primary,
+          <LinkButton
+            containerStyle={{
+              marginTop: sizes.base / sizes.multiplier,
+              alignItems: 'center',
             }}
+            onPress={() => Alert.alert('Forgot password!')}
+          >
+            <Text>I forgot my password</Text>
+          </LinkButton>
+          <FormButton
+            containerStyle={{ marginTop: sizes.l }}
+            outline={true}
+            title={'Create an account'}
+            onPress={handleCreateAccount}
           />
         </View>
-      </KeyboardAvoidingView>
+      </View>
+      {/* Bottom Section */}
+      <View style={{ flex: 0.25, backgroundColor: 'yellow' }} />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingVertical: 24,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    backgroundColor: 'transparent',
-    padding: 12,
-    marginVertical: 8,
-    borderRadius: 10,
-  },
-  footer: {
-    marginTop: 'auto',
-    marginBottom: 20,
-  },
-});

@@ -1,12 +1,12 @@
 import axios, { AxiosError } from 'axios';
 
 import { API } from '@constants';
-import { Friend, Post } from '@constants/types';
+import { IFriend, IPost } from '@constants/types/interfaces';
 import { Logger } from '@utils/Logger';
 
-export async function getPosts(page = 1, limit = 10): Promise<Post[]> {
+export async function getPosts(page = 1, limit = 10): Promise<IPost[]> {
   try {
-    const response = await axios.get<Post[]>(API.endpoints.getPosts, { params: { page, limit } });
+    const response = await axios.get<IPost[]>(API.endpoints.getPosts, { params: { page, limit } });
     return response.data;
   } catch (error: unknown) {
     const err = error as AxiosError;
@@ -15,9 +15,11 @@ export async function getPosts(page = 1, limit = 10): Promise<Post[]> {
   }
 }
 
-export async function getFriends(page = 1, limit = 10): Promise<Friend[]> {
+export async function getFriends(page = 1, limit = 10): Promise<IFriend[]> {
   try {
-    const response = await axios.get<Friend[]>(API.endpoints.getFriends, { params: { page, limit } });
+    const response = await axios.get<IFriend[]>(API.endpoints.getFriends, {
+      params: { page, limit },
+    });
     return response.data;
   } catch (error: unknown) {
     const err = error as AxiosError;
