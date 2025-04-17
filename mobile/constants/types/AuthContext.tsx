@@ -3,6 +3,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 export type AuthContextType = {
   user: FirebaseAuthTypes.User | null;
   initializing: boolean;
+  facebookSignin: () => Promise<FirebaseAuthTypes.UserCredential>;
   registerUserWithEmail: (
     email: string,
     password: string,

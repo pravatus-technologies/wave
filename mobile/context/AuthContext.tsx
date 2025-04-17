@@ -5,6 +5,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import * as Sentry from '@sentry/react-native';
 import axios from 'axios';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 
 import { Logger } from '@utils/Logger';
 
@@ -14,6 +15,9 @@ import { AuthContextType } from '../constants/types';
 const AuthContext = createContext<AuthContextType>({
   user: null,
   initializing: true,
+  facebookSignin: async () => {
+    throw new Error('facebookSignin not implemented');
+  },
   registerUserWithEmail: async () => {
     throw new Error('registerUserWithEmail not implemented');
   },
@@ -56,6 +60,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): JSX.E
 
     return unsubscribe;
   }, [initializing]);
+
+  const facebookSignin = useCallback(async (): Promise<FirebaseAuthTypes.UserCredential> => {
+    try {
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw 'Something went wrong obtaining the access token';
+      }
+
+      const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+      return auth().signInWithCredential(facebookCredential);
+    } catch (error) {
+      Logger.error(error, 'handleFacebookSignin', 'An error occurred trying to login to Facebook.');
+      throw error;
+    }
+  }, []);
 
   /**
    * Creates a new user with an email and password.
@@ -170,6 +197,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): JSX.E
       value={{
         user,
         initializing,
+        facebookSignin,
         registerUserWithEmail,
         loginWithEmail,
         logout,

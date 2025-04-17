@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FormButton, FormInput } from '@components/controls';
+import ImageButton from '@components/controls/ImageButton';
 import { LinkButton } from '@components/controls/LinkButton';
 import * as regex from '@constants';
 import { AuthErrorCodes } from '@constants';
@@ -13,11 +14,10 @@ import { useAuth, useTheme } from '@context';
 import Logger from '@utils/Logger';
 
 import wave from '../../assets/images/wave.png';
-import ImageButton from '@components/controls/ImageButton';
 
 export default function Signin(): JSX.Element {
   const { colors, sizes, assets } = useTheme();
-  const { user, loginWithEmail } = useAuth();
+  const { user, loginWithEmail, facebookSignin } = useAuth();
   // const router = useRouter();
 
   const [busy, setBusy] = useState(false);
@@ -98,6 +98,15 @@ export default function Signin(): JSX.Element {
       Alert.alert('error ', errorMessage);
     } finally {
       setBusy(false);
+    }
+  };
+
+  const handleFacebookSignin = async (): Promise<void> => {
+    try {
+      setBusy(true);
+      await facebookSignin();
+    } catch (error) {
+      Logger.error(error, 'handleFacebookSignin', 'Unable to login to Facebook');
     }
   };
 
@@ -188,7 +197,7 @@ export default function Signin(): JSX.Element {
           <ImageButton onPress={() => Alert.alert(`X Logo clicked`)}>
             <Image source={assets.xLogo} style={{ height: 24, width: 24, resizeMode: 'contain' }} />
           </ImageButton>
-          <ImageButton onPress={() => Alert.alert(`Facebook clicked`)}>
+          <ImageButton onPress={handleFacebookSignin}>
             <Image
               source={assets.fbLogo}
               style={{ height: 24, width: 24, resizeMode: 'contain' }}
