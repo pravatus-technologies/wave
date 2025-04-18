@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState, useContext, createContext } fr
 
 import translations from '@constants/translations';
 import { ITranslate } from '@constants/types/interfaces';
-import { logWarn } from '@utils/Logger';
+import { Logger } from '@utils/Logger';
 
 export const TranslationContext = createContext({});
 const i18n = new I18n(translations);
@@ -61,7 +61,7 @@ export const TranslationProvider = ({ children }: { children: React.ReactNode })
       // if the locale is not supported, we issue a warning so we can
       // identify this for future releases. We'll set to the fallback locale
       // to continue
-      logWarn(
+      Logger.warn(
         new Error('Unsupported Locale'),
         'getLocale',
         `Unsupported locale "${deviceLocale}", falling back to "${fallback}"`
@@ -69,7 +69,7 @@ export const TranslationProvider = ({ children }: { children: React.ReactNode })
       setLocale(fallback);
       return fallback;
     } catch (err: unknown) {
-      logWarn(err, 'getLocale', 'Error detecting locale:');
+      Logger.warn(err, 'getLocale', 'Error detecting locale:');
       setLocale(fallback);
       return fallback;
     }
