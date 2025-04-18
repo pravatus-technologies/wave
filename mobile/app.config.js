@@ -89,6 +89,15 @@ export default ({ config }) => {
           },
         },
       ],
+      [
+        'react-native-fbsdk-next',
+        {
+          appID: '',
+          clientToken: '',
+          displayName: '',
+          scheme: '',
+        },
+      ],
       'expo-router',
       'expo-localization',
       '@react-native-firebase/app',

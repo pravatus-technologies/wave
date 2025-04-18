@@ -79,7 +79,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): JSX.E
 
       return auth().signInWithCredential(facebookCredential);
     } catch (error) {
-      Logger.error(error, 'handleFacebookSignin', 'An error occurred trying to login to Facebook.');
+      Logger.error(
+        error,
+        'handleFacebookSignin',
+        `An error occurred trying to login to Facebook. ${JSON.stringify(error)}`
+      );
       throw error;
     }
   }, []);
