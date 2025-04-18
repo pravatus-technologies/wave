@@ -1,16 +1,8 @@
 {
-  "common": {
-    "search": "Search..."
-  },
-  "app": {
-    "name": "wave",
-    "fullname": "wave social",
-    "link": "waveapp.social"
-  },
-  "screens": {
-    "home": {},
-    "friends": {
-      "title": "Friendships"
-    }
-  }
+  "Username": "Username",
+  "Password": "Password",
+  "Login": "Login",
+  "I forgot my password": "I forgot my password",
+  "Create an account": "Create an account",
+  "or use your social media accounts": "or use your social media accounts"
 }
