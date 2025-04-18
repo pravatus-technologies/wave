@@ -10,7 +10,7 @@ import { LinkButton } from '@components/controls/LinkButton';
 import * as regex from '@constants';
 import { AuthErrorCodes } from '@constants';
 import { FirebaseAuthError, ILogin, ILoginValidation } from '@constants/types/interfaces';
-import { useAuth, useTheme } from '@context';
+import { useAuth, useTheme, useTranslation } from '@context';
 import Logger from '@utils/Logger';
 
 import wave from '../../assets/images/wave.png';
@@ -18,6 +18,7 @@ import wave from '../../assets/images/wave.png';
 export default function Signin(): JSX.Element {
   const { colors, sizes, assets } = useTheme();
   const { user, loginWithEmail, facebookSignin } = useAuth();
+  const { t } = useTranslation();
   // const router = useRouter();
 
   const [busy, setBusy] = useState(false);
@@ -137,7 +138,7 @@ export default function Signin(): JSX.Element {
       <View style={{ flex: 0.55 }}>
         <View>
           <FormInput
-            placeholder="Username"
+            placeholder={t('Username')}
             placeholderTextColor={colors.hint}
             autoCapitalize="none"
             autoCorrect={false}
@@ -148,7 +149,7 @@ export default function Signin(): JSX.Element {
           />
           <FormInput
             secureTextEntry
-            placeholder="Password"
+            placeholder={t('Password')}
             placeholderTextColor={colors.hint}
             autoCapitalize="none"
             autoCorrect={false}
@@ -160,7 +161,7 @@ export default function Signin(): JSX.Element {
           <FormButton
             loading={busy}
             disabled={!isValid || busy}
-            title={'Login'}
+            title={t('Login')}
             onPress={handleSignin}
           />
           <LinkButton
@@ -175,7 +176,7 @@ export default function Signin(): JSX.Element {
           <FormButton
             containerStyle={{ marginTop: sizes.l }}
             outline={true}
-            title={'Create an account'}
+            title={t('Create an account')}
             onPress={handleCreateAccount}
           />
         </View>
@@ -183,7 +184,7 @@ export default function Signin(): JSX.Element {
       {/* Bottom Section */}
       <View style={{ flex: 0.25 }}>
         <View style={{ marginTop: sizes.s, alignItems: 'center' }}>
-          <Text>or use your social media accounts</Text>
+          <Text>{t('or use your social media accounts')}</Text>
         </View>
         <View
           style={{
