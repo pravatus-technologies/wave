@@ -125,12 +125,12 @@ export default function SignupStep1(): JSX.Element {
             marginTop: sizes.m,
           }}
         >
-          <LinkButton style={{ paddingRight: sizes.sm }} onPress={() => router.back()}>
+          <LinkButton style={{ paddingRight: sizes.sm }} onPress={handleNavigateBack}>
             <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>I have an account</Text>
           </LinkButton>
           <LinkButton
             disabled={Object.values(isValid).includes(false)}
-            onPress={() => console.log(`${JSON.stringify(personalData)}`)}
+            onPress={() => router.navigate('/signup/step2')}
           >
             <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
           </LinkButton>
