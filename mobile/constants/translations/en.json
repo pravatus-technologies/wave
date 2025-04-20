@@ -9,7 +9,7 @@
   "We need to make sure to get this right": "We need to make sure to get this right",
   "Given names": "Given names",
   "Last name": "Last name",
-  "Birthday": "Birthday",
+  "Birthday": "Birthday (yyyy/mm/dd)",
   "I have an account": "I have an account",
   "Next": "Next"
 }

@@ -115,7 +115,7 @@ export default function SignupStep1(): JSX.Element {
             marginTop: sizes.m,
           }}
         >
-          <LinkButton style={{ paddingRight: sizes.sm }} onPress={() => console.log(`link button`)}>
+          <LinkButton style={{ paddingRight: sizes.sm }} onPress={() => router.back()}>
             <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>I have an account</Text>
           </LinkButton>
           <LinkButton
