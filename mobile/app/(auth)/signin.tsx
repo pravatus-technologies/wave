@@ -111,7 +111,7 @@ export default function Signin(): JSX.Element {
       <View style={{ flex: 0.55 }}>
         <View>
           <FormInput
-            placeholder={t('Username')}
+            placeholder={t('Email')}
             placeholderTextColor={colors.hint}
             autoCapitalize="none"
             autoCorrect={false}
