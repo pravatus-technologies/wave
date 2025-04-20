@@ -8,4 +8,5 @@ export type FormInputProps = TextInputProps & {
   icon?: IconName;
   iconSize?: number;
   iconColor: ColorValue;
+  hint?: string;
 };

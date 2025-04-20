@@ -13,6 +13,7 @@ export * from "./IGradients";
 export * from "./ILogger";
 export * from "./ILogin";
 export * from "./ILoginValidation";
+export * from "./IPersonalDetails";
 export * from "./IPost";
 export * from "./ISizes";
 export * from "./ISpacing";

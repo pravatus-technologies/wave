@@ -1,6 +1,6 @@
 import { Alert, Text, Image, View } from 'react-native';
 
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -19,7 +19,7 @@ export default function Signin(): JSX.Element {
   const { colors, sizes, assets } = useTheme();
   const { user, loginWithEmail, facebookSignin } = useAuth();
   const { t } = useTranslation();
-  // const router = useRouter();
+  const router = useRouter();
 
   const [busy, setBusy] = useState(false);
 
@@ -71,35 +71,8 @@ export default function Signin(): JSX.Element {
     }
   };
 
-  const handleCreateAccount = async (): Promise<void> => {
-    try {
-      setBusy(true);
-    } catch (error: unknown) {
-      let errorMessage = 'something went wrong. Please try again.';
-      const err = error as FirebaseAuthError;
-      switch (err.code) {
-        case AuthErrorCodes.EMAIL_ALREADY_IN_USE:
-          errorMessage =
-            'This email is already registered. Try logging in or use a different email.';
-          break;
-        case AuthErrorCodes.INVALID_EMAIL:
-          errorMessage = 'Please enter a valid email address.';
-          break;
-        case AuthErrorCodes.OPERATION_NOT_ALLOWED:
-          errorMessage = 'Account creation is currently disabled. Please contact support for help.';
-          break;
-        case AuthErrorCodes.WEAK_PASSWORD:
-          errorMessage = 'Your password is too weak. Please use at least 6 characters.';
-          break;
-        default:
-          errorMessage = 'Unknown error.';
-          Logger.error(err, 'handleCreateAccount', err.message);
-      }
-
-      Alert.alert('error ', errorMessage);
-    } finally {
-      setBusy(false);
-    }
+  const handleCreateAccount = (): void => {
+    router.push('/signup');
   };
 
   const handleFacebookSignin = async (): Promise<void> => {

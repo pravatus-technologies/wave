@@ -2,7 +2,15 @@
  * name validation
  * accepted: letters & spaces, minimum 3 chars, maximum 15 chars
  */
-export const name: RegExp = /[a-zA-Z]{3,15}/;
+//export const name: RegExp = /[a-zA-Z]{3,15}/;
+
+/*
+ * given name validation
+ *
+ * a bit stricter than the 'name' reg ex and allow sup to 25 chars
+ * Allows inner spaces, apostrophes, or hyphens, followed by more letters
+ */
+export const name: RegExp = /^(?=.{1,25}$)[A-Za-zÀ-ÖØ-öø-ÿ]+([ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/
 
 /*
  * email validation
@@ -27,3 +35,4 @@ export const password: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$
  * but won't validate if the calendar date given is ok. example Feb 30
  */
 export const date: RegExp = /^(?:\d{4})\/(?:0[1-9]|1[0-2])\/(?:0[1-9]|[12][0-9]|3[01])$/;
+

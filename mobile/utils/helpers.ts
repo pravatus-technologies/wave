@@ -2,6 +2,16 @@ import * as regex from 'constants/regex';
 
 export const isValidDateFormat = (dateStr: string): boolean => regex.date.test(dateStr);
 
+export const isValidDateValue = (dateStr: string): boolean => {
+  const parts = dateStr.split('/');
+  if (parts.length !== 3) return false;
+
+  const [year, month, day] = parts.map(Number);
+  const date = new Date(year, month - 1, day);
+
+  return date.getFullYear() == year && date.getMonth() === month - 1 && date.getDate() === day;
+};
+
 export const isOfLegalAge = (birthdayStr: string, legalAge = 18): boolean => {
   if (!isValidDateFormat(birthdayStr)) return false;
 
@@ -18,3 +28,5 @@ export const isOfLegalAge = (birthdayStr: string, legalAge = 18): boolean => {
 
   return age >= legalAge;
 };
+
+export const filterDateInput = (input: string): string => input.replace(/[^0-9/]/g, '');

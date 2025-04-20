@@ -13,6 +13,7 @@ export default function FormInput({
   iconSize = 24,
   iconColor = '#5B5B5C',
   secureTextEntry,
+  hint,
   ...props
 }: FormInputProps): JSX.Element {
   const LucideIcon = icon
@@ -65,6 +66,15 @@ export default function FormInput({
           secureTextEntry={isPassword && !isPasswordVisible}
           {...props}
         />
+        {hint && (
+          <View style={{ paddingLeft: 8 }}>
+            {typeof hint === 'string' ? (
+              <Text style={{ color: colors.hint, fontSize: 12 }}>{hint}</Text>
+            ) : (
+              hint
+            )}
+          </View>
+        )}
         {isPassword && (
           <Pressable onPress={togglePassword}>
             <Text
