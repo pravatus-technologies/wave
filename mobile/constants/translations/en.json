@@ -1,5 +1,5 @@
 {
-  "Username": "Username",
+  "Email": "Email",
   "Password": "Password",
   "Login": "Login",
   "I forgot my password": "I forgot my password",
@@ -17,5 +17,13 @@
   "You must be at least 18 years old": "You must be at least 18 years old",
   "Enter a valid birthday in yyyy/mm/dd format": "Enter a valid birthday in yyyy/mm/dd format",
   "Create your account": "Create your account",
-  "Create a username and password": "Create a username and password"
+  "Create a username and password": "Create a username and password",
+  "I agree to the Terms and Service": "I agree to the Terms and Service",
+  "You must agree to continue": "You must agree to continue",
+  "Enter a valid email": "Enter a valid email",
+  "Time for a selfie!": "Time for a selfie!",
+  "Let's show the world your smile": "Let's show the world your smile",
+  "Take a picture": "Take a picture",
+  "Upload an existing picture": "Upload an existing picture",
+  "I'll do this later": "I'll do this later"
 }
