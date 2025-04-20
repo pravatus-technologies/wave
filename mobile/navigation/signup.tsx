@@ -5,6 +5,7 @@ export default function SignupLayout(): JSX.Element {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="step2" />
+      <Stack.Screen name="step3" />
     </Stack>
   );
 }
