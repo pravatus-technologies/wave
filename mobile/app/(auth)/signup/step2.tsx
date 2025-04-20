@@ -1,22 +1,25 @@
 import { View, Text } from 'react-native';
 
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ImageButton, FormInput } from '@components/controls';
+import { ImageButton, FormInput, LinkButton } from '@components/controls';
+import FormCheckbox from '@components/controls/FormCheckbox';
 import * as regex from '@constants/regex';
 import { useTheme, useTranslation } from '@context';
 import { AppIcon } from 'src/components';
 
 export interface ILoginData {
-  username: string;
+  email: string;
   password: string;
+  isAgreedToTerms: boolean;
 }
 
 export interface ILoginDataValid {
-  username: boolean;
+  email: boolean;
   password: boolean;
+  isAgreedToTerms: boolean;
 }
 
 export default function SignupStep2(): JSX.Element {
@@ -25,13 +28,23 @@ export default function SignupStep2(): JSX.Element {
   const router = useRouter();
 
   const [loginData, setLoginData] = useState<ILoginData>({
-    username: '',
+    email: '',
     password: '',
+    isAgreedToTerms: false,
   });
 
-  const [isValild, setIsValid] = useState<ILoginDataValid>({
-    username: false,
+  const [isValid, setIsValid] = useState<ILoginDataValid>({
+    email: false,
     password: false,
+    isAgreedToTerms: false,
+  });
+
+  const [touched, setTouched] = useState({
+    isAgreedToTerms: false,
+  });
+
+  const [fieldDirty, setFieldDirty] = useState({
+    email: false,
   });
 
   const handleChange = (value: Partial<ILoginData>): void => {
@@ -45,7 +58,7 @@ export default function SignupStep2(): JSX.Element {
   useEffect(() => {
     setIsValid(state => ({
       ...state,
-      username: regex.username.test(loginData.username),
+      email: regex.email.test(loginData.email),
       password: regex.password.test(loginData.password),
     }));
   }, [loginData, setIsValid]);
@@ -75,17 +88,19 @@ export default function SignupStep2(): JSX.Element {
       {/* form container */}
       <View style={{ padding: sizes.padding, marginTop: sizes.s }}>
         <FormInput
-          placeholder={t('Username')}
-          hint="@Username"
+          placeholder={t('Email')}
           placeholderTextColor={colors.hint}
           autoCapitalize="none"
           autoCorrect={false}
           iconColor={colors.icon}
           inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
           containerStyle={{ marginVertical: sizes.s / 2 }}
-          onChangeText={text => handleChange({ username: text })}
-          hasError={!isValild.username && loginData.username.length > 1}
-          errorMessage={t('Enter a valid username')}
+          onChangeText={text => {
+            setFieldDirty({ email: true });
+            handleChange({ email: text });
+          }}
+          hasError={!isValid.email && fieldDirty.email && loginData.email.length > 2}
+          errorMessage={t('Enter a valid email')}
         />
         <FormInput
           secureTextEntry
@@ -98,6 +113,37 @@ export default function SignupStep2(): JSX.Element {
           containerStyle={{ marginVertical: sizes.s / 2 }}
           onChangeText={text => handleChange({ password: text })}
         />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <FormCheckbox
+            value={loginData.isAgreedToTerms}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onValueChange={(value: boolean) => {
+              setTouched(prev => ({ ...prev, isAgreedToTerms: true }));
+              handleChange({ isAgreedToTerms: value });
+              setIsValid(prev => ({ ...prev, isAgreedToTerms: value }));
+            }}
+            label={t('I agree to the Terms and Service')}
+            hasError={touched.isAgreedToTerms && !isValid.isAgreedToTerms}
+            errorMessage={t('You must agree to continue')}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            marginTop: sizes.m,
+          }}
+        >
+          <LinkButton style={{ paddingRight: sizes.sm }} onPress={handleNavigateBack}>
+            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>I have an account</Text>
+          </LinkButton>
+          <LinkButton
+            disabled={Object.values(isValid).includes(false)}
+            onPress={() => router.replace('/signup/step3/')}
+          >
+            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
+          </LinkButton>
+        </View>
       </View>
     </SafeAreaView>
   );
