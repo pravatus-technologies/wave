@@ -14,6 +14,8 @@ export default function FormInput({
   iconColor = '#5B5B5C',
   secureTextEntry,
   hint,
+  hasError = false,
+  errorMessage,
   ...props
 }: FormInputProps): JSX.Element {
   const LucideIcon = icon
@@ -96,6 +98,9 @@ export default function FormInput({
               />
             </Text>
           </Pressable>
+        )}
+        {hasError && errorMessage && (
+          <Text style={{ color: colors.danger, fontSize: 12, marginTop: 4 }}>{errorMessage}</Text>
         )}
       </View>
     </View>

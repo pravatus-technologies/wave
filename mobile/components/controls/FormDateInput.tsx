@@ -16,12 +16,12 @@ export default function FormDateInput({
   showCalendar = true,
   inputStyle,
   containerStyle,
-  errorText,
-}: FormDateInputProps) {
+  hasError = false,
+  errorMessage,
+}: FormDateInputProps): JSX.Element {
   const { colors, sizes } = useTheme();
   const { locale } = useTranslation();
   const [internalValue, setInternalValue] = useState(value ?? '');
-  const [hasError, setHasError] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [tempDate, setTempDate] = useState<Date>(new Date());
 
@@ -59,7 +59,7 @@ export default function FormDateInput({
     setInternalValue(formatted);
     onChangeText?.(formatted);
     const valid = isValidDateValue(formatted) && isOfLegalAge(formatted);
-    setHasError(!valid);
+    //setHasError(!valid);
     onValidationChange?.(valid);
   };
 
@@ -113,8 +113,8 @@ export default function FormDateInput({
           </Pressable>
         )}
       </View>
-      {hasError && errorText && (
-        <Text style={{ color: colors.danger, fontSize: 12, marginTop: 4 }}>{errorText}</Text>
+      {hasError && errorMessage && (
+        <Text style={{ color: colors.danger, fontSize: 12, marginTop: 4 }}>{errorMessage}</Text>
       )}
       <Modal visible={showPicker} transparent animationType="slide">
         <View

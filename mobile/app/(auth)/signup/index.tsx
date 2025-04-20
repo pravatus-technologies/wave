@@ -89,6 +89,8 @@ export default function SignupStep1(): JSX.Element {
           inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
           containerStyle={{ marginVertical: sizes.s / 2 }}
           onChangeText={text => handleChange({ givenName: text })}
+          hasError={!isValid.givenName && personalData.givenName.length > 1}
+          errorMessage={t('Enter a valid first name')}
         />
         <FormInput
           placeholder={t('Last name')}
@@ -99,6 +101,8 @@ export default function SignupStep1(): JSX.Element {
           inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
           containerStyle={{ marginVertical: sizes.s / 2 }}
           onChangeText={text => handleChange({ lastName: text })}
+          hasError={!isValid.lastName && personalData.lastName.length > 1}
+          errorMessage={t('Enter a valid last name')}
         />
         <FormDateInput
           hint={t('Birthday')}
@@ -107,6 +111,12 @@ export default function SignupStep1(): JSX.Element {
           containerStyle={{ marginVertical: sizes.s / 2 }}
           inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
           onChangeText={text => handleChange({ birthday: text })}
+          hasError={(!isValid.birthday || !isValid.legalAge) && personalData.birthday.length > 0}
+          errorMessage={
+            !isValid.legalAge
+              ? t('You must be at least 18 years old')
+              : t('Enter a valid birthday in yyyy/mm/dd format')
+          }
         ></FormDateInput>
         <View
           style={{
@@ -120,7 +130,7 @@ export default function SignupStep1(): JSX.Element {
           </LinkButton>
           <LinkButton
             disabled={Object.values(isValid).includes(false)}
-            onPress={() => console.log(`${JSON.stringify(isValid)}`)}
+            onPress={() => console.log(`${JSON.stringify(personalData)}`)}
           >
             <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
           </LinkButton>

@@ -9,5 +9,6 @@ export type FormDateInputProps = TextInputProps & {
   showCalendar: boolean;
   inputStyle?: TextStyle;
   containerStyle?: StyleProp<ViewStyle>;
-  errorText?: string;
+  hasError?: boolean;
+  errorMessage?: string;
 };
