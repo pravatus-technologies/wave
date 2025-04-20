@@ -15,5 +15,7 @@
   "Enter a valid first name": "Enter a valid first name",
   "Enter a valid last name": "Enter a valid last name",
   "You must be at least 18 years old": "You must be at least 18 years old",
-  "Enter a valid birthday in yyyy/mm/dd format": "Enter a valid birthday in yyyy/mm/dd format"
+  "Enter a valid birthday in yyyy/mm/dd format": "Enter a valid birthday in yyyy/mm/dd format",
+  "Create your account": "Create your account",
+  "Create a username and password": "Create a username and password"
 }
