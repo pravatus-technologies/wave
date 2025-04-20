@@ -64,8 +64,17 @@ export default function FormDateInput({
   };
 
   const handleDateChange = (_: any, selectedDate?: Date) => {
-    if (selectedDate) {
-      setTempDate(selectedDate); // just set the temp date
+    if (Platform.OS === 'android') {
+      // On Android, this gets called when the picker is dismissed
+      setShowPicker(false);
+      if (selectedDate) {
+        applyDate(selectedDate);
+      }
+    } else {
+      // On iOS, update tempDate only — wait for "Done" button
+      if (selectedDate) {
+        setTempDate(selectedDate);
+      }
     }
   };
 
