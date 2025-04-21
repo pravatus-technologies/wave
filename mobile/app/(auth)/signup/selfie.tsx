@@ -1,24 +1,16 @@
 /* eslint-disable import/no-named-as-default */
-import {
-  Button,
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Modal,
-  Image,
-} from 'react-native';
+import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import MaskedView from '@react-native-masked-view/masked-view';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import { SaveFormat, manipulateAsync } from 'expo-image-manipulator';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Svg, { Rect, Defs, Mask } from 'react-native-svg';
 
-import { useSignup } from '@context/SignupContext';
 import { useTheme } from '@context';
+import { useSignup } from '@context/SignupContext';
 
 const { width, height } = Dimensions.get('window');
 const BASE_CIRCLE_SIZE = 260;
@@ -26,14 +18,40 @@ const CIRCLE_SIZE = BASE_CIRCLE_SIZE * 1.15;
 
 export default function SelfieStep(): JSX.Element {
   const [permission, requestPermission] = useCameraPermissions();
-  const [capturedUri, setCapturedUri] = useState<string | null>(null);
-  const [showPreview, setShowPreview] = useState(false);
+  const [rawUri, setRawUri] = useState<string | null>(null);
   const router = useRouter();
+  const cameraRef = useRef<CameraView>(null);
 
   const { colors } = useTheme();
-  const { data, setSignupData } = useSignup();
+  const { setSignupData } = useSignup();
 
-  const cameraRef = useRef(null);
+  useEffect(() => {
+    const processImage = async () => {
+      if (!rawUri) return;
+
+      try {
+        /**
+         * As of Expo SDK 50, the official documentation indicates that manipulateAsync is deprecated
+         * in favor of the new, contextual, and object-oriented API using useImageManipulator.
+         * However, manipulateAsync remains available and functional in the current SDK versions.
+         * This means that while it's not the recommended approach moving forward, it can
+         * still be used, especially in scenarios where the new API may not be suitable.​
+         */
+        const result = await manipulateAsync(rawUri, [{ resize: { width: 512 } }], {
+          compress: 0.7,
+          format: SaveFormat.JPEG,
+        });
+
+        //setCapturedUri(result.uri);
+        setSignupData({ pictureUri: result.uri });
+        //setShowPreview(true);
+      } catch (error) {
+        console.error('Image processing failed:', error);
+      }
+    };
+
+    processImage();
+  }, [rawUri]);
 
   if (!permission) return <View />;
 
@@ -48,14 +66,11 @@ export default function SelfieStep(): JSX.Element {
 
   const handleCapture = async () => {
     if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      setCapturedUri(photo.uri);
-      setSignupData({ pictureUri: photo.uri });
-      router.navigate('/signup/confirm/');
-      //setShowPreview(true);
+      const photo = await cameraRef.current.takePictureAsync({ skipProcessing: true });
+      setRawUri(photo?.uri as string);
+      router.navigate('/signup/confirm');
     }
   };
-
   return (
     <View style={styles.container}>
       <CameraView style={styles.camera} facing={'front'} ref={cameraRef}>
@@ -97,30 +112,6 @@ export default function SelfieStep(): JSX.Element {
           </TouchableOpacity>
         </View>
       </CameraView>
-
-      {/* Capture preview modal */}
-      <Modal visible={showPreview} transparent animationType="slide">
-        <View style={styles.previewContainer}>
-          {capturedUri && (
-            <View style={styles.cropContainer}>
-              <Image source={{ uri: capturedUri }} style={styles.croppedPreview} />
-            </View>
-          )}
-          <View style={styles.previewButtons}>
-            <TouchableOpacity style={styles.previewButton} onPress={() => setShowPreview(false)}>
-              <Text style={styles.text}>Retake</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.previewButton}
-              onPress={() => {
-                console.log(`${JSON.stringify(data)}`);
-              }}
-            >
-              <Text style={styles.text}>Upload</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 }
