@@ -1,15 +1,19 @@
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
-import { router } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FormButton, ImageButton, LinkButton } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
+import { useSignup } from '@context/SignupContext';
 import { AppIcon } from 'src/components';
 
-export default function SignupStep3(): JSX.Element {
+export default function ConfirmSignup(): JSX.Element {
   const { colors, sizes } = useTheme();
+  const { data } = useSignup();
   const { t } = useTranslation();
+  const router = useNavigation();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       {/* header back button container */}
@@ -19,37 +23,49 @@ export default function SignupStep3(): JSX.Element {
           marginHorizontal: -3,
         }}
       >
-        {/* This is hidden */}
-        <ImageButton onPress={() => console.log()}>
-          <AppIcon name="ChevronLeft" size={sizes.m} color={colors.background} />
+        <ImageButton onPress={() => router.goBack()}>
+          <AppIcon name="ChevronLeft" size={sizes.m} color={colors.text} />
         </ImageButton>
       </View>
       {/* header title container */}
       <View style={{ padding: sizes.padding }}>
         <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {t('Time for a selfie!')}
+          {t("That's a beautiful smile!")}
         </Text>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.s }}>
-          {t("Let's show the world your smile")}
+        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.sm }}>
+          {t("If you're not satisfied you can always pick another one")}
         </Text>
+      </View>
+      {/* Preview circle */}
+      <View style={{ padding: sizes.padding, alignItems: 'center', marginTop: sizes.m }}>
+        <Image
+          source={{ uri: data.pictureUri as string }}
+          style={{
+            height: 250,
+            width: 250,
+            borderRadius: 125,
+            borderWidth: 5,
+            borderColor: colors.primary,
+          }}
+        />
       </View>
       {/* form buttons */}
       <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
         <FormButton
-          title={t('Take a picture')}
-          onPress={() => router.navigate('/signup/selfie')}
+          title={t('This looks good!')}
+          onPress={() => console.log('Save details and proceed to onboarding')}
         ></FormButton>
         <FormButton
           containerStyle={{ marginTop: sizes.s }}
           outline={true}
-          title={t('Upload an existing picture')}
-          onPress={() => console.log('Upload picture')}
+          title={t('Let me give it another shot')}
+          onPress={() => router.goBack()}
         />
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginTop: sizes.m,
+            justifyContent: 'center',
+            marginTop: sizes.l,
           }}
         >
           <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>

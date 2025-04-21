@@ -1,5 +1,6 @@
-import { SignupProvider } from '@context/SignupContext';
 import { Stack } from 'expo-router';
+
+import { SignupProvider } from '@context/SignupContext';
 
 export default function SignupLayout(): JSX.Element {
   return (
@@ -9,6 +10,7 @@ export default function SignupLayout(): JSX.Element {
         <Stack.Screen name="step2" />
         <Stack.Screen name="step3" />
         <Stack.Screen name="selfie" />
+        <Stack.Screen name="confirm" />
       </Stack>
     </SignupProvider>
   );

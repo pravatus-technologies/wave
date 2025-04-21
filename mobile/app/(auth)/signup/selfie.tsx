@@ -49,7 +49,8 @@ export default function SelfieStep(): JSX.Element {
       const photo = await cameraRef.current.takePictureAsync();
       setCapturedUri(photo.uri);
       setSignupData({ pictureUri: photo.uri });
-      setShowPreview(true);
+      router.navigate('/signup/confirm/');
+      //setShowPreview(true);
     }
   };
 
