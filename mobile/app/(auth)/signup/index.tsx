@@ -1,10 +1,10 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FormInput, LinkButton } from '@components/controls';
+import { AppText, FormInput, LinkButton } from '@components/controls';
 import FormDateInput from '@components/controls/FormDateInput';
 import ImageButton from '@components/controls/ImageButton';
 import * as regex from '@constants/regex';
@@ -73,12 +73,10 @@ export default function SignupStep1(): JSX.Element {
       </View>
       {/* header title container */}
       <View style={{ padding: sizes.padding }}>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {t('Tell us about you')}
-        </Text>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.s }}>
+        <AppText h1>{t('Tell us about you')}</AppText>
+        <AppText h5 style={{ marginTop: sizes.s }}>
           {t('We need to make sure to get this right')}
-        </Text>
+        </AppText>
       </View>
       {/* form container */}
       <View style={{ padding: sizes.padding, marginTop: sizes.s }}>
@@ -128,7 +126,7 @@ export default function SignupStep1(): JSX.Element {
           }}
         >
           <LinkButton style={{ paddingRight: sizes.sm }} onPress={handleNavigateBack}>
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>I have an account</Text>
+            <AppText link>{t('I have an account')}</AppText>
           </LinkButton>
           <LinkButton
             disabled={Object.values(isValid).includes(false)}
@@ -137,7 +135,7 @@ export default function SignupStep1(): JSX.Element {
               router.navigate('/signup/step2/');
             }}
           >
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
+            <AppText link>{t('Next')}</AppText>
           </LinkButton>
         </View>
       </View>
