@@ -1,6 +1,5 @@
 import { View, Text, Image } from 'react-native';
 
-import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FormButton, ImageButton, LinkButton } from '@components/controls';
@@ -8,14 +7,15 @@ import { useTheme, useTranslation } from '@context';
 import { useSignup } from '@context/SignupContext';
 import { AppIcon } from 'src/components';
 
-export default function ConfirmSignup(): JSX.Element {
-  const { colors, sizes } = useTheme();
+export default function SignupWelcome(): JSX.Element {
   const { data } = useSignup();
   const { t } = useTranslation();
-  const router = useRouter();
+  const { colors, sizes } = useTheme();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.background, paddingHorizontal: sizes.padding }}
+    >
       {/* header back button container */}
       <View
         style={{
@@ -23,49 +23,51 @@ export default function ConfirmSignup(): JSX.Element {
           marginHorizontal: -3,
         }}
       >
-        <ImageButton onPress={() => router.back()}>
-          <AppIcon name="ChevronLeft" size={sizes.m} color={colors.text} />
+        <ImageButton onPress={() => console.log('back')}>
+          <AppIcon name="ChevronLeft" size={sizes.m} color={colors.background} />
         </ImageButton>
       </View>
       {/* header title container */}
-      <View style={{ padding: sizes.padding }}>
+      <View
+        style={{
+          padding: sizes.padding,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {t("That's a beautiful smile!")}
+          {`Hi, ${data.givenNames}!`}
         </Text>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.sm }}>
-          {t("If you're not satisfied you can always pick another one")}
-        </Text>
-      </View>
-      {/* Preview circle */}
-      <View style={{ padding: sizes.padding, alignItems: 'center', marginTop: sizes.m }}>
         <Image
           source={{ uri: data.pictureUri as string }}
-          style={{
-            height: 250,
-            width: 250,
-            borderRadius: 125,
-            borderWidth: 5,
-            borderColor: colors.primary,
-          }}
+          width={48}
+          height={48}
+          borderRadius={24}
         />
+      </View>
+      <View>
+        <Text
+          style={{
+            fontFamily: 'OpenSans-Regular',
+            fontSize: sizes.p,
+            paddingHorizontal: sizes.padding,
+            marginTop: sizes.sm,
+          }}
+        >
+          {t(
+            "We're so glad to have you, invite your friends and family so you can share this new and exciting experience!"
+          )}
+        </Text>
       </View>
       {/* form buttons */}
       <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
-        <FormButton
-          title={t('This looks good!')}
-          onPress={() => router.navigate('welcome')}
-        ></FormButton>
-        <FormButton
-          containerStyle={{ marginTop: sizes.s }}
-          outline={true}
-          title={t('Let me give it another shot')}
-          onPress={() => router.back()}
-        />
+        <FormButton title={t('Invite my friends')} onPress={() => console.log('hello')} />
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
-            marginTop: sizes.l,
+            marginTop: sizes.m,
           }}
         >
           <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>
