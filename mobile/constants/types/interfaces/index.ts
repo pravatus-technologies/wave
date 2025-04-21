@@ -17,7 +17,6 @@ export * from './IPersonalDetails';
 export * from './IPost';
 export * from './ISizes';
 export * from './ISpacing';
-export * from './ITextProps';
 export * from './ITheme';
 export * from './IThemeProvider';
 export * from './ITranslate';
