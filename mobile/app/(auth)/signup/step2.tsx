@@ -2,9 +2,8 @@ import { View } from 'react-native';
 
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ImageButton, FormInput, LinkButton, AppText } from '@components/controls';
+import { ImageButton, FormInput, LinkButton, AppText, Screen } from '@components/controls';
 import FormCheckbox from '@components/controls/FormCheckbox';
 import * as regex from '@constants/regex';
 import { useTheme, useTranslation } from '@context';
@@ -66,7 +65,7 @@ export default function SignupStep2(): JSX.Element {
   }, [loginData, setIsValid]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background, padding: sizes.padding }}>
+    <Screen>
       {/* header back button container */}
       <View
         style={{
@@ -148,6 +147,6 @@ export default function SignupStep2(): JSX.Element {
           </LinkButton>
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }

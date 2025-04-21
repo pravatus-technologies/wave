@@ -1,9 +1,8 @@
 import { View, Image, StatusBar } from 'react-native';
 
 import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, FormButton, ImageButton, LinkButton } from '@components/controls';
+import { AppText, FormButton, ImageButton, LinkButton, Screen } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
 import { useSignup } from '@context/SignupContext';
 import { AppIcon } from 'src/components';
@@ -18,7 +17,7 @@ export default function ConfirmSignup(): JSX.Element {
     <>
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.black} />
 
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+      <Screen>
         {/* header back button container */}
         <View
           style={{
@@ -54,7 +53,7 @@ export default function ConfirmSignup(): JSX.Element {
         <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
           <FormButton
             title={t('This looks good!')}
-            onPress={() => router.navigate('welcome')}
+            onPress={() => router.navigate('/signup/welcome/')}
           ></FormButton>
           <FormButton
             containerStyle={{ marginTop: sizes.s }}
@@ -74,7 +73,7 @@ export default function ConfirmSignup(): JSX.Element {
             </LinkButton>
           </View>
         </View>
-      </SafeAreaView>
+      </Screen>
     </>
   );
 }

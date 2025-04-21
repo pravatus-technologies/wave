@@ -2,11 +2,15 @@ import { Alert, Image, View } from 'react-native';
 
 import { Redirect, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, FormButton, FormInput } from '@components/controls';
-import ImageButton from '@components/controls/ImageButton';
-import { LinkButton } from '@components/controls/LinkButton';
+import {
+  AppText,
+  FormButton,
+  FormInput,
+  ImageButton,
+  LinkButton,
+  Screen,
+} from '@components/controls';
 import * as regex from '@constants';
 import { AuthErrorCodes } from '@constants';
 import { FirebaseAuthError, ILogin, ILoginValidation } from '@constants/types/interfaces';
@@ -94,9 +98,7 @@ export default function Signin(): JSX.Element {
   if (user) return <Redirect href="/" />;
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: colors.background, paddingHorizontal: sizes.padding }}
-    >
+    <Screen>
       {/* Top Section */}
       <View
         style={{
@@ -185,6 +187,6 @@ export default function Signin(): JSX.Element {
           </ImageButton>
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }

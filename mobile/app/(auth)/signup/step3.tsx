@@ -1,9 +1,8 @@
 import { View } from 'react-native';
 
 import { router } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AppText, FormButton, ImageButton, LinkButton } from '@components/controls';
+import { AppText, FormButton, ImageButton, LinkButton, Screen } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
 import { AppIcon } from 'src/components';
 
@@ -11,7 +10,7 @@ export default function SignupStep3(): JSX.Element {
   const { colors, sizes } = useTheme();
   const { t } = useTranslation();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+    <Screen>
       {/* header back button container */}
       <View
         style={{
@@ -55,6 +54,6 @@ export default function SignupStep3(): JSX.Element {
           </LinkButton>
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }

@@ -1,8 +1,8 @@
 import { View, Image } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
-import { AppText, FormButton, ImageButton, LinkButton } from '@components/controls';
+import { AppText, FormButton, ImageButton, LinkButton, Screen } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
 import { useSignup } from '@context/SignupContext';
 import { AppIcon } from 'src/components';
@@ -12,10 +12,10 @@ export default function SignupWelcome(): JSX.Element {
   const { t } = useTranslation();
   const { colors, sizes } = useTheme();
 
+  const router = useRouter();
+
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: colors.background, paddingHorizontal: sizes.padding }}
-    >
+    <Screen>
       {/* header back button container */}
       <View
         style={{
@@ -67,11 +67,17 @@ export default function SignupWelcome(): JSX.Element {
             marginTop: sizes.m,
           }}
         >
-          <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>
-            <AppText>{t("I'll do this later")}</AppText>
+          <LinkButton
+            disabled={false}
+            onPress={() => {
+              console.log(`Data: ${JSON.stringify(data)}`);
+              router.navigate('/');
+            }}
+          >
+            <AppText link>{t("I'll do this later")}</AppText>
           </LinkButton>
         </View>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }
