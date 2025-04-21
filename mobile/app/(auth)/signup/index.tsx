@@ -10,9 +10,9 @@ import ImageButton from '@components/controls/ImageButton';
 import * as regex from '@constants/regex';
 import { IPersonalDetails } from '@constants/types/interfaces/IPersonalDetails';
 import { useTheme, useTranslation } from '@context';
+import { useSignup } from '@context/SignupContext';
 import { isOfLegalAge } from '@utils/helpers';
 import { AppIcon } from 'src/components';
-import { useSignup } from '@context/SignupContext';
 
 interface IPersonalDetailsValidation {
   givenNames: boolean;
