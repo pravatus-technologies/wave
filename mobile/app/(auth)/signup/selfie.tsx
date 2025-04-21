@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable import/no-named-as-default */
 import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -26,7 +27,7 @@ export default function SelfieStep(): JSX.Element {
   const { setSignupData } = useSignup();
 
   useEffect(() => {
-    const processImage = async () => {
+    const processImage = async (): Promise<void> => {
       if (!rawUri) return;
 
       try {
@@ -51,6 +52,7 @@ export default function SelfieStep(): JSX.Element {
     };
 
     processImage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawUri]);
 
   if (!permission) return <View />;
@@ -64,7 +66,7 @@ export default function SelfieStep(): JSX.Element {
     );
   }
 
-  const handleCapture = async () => {
+  const handleCapture = async (): Promise<void> => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync({ skipProcessing: true });
       setRawUri(photo?.uri as string);
