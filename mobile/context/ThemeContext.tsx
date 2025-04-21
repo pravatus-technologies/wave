@@ -3,7 +3,7 @@ import React, { createContext, useContext } from 'react';
 import { ITheme, IThemeProvider } from '@constants/types/interfaces';
 
 //import { dark } from '../themes/dark';
-import { light } from '../themes/light';
+import { LIGHT as light } from '../themes/light';
 
 export const ThemeContext = createContext({
   theme: light,
