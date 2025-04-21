@@ -86,12 +86,12 @@ export const SIZES: ISizes = {
   padding: 10,
 
   // font sizes
-  h1: 24,
-  h2: 22,
-  h3: 20,
-  h4: 18,
-  h5: 16,
-  p: 12,
+  h1: 28,
+  h2: 24,
+  h3: 22,
+  h4: 20,
+  h5: 18,
+  p: 14,
 
   // button sizes
   buttonBorder: 1,
