@@ -12,27 +12,29 @@ import { IPersonalDetails } from '@constants/types/interfaces/IPersonalDetails';
 import { useTheme, useTranslation } from '@context';
 import { isOfLegalAge } from '@utils/helpers';
 import { AppIcon } from 'src/components';
+import { useSignup } from '@context/SignupContext';
 
 interface IPersonalDetailsValidation {
-  givenName: boolean;
+  givenNames: boolean;
   lastName: boolean;
   birthday: boolean;
   legalAge: boolean;
 }
 
 export default function SignupStep1(): JSX.Element {
+  const { setSignupData } = useSignup();
   const { colors, sizes } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
 
   const [personalData, setPersonalData] = useState<IPersonalDetails>({
-    givenName: '',
+    givenNames: '',
     lastName: '',
     birthday: '',
   });
 
   const [isValid, setIsValid] = useState<IPersonalDetailsValidation>({
-    givenName: false,
+    givenNames: false,
     lastName: false,
     birthday: false,
     legalAge: false,
@@ -49,7 +51,7 @@ export default function SignupStep1(): JSX.Element {
   useEffect(() => {
     setIsValid(state => ({
       ...state,
-      givenName: regex.name.test(personalData.givenName),
+      givenNames: regex.name.test(personalData.givenNames),
       lastName: regex.name.test(personalData.lastName),
       birthday: regex.date.test(personalData.birthday),
       legalAge: regex.date.test(personalData.birthday) && isOfLegalAge(personalData.birthday),
@@ -88,8 +90,8 @@ export default function SignupStep1(): JSX.Element {
           iconColor={colors.icon}
           inputStyle={{ height: sizes.inputHeight, fontSize: sizes.text }}
           containerStyle={{ marginVertical: sizes.s / 2 }}
-          onChangeText={text => handleChange({ givenName: text })}
-          hasError={!isValid.givenName && personalData.givenName.length > 1}
+          onChangeText={text => handleChange({ givenNames: text })}
+          hasError={!isValid.givenNames && personalData.givenNames.length > 1}
           errorMessage={t('Enter a valid first name')}
         />
         <FormInput
@@ -130,7 +132,10 @@ export default function SignupStep1(): JSX.Element {
           </LinkButton>
           <LinkButton
             disabled={Object.values(isValid).includes(false)}
-            onPress={() => router.navigate('/signup/step2')}
+            onPress={() => {
+              setSignupData(personalData);
+              router.navigate('/signup/step2/');
+            }}
           >
             <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
           </LinkButton>

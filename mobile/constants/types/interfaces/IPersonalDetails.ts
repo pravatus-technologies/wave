@@ -1,5 +1,5 @@
 export interface IPersonalDetails {
-  givenName: string;
+  givenNames: string;
   lastName: string;
   birthday: string;
 }

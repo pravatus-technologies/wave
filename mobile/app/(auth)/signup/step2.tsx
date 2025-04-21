@@ -9,6 +9,7 @@ import FormCheckbox from '@components/controls/FormCheckbox';
 import * as regex from '@constants/regex';
 import { useTheme, useTranslation } from '@context';
 import { AppIcon } from 'src/components';
+import { useSignup } from '@context/SignupContext';
 
 export interface ILoginData {
   email: string;
@@ -23,6 +24,7 @@ export interface ILoginDataValid {
 }
 
 export default function SignupStep2(): JSX.Element {
+  const { setSignupData } = useSignup();
   const { colors, sizes } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
@@ -139,7 +141,10 @@ export default function SignupStep2(): JSX.Element {
           </LinkButton>
           <LinkButton
             disabled={Object.values(isValid).includes(false)}
-            onPress={() => router.replace('/signup/step3/')}
+            onPress={() => {
+              setSignupData(loginData);
+              router.replace('/signup/step3/');
+            }}
           >
             <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
           </LinkButton>
