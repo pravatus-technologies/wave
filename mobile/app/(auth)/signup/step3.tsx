@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FormButton, ImageButton, LinkButton } from '@components/controls';
+import { AppText, FormButton, ImageButton, LinkButton } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
 import { AppIcon } from 'src/components';
 
@@ -26,12 +26,10 @@ export default function SignupStep3(): JSX.Element {
       </View>
       {/* header title container */}
       <View style={{ padding: sizes.padding }}>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {t('Time for a selfie!')}
-        </Text>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.s }}>
+        <AppText h1>{t('Time for a selfie!')}</AppText>
+        <AppText h5 style={{ marginTop: sizes.sm }}>
           {t("Let's show the world your smile")}
-        </Text>
+        </AppText>
       </View>
       {/* form buttons */}
       <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
@@ -53,7 +51,7 @@ export default function SignupStep3(): JSX.Element {
           }}
         >
           <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>{t("I'll do this later")}</Text>
+            <AppText link>{t("I'll do this later")}</AppText>
           </LinkButton>
         </View>
       </View>

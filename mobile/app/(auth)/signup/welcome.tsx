@@ -1,8 +1,8 @@
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FormButton, ImageButton, LinkButton } from '@components/controls';
+import { AppText, FormButton, ImageButton, LinkButton } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
 import { useSignup } from '@context/SignupContext';
 import { AppIcon } from 'src/components';
@@ -36,9 +36,7 @@ export default function SignupWelcome(): JSX.Element {
           justifyContent: 'space-between',
         }}
       >
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {`Hi, ${data.givenNames}!`}
-        </Text>
+        <AppText h1>{`Hi, ${data.givenNames}!`}</AppText>
         <Image
           source={{ uri: data.pictureUri as string }}
           width={48}
@@ -47,10 +45,9 @@ export default function SignupWelcome(): JSX.Element {
         />
       </View>
       <View>
-        <Text
+        <AppText
+          p
           style={{
-            fontFamily: 'OpenSans-Regular',
-            fontSize: sizes.p,
             paddingHorizontal: sizes.padding,
             marginTop: sizes.sm,
           }}
@@ -58,7 +55,7 @@ export default function SignupWelcome(): JSX.Element {
           {t(
             "We're so glad to have you, invite your friends and family so you can share this new and exciting experience!"
           )}
-        </Text>
+        </AppText>
       </View>
       {/* form buttons */}
       <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
@@ -71,7 +68,7 @@ export default function SignupWelcome(): JSX.Element {
           }}
         >
           <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>{t("I'll do this later")}</Text>
+            <AppText>{t("I'll do this later")}</AppText>
           </LinkButton>
         </View>
       </View>

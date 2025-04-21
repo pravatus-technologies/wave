@@ -1,9 +1,9 @@
-import { View, Text, Image } from 'react-native';
+import { View, Image, StatusBar } from 'react-native';
 
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FormButton, ImageButton, LinkButton } from '@components/controls';
+import { AppText, FormButton, ImageButton, LinkButton } from '@components/controls';
 import { useTheme, useTranslation } from '@context';
 import { useSignup } from '@context/SignupContext';
 import { AppIcon } from 'src/components';
@@ -15,64 +15,66 @@ export default function ConfirmSignup(): JSX.Element {
   const router = useRouter();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-      {/* header back button container */}
-      <View
-        style={{
-          alignItems: 'flex-start',
-          marginHorizontal: -3,
-        }}
-      >
-        <ImageButton onPress={() => router.back()}>
-          <AppIcon name="ChevronLeft" size={sizes.m} color={colors.text} />
-        </ImageButton>
-      </View>
-      {/* header title container */}
-      <View style={{ padding: sizes.padding }}>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {t("That's a beautiful smile!")}
-        </Text>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.sm }}>
-          {t("If you're not satisfied you can always pick another one")}
-        </Text>
-      </View>
-      {/* Preview circle */}
-      <View style={{ padding: sizes.padding, alignItems: 'center', marginTop: sizes.m }}>
-        <Image
-          source={{ uri: data.pictureUri as string }}
-          style={{
-            height: 250,
-            width: 250,
-            borderRadius: 125,
-            borderWidth: 5,
-            borderColor: colors.primary,
-          }}
-        />
-      </View>
-      {/* form buttons */}
-      <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
-        <FormButton
-          title={t('This looks good!')}
-          onPress={() => router.navigate('welcome')}
-        ></FormButton>
-        <FormButton
-          containerStyle={{ marginTop: sizes.s }}
-          outline={true}
-          title={t('Let me give it another shot')}
-          onPress={() => router.back()}
-        />
+    <>
+      <StatusBar barStyle={'dark-content'} backgroundColor={colors.black} />
+
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+        {/* header back button container */}
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: sizes.l,
+            alignItems: 'flex-start',
+            marginHorizontal: -3,
           }}
         >
-          <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>{t("I'll do this later")}</Text>
-          </LinkButton>
+          <ImageButton onPress={() => router.back()}>
+            <AppIcon name="ChevronLeft" size={sizes.m} color={colors.text} />
+          </ImageButton>
         </View>
-      </View>
-    </SafeAreaView>
+        {/* header title container */}
+        <View style={{ padding: sizes.padding }}>
+          <AppText h1>{t("That's a beautiful smile!")}</AppText>
+          <AppText h5 style={{ marginTop: sizes.sm }}>
+            {t("If you're not satisfied you can always pick another one")}
+          </AppText>
+        </View>
+        {/* Preview circle */}
+        <View style={{ padding: sizes.padding, alignItems: 'center', marginTop: sizes.m }}>
+          <Image
+            source={{ uri: data.pictureUri as string }}
+            style={{
+              height: 250,
+              width: 250,
+              borderRadius: 125,
+              borderWidth: 5,
+              borderColor: colors.primary,
+            }}
+          />
+        </View>
+        {/* form buttons */}
+        <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
+          <FormButton
+            title={t('This looks good!')}
+            onPress={() => router.navigate('welcome')}
+          ></FormButton>
+          <FormButton
+            containerStyle={{ marginTop: sizes.s }}
+            outline={true}
+            title={t('Let me give it another shot')}
+            onPress={() => router.back()}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: sizes.l,
+            }}
+          >
+            <LinkButton disabled={false} onPress={() => console.log('Skip to onboarding')}>
+              <AppText link>{t("I'll do this later")}</AppText>
+            </LinkButton>
+          </View>
+        </View>
+      </SafeAreaView>
+    </>
   );
 }

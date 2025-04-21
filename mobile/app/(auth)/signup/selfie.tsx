@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 /* eslint-disable import/no-named-as-default */
-import { Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Dimensions, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import MaskedView from '@react-native-masked-view/masked-view';
 import { CameraView, useCameraPermissions } from 'expo-camera';
@@ -10,6 +10,7 @@ import { useRouter } from 'expo-router';
 import { useState, useRef, useEffect } from 'react';
 import Svg, { Rect, Defs, Mask } from 'react-native-svg';
 
+import { AppText } from '@components/controls';
 import { useTheme } from '@context';
 import { useSignup } from '@context/SignupContext';
 
@@ -60,8 +61,8 @@ export default function SelfieStep(): JSX.Element {
   if (!permission.granted) {
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <AppText>We need your permission to show the camera</AppText>
+        <Button onPress={requestPermission} title="Grant permission" />
       </View>
     );
   }
@@ -74,47 +75,52 @@ export default function SelfieStep(): JSX.Element {
     }
   };
   return (
-    <View style={styles.container}>
-      <CameraView style={styles.camera} facing={'front'} ref={cameraRef}>
-        {/* Masked Overlay */}
-        <MaskedView
-          style={StyleSheet.absoluteFill}
-          maskElement={
-            <Svg height={height} width={width}>
-              <Defs>
-                <Mask id="mask" x="0" y="0" width="100%" height="100%">
-                  <Rect x="0" y="0" width="100%" height="100%" fill="white" />
-                </Mask>
-              </Defs>
-              <Rect x="0" y="0" width="100%" height="100%" fill="black" mask="url(#mask)" />
-            </Svg>
-          }
-        >
-          <View style={styles.overlay}>
-            <LinearGradient
-              colors={['rgba(0,0,0,0.6)', 'transparent']}
-              style={styles.topGradient}
-            />
-            <LinearGradient
-              colors={['transparent', 'rgba(0,0,0,0.6)']}
-              style={styles.bottomGradient}
-            />
-          </View>
-        </MaskedView>
+    <>
+      <StatusBar barStyle={'light-content'} backgroundColor={colors.black} />
+      <View style={styles.container}>
+        <CameraView style={styles.camera} facing={'front'} ref={cameraRef}>
+          {/* Masked Overlay */}
+          <MaskedView
+            style={StyleSheet.absoluteFill}
+            maskElement={
+              <Svg height={height} width={width}>
+                <Defs>
+                  <Mask id="mask" x="0" y="0" width="100%" height="100%">
+                    <Rect x="0" y="0" width="100%" height="100%" fill="white" />
+                  </Mask>
+                </Defs>
+                <Rect x="0" y="0" width="100%" height="100%" fill="black" mask="url(#mask)" />
+              </Svg>
+            }
+          >
+            <View style={styles.overlay}>
+              <LinearGradient
+                colors={['rgba(0,0,0,0.6)', 'transparent']}
+                style={styles.topGradient}
+              />
+              <LinearGradient
+                colors={['transparent', 'rgba(0,0,0,0.6)']}
+                style={styles.bottomGradient}
+              />
+            </View>
+          </MaskedView>
 
-        {/* Close button at top-left */}
-        <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
-          <Text style={styles.closeText}>×</Text>
-        </TouchableOpacity>
-
-        {/* Capture button at bottom center */}
-        <View style={styles.captureWrapper}>
-          <TouchableOpacity style={styles.captureButton} onPress={handleCapture}>
-            <View style={[styles.captureInnerCircle, { backgroundColor: colors.primary }]} />
+          {/* Close button at top-left */}
+          <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
+            <AppText h2 color={colors.white as string}>
+              ×
+            </AppText>
           </TouchableOpacity>
-        </View>
-      </CameraView>
-    </View>
+
+          {/* Capture button at bottom center */}
+          <View style={styles.captureWrapper}>
+            <TouchableOpacity style={styles.captureButton} onPress={handleCapture}>
+              <View style={[styles.captureInnerCircle, { backgroundColor: colors.primary }]} />
+            </TouchableOpacity>
+          </View>
+        </CameraView>
+      </View>
+    </>
   );
 }
 

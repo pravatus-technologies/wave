@@ -1,10 +1,10 @@
-import { Alert, Text, Image, View } from 'react-native';
+import { Alert, Image, View } from 'react-native';
 
 import { Redirect, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { FormButton, FormInput } from '@components/controls';
+import { AppText, FormButton, FormInput } from '@components/controls';
 import ImageButton from '@components/controls/ImageButton';
 import { LinkButton } from '@components/controls/LinkButton';
 import * as regex from '@constants';
@@ -144,7 +144,7 @@ export default function Signin(): JSX.Element {
             }}
             onPress={() => Alert.alert('Forgot password!')}
           >
-            <Text>I forgot my password</Text>
+            <AppText>I forgot my password</AppText>
           </LinkButton>
           <FormButton
             containerStyle={{ marginTop: sizes.l }}
@@ -157,7 +157,7 @@ export default function Signin(): JSX.Element {
       {/* Bottom Section */}
       <View style={{ flex: 0.25 }}>
         <View style={{ marginTop: sizes.s, alignItems: 'center' }}>
-          <Text>{t('or use your social media accounts')}</Text>
+          <AppText p>{t('or use your social media accounts')}</AppText>
         </View>
         <View
           style={{

@@ -1,15 +1,15 @@
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { ImageButton, FormInput, LinkButton } from '@components/controls';
+import { ImageButton, FormInput, LinkButton, AppText } from '@components/controls';
 import FormCheckbox from '@components/controls/FormCheckbox';
 import * as regex from '@constants/regex';
 import { useTheme, useTranslation } from '@context';
-import { AppIcon } from 'src/components';
 import { useSignup } from '@context/SignupContext';
+import { AppIcon } from 'src/components';
 
 export interface ILoginData {
   email: string;
@@ -80,12 +80,10 @@ export default function SignupStep2(): JSX.Element {
       </View>
       {/* header title container */}
       <View style={{ padding: sizes.padding }}>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h1 }}>
-          {t('Create your account')}
-        </Text>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: sizes.h5, marginTop: sizes.s }}>
+        <AppText h1>{t('Create your account')}</AppText>
+        <AppText h5 style={{ marginTop: sizes.s }}>
           {t('Create a username and password')}
-        </Text>
+        </AppText>
       </View>
       {/* form container */}
       <View style={{ padding: sizes.padding, marginTop: sizes.s }}>
@@ -137,7 +135,7 @@ export default function SignupStep2(): JSX.Element {
           }}
         >
           <LinkButton style={{ paddingRight: sizes.sm }} onPress={handleNavigateBack}>
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>I have an account</Text>
+            <AppText link>{t('I have an account')}</AppText>
           </LinkButton>
           <LinkButton
             disabled={Object.values(isValid).includes(false)}
@@ -146,7 +144,7 @@ export default function SignupStep2(): JSX.Element {
               router.replace('/signup/step3/');
             }}
           >
-            <Text style={{ fontFamily: 'OpenSans-SemiBold' }}>Next</Text>
+            <AppText link>{t('Next')}</AppText>
           </LinkButton>
         </View>
       </View>
