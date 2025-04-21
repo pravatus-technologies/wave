@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native';
 
+import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FormButton, ImageButton, LinkButton } from '@components/controls';
@@ -36,7 +37,7 @@ export default function SignupStep3(): JSX.Element {
       <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
         <FormButton
           title={t('Take a picture')}
-          onPress={() => console.log('Take a picture')}
+          onPress={() => router.navigate('/signup/selfie')}
         ></FormButton>
         <FormButton
           containerStyle={{ marginTop: sizes.s }}

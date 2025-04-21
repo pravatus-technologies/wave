@@ -6,6 +6,7 @@ export default function SignupLayout(): JSX.Element {
       <Stack.Screen name="index" />
       <Stack.Screen name="step2" />
       <Stack.Screen name="step3" />
+      <Stack.Screen name="selfie" />
     </Stack>
   );
 }
