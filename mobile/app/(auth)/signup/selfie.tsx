@@ -18,6 +18,7 @@ import { useState, useRef } from 'react';
 import Svg, { Rect, Defs, Mask } from 'react-native-svg';
 
 import { useSignup } from '@context/SignupContext';
+import { useTheme } from '@context';
 
 const { width, height } = Dimensions.get('window');
 const BASE_CIRCLE_SIZE = 260;
@@ -29,6 +30,7 @@ export default function SelfieStep(): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const router = useRouter();
 
+  const { colors } = useTheme();
   const { data, setSignupData } = useSignup();
 
   const cameraRef = useRef(null);
@@ -91,7 +93,7 @@ export default function SelfieStep(): JSX.Element {
         {/* Capture button at bottom center */}
         <View style={styles.captureWrapper}>
           <TouchableOpacity style={styles.captureButton} onPress={handleCapture}>
-            <View style={styles.captureInnerCircle} />
+            <View style={[styles.captureInnerCircle, { backgroundColor: colors.primary }]} />
           </TouchableOpacity>
         </View>
       </CameraView>
