@@ -53,7 +53,9 @@ export default function ConfirmSignup(): JSX.Element {
       <View style={{ padding: sizes.padding, marginTop: sizes.m }}>
         <FormButton
           title={t('This looks good!')}
-          onPress={() => console.log('Save details and proceed to onboarding')}
+          onPress={() =>
+            console.log(`Save details and proceed to onboarding ${JSON.stringify(data)}`)
+          }
         ></FormButton>
         <FormButton
           containerStyle={{ marginTop: sizes.s }}
