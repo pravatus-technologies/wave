@@ -5,16 +5,16 @@ import React from 'react';
 import { useAuth } from '@context/AuthContext';
 
 export default function HomePage() {
-  const { user, logout } = useAuth();
+  const { logout, profile } = useAuth();
 
-  if (!user) return <Text>Loading...</Text>;
+  if (!profile) return <Text>Loading...</Text>;
 
   return (
     <View style={{ padding: 20, alignItems: 'center' }}>
-      <Text>Welcome, {user.email}</Text>
-      {user.photoURL && (
+      <Text>Welcome, {profile.email}</Text>
+      {profile.pictureUri && (
         <Image
-          source={{ uri: user.photoURL }}
+          source={{ uri: profile.pictureUri }}
           style={{ width: 120, height: 120, borderRadius: 60 }}
         />
       )}

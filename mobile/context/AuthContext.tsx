@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): JSX.E
   }, [user]);
 
   useEffect(() => {
+    setInitializing(true);
     const unsubscribe = auth().onAuthStateChanged(currentUser => {
       const initializeProfile = async (): Promise<void> => {
         setUser(currentUser);
@@ -165,10 +166,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }): JSX.E
             [USER_PROFILE_KEY, JSON.stringify(fullProfile)],
             [PROFILE_LAST_SYNC_KEY, Date.now().toString()],
           ]);
-          setProfile(fullProfile);
-        }
 
-        setUser(userCred.user);
+          setProfile(fullProfile);
+          setUser(userCred.user);
+        }
         return userCred;
       } catch (error) {
         await Logger.error(error, 'registerUserWithEmail', 'Unable to register user');
