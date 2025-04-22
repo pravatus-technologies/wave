@@ -19,6 +19,7 @@ export function BootstrapProvider({ children }: { children: React.ReactNode }): 
   const [bootComplete, setBootComplete] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [theme, setTheme] = useState<ITheme>(light);
+
   /***
    * Load fonts from base theme
    */

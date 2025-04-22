@@ -1,8 +1,12 @@
-import { SafeAreaView, StyleSheet, ViewProps } from 'react-native';
+import { SafeAreaView, StyleSheet, View, ViewProps } from 'react-native';
 
 import { useTheme } from '@context';
 
-export default function Screen({ children, style }: ViewProps): JSX.Element {
+interface ScreenProps extends ViewProps {
+  padded?: boolean;
+}
+
+export default function Screen({ children, style }: ScreenProps): JSX.Element {
   const { sizes, colors } = useTheme();
 
   const screenStyle = StyleSheet.flatten([
@@ -13,5 +17,10 @@ export default function Screen({ children, style }: ViewProps): JSX.Element {
       backgroundColor: colors.background,
     },
   ]);
-  return <SafeAreaView style={screenStyle}>{children}</SafeAreaView>;
+
+  return (
+    <SafeAreaView style={screenStyle}>
+      <View style={screenStyle}>{children}</View>
+    </SafeAreaView>
+  );
 }

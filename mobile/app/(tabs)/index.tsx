@@ -1,17 +1,24 @@
-import { Pressable, Text } from 'react-native';
+import { View, Text, Image, Button } from 'react-native';
 
-import { AppText, Screen } from '@components/controls';
-import { useAuth, useTranslation } from '@context';
+import React from 'react';
 
-export default function Home(): JSX.Element {
-  const { logout } = useAuth();
-  const { t } = useTranslation();
+import { useAuth } from '@context/AuthContext';
+
+export default function HomePage() {
+  const { user, logout } = useAuth();
+
+  if (!user) return <Text>Loading...</Text>;
+
   return (
-    <Screen style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <AppText>{t('hello')}</AppText>
-      <Pressable onPress={logout}>
-        <Text>Logout</Text>
-      </Pressable>
-    </Screen>
+    <View style={{ padding: 20, alignItems: 'center' }}>
+      <Text>Welcome, {user.email}</Text>
+      {user.photoURL && (
+        <Image
+          source={{ uri: user.photoURL }}
+          style={{ width: 120, height: 120, borderRadius: 60 }}
+        />
+      )}
+      <Button title="Logout" onPress={logout} />
+    </View>
   );
 }
