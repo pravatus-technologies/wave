@@ -122,7 +122,7 @@ export const SIZES: ISizes = {
 
   imageRadius: 15,
 
-  avatarSize: 35,
+  avatarSize: 40,
   avatarRadius: 12,
   miniAvatar: 12,
 

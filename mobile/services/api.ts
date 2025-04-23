@@ -1,8 +1,19 @@
 import axios, { AxiosError } from 'axios';
 
 import { API } from '@constants';
-import { IFriend, IPost } from '@constants/types/interfaces';
+import { IFriend, IPost, IStory } from '@constants/types/interfaces';
 import { Logger } from '@utils/Logger';
+
+export async function getStories(page = 1, limit = 10): Promise<IStory[]> {
+  try {
+    const response = await axios.get<IStory[]>(API.endpoints.getStories, { params: { page, limit } });
+    return response.data;
+  } catch (error: unknown) {
+    const err = error as AxiosError;
+    Logger.error(error, 'API', `Failed to fetch stories ${err.message}`);
+    throw new Error('Failed to fetch stories');
+  }
+}
 
 export async function getPosts(page = 1, limit = 10): Promise<IPost[]> {
   try {

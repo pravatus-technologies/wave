@@ -19,6 +19,8 @@ export * from "./IProfile";
 export * from "./ISignupData";
 export * from "./ISizes";
 export * from "./ISpacing";
+export * from "./IStory";
+export * from "./IStoryItem";
 export * from "./ITheme";
 export * from "./IThemeProvider";
 export * from "./ITranslate";

@@ -28,7 +28,7 @@ export default ({ config }) => {
     icon: './assets/images/icon.png',
     splash: {
       image: './assets/images/splash.png',
-      resizeMode: 'contain',
+      resizeMode: 'cover',
       backgroundColor: '#19295C',
     },
 
@@ -39,6 +39,8 @@ export default ({ config }) => {
     assetBundlePatterns: ['**/*'],
 
     ios: {
+      deploymentTarget: '12.0',
+      useFrameworks: 'static',
       supportsTablet: true,
       bundleIdentifier: isProd
         ? 'com.pravatustech.waveapp'
@@ -56,6 +58,8 @@ export default ({ config }) => {
     },
 
     android: {
+      compileSdkVersion: 33,
+      targetSdkVersion: 33,
       package: isProd
         ? 'com.pravatustech.waveapp'
         : isPreview
@@ -82,6 +86,14 @@ export default ({ config }) => {
 
     plugins: [
       [
+        'expo-camera',
+        {
+          cameraPermission: 'Allow $(PRODUCT_NAME) to access your camera',
+          microphonePermission: 'Allow $(PRODUCT_NAME) to access your microphone',
+          recordAudioAndroid: true,
+        },
+      ],
+      [
         'expo-build-properties',
         {
           ios: {
@@ -99,6 +111,7 @@ export default ({ config }) => {
         },
       ],
       'expo-router',
+      'expo-video',
       'expo-localization',
       '@react-native-firebase/app',
       '@react-native-firebase/auth',

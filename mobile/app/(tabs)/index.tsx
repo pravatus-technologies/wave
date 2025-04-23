@@ -1,13 +1,15 @@
-import { View, Text, Image, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
+import { ResizeMode, Video } from 'expo-av';
 import React from 'react';
-
-import { useAuth } from '@context/AuthContext';
-import { useTheme } from '@context';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { ImageButton, Screen } from '@components/controls';
+import { useTheme } from '@context';
+import { useAuth } from '@context/AuthContext';
 import { AppIcon } from 'src/components';
-import { LinearGradient } from 'expo-linear-gradient';
+import MainHeader from 'src/components/MainHeader';
+import StoryScroll from '@features/feed/components/StoryScroll';
 
 export default function HomePage() {
   const { logout, profile } = useAuth();
@@ -18,6 +20,31 @@ export default function HomePage() {
   const NUM_CARDS = 7;
   const PICS_PER_STORY = 3;
 
+  const COVER_VIDEO_POOL = [
+    '../../assets/videos/video1.mp4',
+    '../../assets/videos/video2.mp4',
+    '../../assets/videos/video3.mp4',
+    '../../assets/videos/video4.mp4',
+    '../../assets/videos/video5.mp4',
+  ];
+
+  const getRandomMedia = (): { type: 'image' | 'video'; uri: string } => {
+    const isVideo = Math.random() < 0.4;
+
+    if (isVideo) {
+      const randomIndex = Math.floor(Math.random() * COVER_VIDEO_POOL.length);
+      return {
+        type: 'video',
+        uri: COVER_VIDEO_POOL[randomIndex],
+      };
+    } else {
+      return {
+        type: 'image',
+        uri: `https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/200/300`,
+      };
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.card, paddingHorizontal: sizes.padding }}>
       <SafeAreaView
@@ -27,29 +54,7 @@ export default function HomePage() {
         }}
       >
         {/* header container */}
-        <View
-          style={{
-            height: sizes.headerHeight - 16,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Image source={assets.appLogo} />
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <ImageButton onPress={() => console.log('notification')}>
-              <AppIcon name="bell" size={22} />
-            </ImageButton>
-            <View>
-              {profile.pictureUri && (
-                <Image
-                  source={{ uri: profile.pictureUri }}
-                  style={{ width: 42, height: 42, borderRadius: 21, marginLeft: sizes.s }}
-                />
-              )}
-            </View>
-          </View>
-        </View>
+        <MainHeader />
         {/* stories scrollview container */}
         <View
           style={{
@@ -65,23 +70,7 @@ export default function HomePage() {
               paddingTop: 10,
             }}
           >
-            {/* scrollable children */}
-            {Array.from({ length: NUM_CARDS }).map((_, cardIndex) => (
-              <ImageButton key={cardIndex} onPress={() => console.log('clicked ' + cardIndex)}>
-                <View style={styles.cardContainer}>
-                  {Array.from({ length: PICS_PER_STORY }).map((_, index) => {
-                    const rotation = index === 0 ? '10deg' : index === 1 ? '5deg' : '0deg';
-                    return (
-                      <Image
-                        key={index}
-                        source={{ uri: 'https://picsum.photos/200/300' }}
-                        style={[styles.image, { transform: [{ rotate: rotation }] }]}
-                      />
-                    );
-                  })}
-                </View>
-              </ImageButton>
-            ))}
+            <StoryScroll />
           </ScrollView>
         </View>
       </SafeAreaView>

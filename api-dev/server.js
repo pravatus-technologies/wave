@@ -1,9 +1,58 @@
 const express = require("express");
 const cors = require("cors");
 const faker = require("faker");
+const fs = require("fs");
+const path = require("path");
+
+const videoFolderPath = path.join(__dirname, "assets/videos");
+const videoFiles = fs
+  .readdirSync(videoFolderPath)
+  .filter((file) => file.endsWith(".mp4"));
+
+console.log(
+  "Serving static files from:",
+  path.join(__dirname, "assets/videos")
+);
 
 const app = express();
 app.use(cors());
+
+app.use(
+  "/static/videos",
+  express.static(path.join(__dirname, "assets/videos"))
+);
+
+function generateRandomStories(count = 10) {
+  const stories = [];
+
+  for (let i = 0; i < count; i++) {
+    const itemsCount = Math.floor(Math.random() * 3) + 1; // 1 to 3 items
+    const items = [];
+
+    for (let j = 0; j < itemsCount; j++) {
+      const isVideo = Math.random() > 0.5 && videoFiles.length > 0;
+      if (isVideo) {
+        const filename = faker.random.arrayElement(videoFiles);
+        items.push({
+          type: "video",
+          uri: `http://192.168.10.67:3000/static/videos/${filename}`, // adjust domain/port as needed
+        });
+      } else {
+        items.push({
+          type: "image",
+          uri: `https://picsum.photos/seed/${faker.datatype.uuid()}/400/700`,
+        });
+      }
+    }
+
+    stories.push({
+      uid: faker.datatype.uuid(),
+      items,
+    });
+  }
+
+  return stories;
+}
 
 // Generate fake friends
 function generateRandomFriends(count) {
@@ -114,6 +163,14 @@ function generateRandomPosts(count, startId = 0, page = 1) {
 
   return posts;
 }
+
+app.get("/stories", (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const allStories = generateRandomStories(limit);
+  res.json(allStories);
+});
 
 app.get("/posts", (req, res) => {
   const page = parseInt(req.query.page) || 1;

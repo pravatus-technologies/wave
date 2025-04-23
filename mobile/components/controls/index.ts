@@ -1,3 +1,4 @@
+export { default as AppIcon } from "./AppIcon";
 export { default as AppText } from "./AppText";
 export { default as FormButton } from "./FormButton";
 export { default as FormCheckbox } from "./FormCheckbox";
