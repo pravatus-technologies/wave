@@ -15,6 +15,10 @@ export default function MainLayout(): React.ReactNode {
       <Text>No User</Text>
     </SafeAreaView>
   ) : (
-    <Tabs />
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+      }}
+    />
   );
 }

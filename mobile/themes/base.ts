@@ -17,6 +17,9 @@ import {
 } from '@constants/types/interfaces';
 
 // Import all fonts from the assets folder
+import FbLogo from '../assets/external/fb.png';
+import GoogleLogo from '../assets/external/google.png';
+import xLogo from '../assets/external/x.png';
 import BoldFont from '../assets/fonts/OpenSans-Bold.ttf';
 import ExtraBoldFont from '../assets/fonts/OpenSans-ExtraBold.ttf';
 import LightFont from '../assets/fonts/OpenSans-Light.ttf';
@@ -25,13 +28,9 @@ import SemiBoldFont from '../assets/fonts/OpenSans-SemiBold.ttf';
 // Import all logo and images for the app from the assets folder
 import AppAdaptiveIcon from '../assets/images/adaptive-icon.png';
 import AppFavicon from '../assets/images/favicon.png';
-import AppLogo from '../assets/images/logo.png';
 import AppSplashLogo from '../assets/images/splash-icon.png';
 import AppSplashScreen from '../assets/images/splash.png';
-
-import FbLogo from '../assets/external/fb.png';
-import GoogleLogo from '../assets/external/google.png';
-import xLogo from '../assets/external/x.png';
+import AppLogo from '../assets/images/wave.png';
 
 // Define the width and height for the screen
 const { width, height } = Dimensions.get('window');

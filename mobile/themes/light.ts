@@ -79,6 +79,9 @@ export const SIZES: ISizes = {
   // top header height
   headerHeight: 60,
 
+  // stories height
+  storiesHeight: 175,
+
   // global sizes
   base: 10,
   text: 14,

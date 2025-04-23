@@ -3,6 +3,7 @@
  */
 export interface ISizes {
   headerHeight: number;
+  storiesHeight: number;
 
   base: number;
   text: number;
